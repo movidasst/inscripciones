@@ -139,12 +139,12 @@
 
           <!-- Opción Principal: PayPal (Responsive Layout) -->
           <div class="mb-8 relative">
-             <h3 class="font-bold text-lg md:text-xl text-slate-900 mb-3 md:mb-4 flex items-center justify-center sm:justify-start gap-2">
-               <i class="fa-brands fa-paypal text-sky-600"></i> Opción Recomendada
-             </h3>
-             <a href="https://movidasst.org/course/index.php?categoryid=24" target="_blank" 
-                    class="block w-full group text-left p-5 md:p-6 rounded-2xl border-2 border-sky-100 bg-gradient-to-br from-sky-50 to-white transition-all duration-300 relative overflow-hidden
-                           hover:-translate-y-1 hover:border-sky-500 hover:shadow-xl hover:shadow-sky-500/20 text-decoration-none">
+              <h3 class="font-bold text-lg md:text-xl text-slate-900 mb-3 md:mb-4 flex items-center justify-center sm:justify-start gap-2">
+                <i class="fa-brands fa-paypal text-sky-600"></i> Opción Recomendada
+              </h3>
+              <a href="https://movidasst.org/course/index.php?categoryid=24" target="_blank" 
+                     class="block w-full group text-left p-5 md:p-6 rounded-2xl border-2 border-sky-100 bg-gradient-to-br from-sky-50 to-white transition-all duration-300 relative overflow-hidden
+                            hover:-translate-y-1 hover:border-sky-500 hover:shadow-xl hover:shadow-sky-500/20 text-decoration-none">
               <!-- Flex container: columna en móvil, fila en desktop -->
               <div class="relative flex flex-col sm:flex-row items-center gap-4 sm:gap-5 text-center sm:text-left">
                 <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-sky-500 text-white flex items-center justify-center text-2xl md:text-3xl group-hover:scale-110 transition-all duration-300 shadow-lg shadow-sky-500/30 shrink-0">
@@ -529,6 +529,59 @@
       </div>
     </div>
   </div>
+
+  <!-- ======================================================= -->
+  <!-- BOTÓN FLOTANTE ESTILO DAO: VOLVER AL HUB (MOVIDASST.COM) -->
+  <!-- Copiar y pegar este bloque al final del body en cada subdominio -->
+  <!-- ======================================================= -->
+
+  <a href="https://www.movidasst.com" 
+     title="Volver al Hub Principal"
+     style="
+       position: fixed; 
+       bottom: 20px; 
+       right: 20px; 
+       background-color: #0f172a; /* Fondo Oscuro (Slate 900) */
+       color: #00b050;            /* Texto Verde Neón */
+       padding: 8px 16px;         /* Más pequeño */
+       border-radius: 8px;        /* Bordes técnicos */
+       text-decoration: none; 
+       font-family: 'Outfit', sans-serif, monospace; 
+       font-weight: 700; 
+       font-size: 12px;           /* Letra más pequeña */
+       letter-spacing: 0.5px;
+       border: 1px solid #00b050; /* Borde Verde Fino */
+       box-shadow: 0 0 10px rgba(0, 176, 80, 0.2); 
+       z-index: 9999; 
+       display: flex; 
+       align-items: center; 
+       gap: 8px; 
+       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+       backdrop-filter: blur(5px);
+     "
+     onmouseover="
+       this.style.transform='translateY(-2px)'; 
+       this.style.boxShadow='0 0 20px rgba(0, 176, 80, 0.5)'; 
+       this.style.backgroundColor='#00b050'; 
+       this.style.color='#ffffff';
+     " 
+     onmouseout="
+       this.style.transform='translateY(0)'; 
+       this.style.boxShadow='0 0 10px rgba(0, 176, 80, 0.2)'; 
+       this.style.backgroundColor='#0f172a'; 
+       this.style.color='#00b050';
+     "
+  >
+      <!-- Icono Hexágono/Nodo Pequeño -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="7.5 4.21 12 12 16.5 4.21"></polyline>
+          <polyline points="7.5 19.79 12 12 16.5 19.79"></polyline>
+          <polyline points="3.29 12 12 12 20.71 12"></polyline>
+      </svg>
+      
+      <span>VOLVER</span>
+  </a>
 
   <!-- Toast Container (Ajustado a max-w-[90vw] para evitar overflow en móviles) -->
   <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none max-w-[90vw]"></div>
