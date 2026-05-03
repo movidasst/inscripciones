@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Meta para permitir carga de imágenes externas -->
     <meta name="referrer" content="no-referrer">
     
     <title>Academia Movida SST - Valoración de Cursos</title>
@@ -69,8 +68,8 @@
     <style>
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: #f1f5f9; /* Slate 100 */
-            color: #0f172a; /* Slate 900 */
+            background-color: #f8fafc;
+            color: #0f172a;
         }
 
         .tech-data {
@@ -88,7 +87,6 @@
             filter: drop-shadow(0 0 2px rgba(217, 119, 6, 0.3));
         }
 
-        /* Efectos Hover Tarjetas */
         .hover-lift {
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
         }
@@ -97,27 +95,11 @@
             box-shadow: 0 20px 30px -10px rgba(13, 148, 136, 0.15);
         }
 
-        /* Spinner */
-        .loader {
-            border: 3px solid #ccfbf1;
-            border-top: 3px solid #0d9488;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #0d9488; }
 
-        /* Toast Animation */
         #toast {
             visibility: hidden;
             opacity: 0;
@@ -130,7 +112,6 @@
             transform: translateY(0);
         }
 
-        /* Transiciones de Tabs */
         .tab-content {
             display: none;
             animation: fadeIn 0.4s ease-out;
@@ -146,14 +127,13 @@
 </head>
 <body class="antialiased min-h-screen pb-20">
 
-    <!-- Configuración JS -->
     <script>
         const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx-rBNVVARQOt9SoL2G_OSJOL4ZydVlFDQeCVH4mIps-7MxOyYQQ1xTO-f0Wdc824Yy/exec"; 
         const MODO_DEMO = false; 
     </script>
 
     <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z-50 border border-teal-500/30">
+    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z- border border-teal-500/30">
         <i class="fas fa-check-circle text-teal-400"></i>
         <span id="toast-message" class="font-medium text-sm">Copiado al portapapeles</span>
     </div>
@@ -177,7 +157,7 @@
          letter-spacing: 0.5px;
          border: 1px solid #115e59; 
          box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.5); 
-         z-index: 9999; 
+         z-index: 40; 
          display: flex; 
          align-items: center; 
          gap: 10px; 
@@ -196,12 +176,8 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        <!-- ============================================== -->
-        <!-- ENCABEZADO FIJO -->
-        <!-- ============================================== -->
+        <!-- ENCABEZADO -->
         <div class="flex flex-col items-center justify-center mb-8 relative">
-            
-            <!-- Logo Grande -->
             <div class="relative mb-4 group">
                 <div class="absolute inset-0 bg-teal-400 rounded-full blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
                 <img src="https://assets.poap.xyz/04118473-016e-4c9a-83b6-6ae33fbbfd8f.png" 
@@ -209,37 +185,33 @@
                      class="w-32 h-32 object-contain relative z-10 drop-shadow-xl transform group-hover:scale-105 transition-transform duration-500 rounded-full">
             </div>
 
-            <!-- Título Principal -->
             <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight text-center mb-1">
                 Academia Movida SST
             </h1>
-            <p class="text-slate-500 font-medium tech-data text-xs tracking-widest uppercase mb-6">Portal de Aprendizaje Descentralizado</p>
+            <p class="text-teal-600 font-bold tech-data text-xs tracking-widest uppercase mb-6">Evoluciona tu carrera en Seguridad y Salud</p>
 
-            <!-- ============================================== -->
-            <!-- NAVEGACIÓN (TABS) - EL CAMBIO CLAVE DE UX -->
-            <!-- ============================================== -->
+            <!-- NAVEGACIÓN -->
             <div class="bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-center gap-2 max-w-2xl w-full mx-auto">
-                
                 <button onclick="switchTab('cursos')" id="btn-cursos" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-teal-600 text-white shadow-lg shadow-teal-500/30">
                     <i class="fas fa-graduation-cap"></i> Cursos
                 </button>
-                
                 <button onclick="switchTab('pagos')" id="btn-pagos" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50">
                     <i class="fas fa-wallet"></i> Pagos
                 </button>
-                
                 <button onclick="switchTab('comunidad')" id="btn-comunidad" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50">
                     <i class="fas fa-users"></i> Comunidad
                 </button>
-
             </div>
         </div>
 
-        <!-- ============================================== -->
-        <!-- VISTA 1: CURSOS (Default) -->
-        <!-- ============================================== -->
+        <!-- VISTA 1: CURSOS -->
         <div id="view-cursos" class="tab-content active">
             
+            <!-- PRUEBA SOCIAL BANNER -->
+            <div id="social-proof-banner" class="hidden mb-10 w-full max-w-5xl mx-auto">
+                <!-- Se inyecta por JS si hay opiniones -->
+            </div>
+
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold text-slate-800">Catálogo de Cursos</h2>
                 <div class="w-12 h-1 bg-teal-500 rounded-full mx-auto mt-2 mb-4"></div>
@@ -251,7 +223,7 @@
             <!-- Recordatorio -->
             <div class="bg-gradient-to-r from-teal-50 to-white border border-teal-100 rounded-2xl p-4 max-w-2xl mx-auto flex items-start sm:items-center gap-4 shadow-sm mb-10">
                 <div class="bg-white p-2 rounded-xl text-teal-600 shadow-sm border border-teal-50 shrink-0">
-                    <i class="fas fa-lightbulb text-lg"></i>
+                    <i class="fas fa-user-check text-lg"></i>
                 </div>
                 <div class="text-left">
                     <p class="text-slate-600 text-sm leading-relaxed">
@@ -261,10 +233,23 @@
                 </div>
             </div>
 
-            <!-- Loading State -->
-            <div id="loading" class="flex flex-col items-center justify-center py-20 bg-white rounded-3xl shadow-soft max-w-lg mx-auto border border-slate-100">
-                <div class="loader mb-4"></div>
-                <p class="text-slate-400 font-medium text-sm">Cargando catálogo...</p>
+            <!-- Skeleton Loading UI -->
+            <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto">
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-72 animate-pulse">
+                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 rounded-xl"></div></div>
+                    <div class="w-3/4 h-6 bg-slate-200 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 rounded mb-8"></div>
+                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 rounded-2xl"></div></div>
+                </div>
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-72 animate-pulse hidden md:flex">
+                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 rounded-xl"></div></div>
+                    <div class="w-3/4 h-6 bg-slate-200 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 rounded mb-8"></div>
+                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 rounded-2xl"></div></div>
+                </div>
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-72 animate-pulse hidden lg:flex">
+                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 rounded-xl"></div></div>
+                    <div class="w-3/4 h-6 bg-slate-200 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 rounded mb-8"></div>
+                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 rounded-2xl"></div></div>
+                </div>
             </div>
 
             <!-- Error State -->
@@ -274,17 +259,15 @@
                     <strong class="font-bold font-sans">Error de conexión</strong>
                 </div>
                 <span class="block sm:inline text-sm opacity-90" id="error-text">No se pudo conectar.</span>
+                <button onclick="fetchData()" class="mt-2 text-xs font-bold underline">Reintentar</button>
             </div>
 
-            <!-- Grid de Cursos -->
-            <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Los cursos se insertarán aquí dinámicamente -->
+            <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+                <!-- Dinámico -->
             </div>
         </div>
 
-        <!-- ============================================== -->
         <!-- VISTA 2: MEDIOS DE PAGO -->
-        <!-- ============================================== -->
         <div id="view-pagos" class="tab-content">
             <div class="w-full max-w-5xl mx-auto">
                 <div class="text-center mb-8">
@@ -295,7 +278,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     
-                    <!-- 1. VENEZUELA (Transferencia) -->
+                    <!-- 1. VENEZUELA -->
                     <div class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 flex flex-col relative overflow-hidden group">
                         <div class="absolute top-0 right-0 w-16 h-16 bg-red-50 rounded-bl-3xl -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
                         <div class="flex items-center gap-3 mb-4 relative z-10">
@@ -362,24 +345,22 @@
                             <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-lg shadow-sm">
                                 <i class="fab fa-paypal"></i>
                             </div>
-                            <h3 class="font-bold text-slate-800 text-sm">PayPal</h3>
+                            <h3 class="font-bold text-slate-800 text-sm">PayPal Directo</h3>
                         </div>
                         <div class="space-y-3 text-xs relative z-10 mb-4 text-slate-600 font-mono">
                             <p class="font-bold">movidasst@gmail.com</p>
                             <p class="text-orange-500 italic font-sans font-semibold">Nota: Pagar como "Amigo/Familiar"</p>
                         </div>
-                        <button onclick="copyPaymentData('paypal')" class="mt-auto w-full bg-slate-900 hover:bg-teal-600 text-white font-bold py-2.5 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-xs">
-                            <span>Copiar Datos Completos</span> <i class="far fa-copy"></i>
-                        </button>
+                        <a href="https://paypal.me/movidasst" target="_blank" class="mt-auto w-full bg-[#0070ba] hover:bg-[#003087] text-white font-bold py-2.5 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-xs">
+                            <span>Pagar en PayPal</span> <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
 
                 </div>
             </div>
         </div>
 
-        <!-- ============================================== -->
         <!-- VISTA 3: COMUNIDAD Y ACCESOS -->
-        <!-- ============================================== -->
         <div id="view-comunidad" class="tab-content">
             <div class="w-full max-w-4xl mx-auto">
                 <div class="text-center mb-8">
@@ -389,10 +370,9 @@
                     </p>
                 </div>
 
-                <!-- ACTION CENTER (Enlaces Bonitos) -->
+                <!-- ACTION CENTER -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                     
-                    <!-- Botón 1: Grupo WhatsApp -->
                     <a href="https://chat.whatsapp.com/Fv0CmlSqTVyDB0diXAyPCI" target="_blank" 
                        class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 group flex flex-col items-center text-center relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
@@ -403,7 +383,6 @@
                         <p class="text-slate-500 text-sm">Únete a la comunidad de estudio</p>
                     </a>
 
-                    <!-- Botón 2: Canal WhatsApp -->
                     <a href="https://whatsapp.com/channel/0029Va0mlH5Jf05mrcCz8r3e" target="_blank"
                        class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 group flex flex-col items-center text-center relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-20 h-20 bg-teal-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
@@ -414,7 +393,6 @@
                         <p class="text-slate-500 text-sm">Noticias y novedades oficiales</p>
                     </a>
 
-                    <!-- Botón 3: Ingresar (Login) -->
                     <a href="https://movidasst.org/login/index.php" target="_blank"
                        class="bg-slate-900 p-6 rounded-3xl shadow-soft hover-lift border border-slate-800 group flex flex-col items-center text-center relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-20 h-20 bg-slate-800 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
@@ -426,7 +404,7 @@
                     </a>
                 </div>
 
-                <!-- SECCIÓN DE CONTACTO (Cápsulas) -->
+                <!-- SECCIÓN DE CONTACTO -->
                 <div class="flex flex-wrap justify-center gap-4">
                     <a href="https://wa.me/56968615650" target="_blank" 
                        class="flex items-center gap-3 pl-2 pr-6 py-2 bg-white border border-slate-200 rounded-full shadow-sm hover:shadow-lg hover:border-teal-400 hover:-translate-y-1 transition-all duration-300 group">
@@ -454,8 +432,8 @@
 
     </div>
 
-    <!-- Modal de Valoración -->
-    <div id="review-modal" class="fixed inset-0 bg-slate-900/80 overflow-y-auto h-full w-full hidden z-50 flex items-center justify-center backdrop-blur-md transition-opacity duration-300">
+    <!-- EL MODAL CON Z-INDEX CORREGIDO AL MÁXIMO -->
+    <div id="review-modal" class="fixed inset-0 bg-slate-900/80 overflow-y-auto h-full w-full hidden z-50 flex items-center justify-center backdrop-blur-md transition-opacity duration-300" style="z-index: 99999;">
         <div class="relative mx-auto p-0 border-0 w-full max-w-2xl shadow-2xl rounded-3xl bg-white m-4 cursor-default transform transition-all scale-100 overflow-hidden" onclick="event.stopPropagation()">
             
             <div class="bg-gradient-to-br from-teal-800 to-slate-900 p-6 sm:p-8 relative overflow-hidden">
@@ -517,13 +495,6 @@
 
     <!-- Scripts de Lógica -->
     <script>
-        // MOCK DATA
-        const mockData = {
-            cursos: [{ id: "c1", nombre: "Curso Demo", imagen: "https://via.placeholder.com/500x300", descripcion: "Ejemplo.", enlace: "#", duracion: "10", modalidad: "asincronico", valor: "50" }],
-            comentarios: []
-        };
-
-        // DATOS DE PAGO (Texto Completo)
         const paymentInfo = {
             transfer: `DATOS PARA TRANSFERENCIA BANCARIA (VENEZUELA)\nBanco: Banco de Venezuela\nTipo de cuenta: Corriente\nNº de cuenta: 0102-0236-1500-0033-6732\nTitular: Ezequiel Linares\nC.I.: 30.407.087`,
             pagoMovil: `DATOS PARA PAGO MÓVIL\nBanco: Banco de Venezuela\nNombre: Ezequiel Linares\nC.I.: V-30.407.087\nTeléfono: 0412-6372223`,
@@ -531,10 +502,10 @@
             paypal: `DATOS PARA PAYPAL\nCorreo: movidasst@gmail.com\nNota: Pagar como "Amigo/Familiar"`
         };
 
-        // VARIABLES Y EVENTOS
         let allComments = [];
         let allCourses = [];
         const ratingLabels = ["Malo", "Regular", "Bueno", "Muy Bueno", "Excelente"];
+        const gradientBorders = ['from-teal-400 to-emerald-400', 'from-blue-400 to-indigo-400', 'from-orange-400 to-rose-400', 'from-purple-400 to-pink-400'];
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchData();
@@ -543,32 +514,23 @@
             setupModalEvents();
         });
 
-        // -----------------------------------------------------
-        // LÓGICA DE TABS
-        // -----------------------------------------------------
         function switchTab(tabName) {
-            // 1. Ocultar todas las vistas
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            // 2. Mostrar la vista seleccionada
             document.getElementById(`view-${tabName}`).classList.add('active');
 
-            // 3. Resetear estilos de botones
             const buttons = ['cursos', 'pagos', 'comunidad'];
             buttons.forEach(btn => {
                 const buttonEl = document.getElementById(`btn-${btn}`);
                 if (btn === tabName) {
-                    // Estilo Activo (Teal)
                     buttonEl.className = "flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-teal-600 text-white shadow-lg shadow-teal-500/30 transform scale-105";
                 } else {
-                    // Estilo Inactivo (Gris)
                     buttonEl.className = "flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50";
                 }
             });
         }
 
-        // FUNCIONALIDAD DE COPIAR DATOS COMPLETOS
         function copyPaymentData(type) {
             const textToCopy = paymentInfo[type];
             if (textToCopy) {
@@ -594,12 +556,12 @@
             }, 3000);
         }
 
-        // FUNCIONES DE CARGA Y RENDERIZADO
         async function fetchData() {
             if (MODO_DEMO) {
                 setTimeout(() => {
                     allCourses = mockData.cursos;
                     allComments = mockData.comentarios;
+                    renderSocialProofBanner();
                     renderCourses(allCourses);
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('courses-grid').classList.remove('hidden');
@@ -616,6 +578,7 @@
                              document.getElementById('error-text').textContent = "Conexión exitosa, pero la hoja 'Cursos' está vacía.";
                              document.getElementById('error-message').classList.remove('hidden');
                         }
+                        renderSocialProofBanner();
                         renderCourses(allCourses);
                         document.getElementById('loading').classList.add('hidden');
                         document.getElementById('courses-grid').classList.remove('hidden');
@@ -626,127 +589,132 @@
                     console.error("Error:", error);
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('error-message').classList.remove('hidden');
-                    document.getElementById('error-text').textContent = "No se pudo cargar. Verifica que el Script tenga permisos 'Cualquier persona'.";
+                    document.getElementById('error-text').textContent = "No se pudo conectar con el servidor.";
                 }
             }
         }
 
-        function processImageUrl(input) {
-            if (!input) return null;
-            let url = String(input).trim();
-            if (url.includes('<img') || url.includes('<IMG')) {
-                const srcMatch = url.match(/src=["'](.*?)["']/i);
-                if (srcMatch && srcMatch[1]) url = srcMatch[1];
+        // PRUEBA SOCIAL
+        function renderSocialProofBanner() {
+            const banner = document.getElementById('social-proof-banner');
+            const topReviews = allComments.filter(c => parseInt(c.estrellas) === 5);
+            
+            if (topReviews.length > 0) {
+                const recent = topReviews.slice(-2);
+                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                recent.forEach(r => {
+                    let com = r.comentario.length > 90 ? r.comentario.substring(0, 90) + '...' : r.comentario;
+                    html += `
+                        <div class="bg-white border border-slate-100 p-5 rounded-2xl flex gap-4 items-center shadow-sm">
+                            <div class="flex-shrink-0 text-amber-300 text-3xl"><i class="fas fa-quote-left"></i></div>
+                            <div>
+                                <p class="text-sm text-slate-700 italic font-medium leading-tight mb-2">"${com}"</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="flex text-amber-400 text-[10px]">${generateStars(5)}</div>
+                                    <span class="text-xs font-bold text-slate-900">${r.nombre}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                html += '</div>';
+                banner.innerHTML = html;
+                banner.classList.remove('hidden');
             }
-            if (url.includes('drive.google.com')) {
-                let id = null;
-                const idMatch1 = url.match(/id=([a-zA-Z0-9_-]+)/);
-                const idMatch2 = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                if (idMatch1 && idMatch1[1]) id = idMatch1[1];
-                else if (idMatch2 && idMatch2[1]) id = idMatch2[1];
-                if (id) return `https://lh3.googleusercontent.com/d/${id}`;
-            }
-            return url;
         }
 
+        // REDISEÑO TARJETAS
         function renderCourses(cursos) {
             const grid = document.getElementById('courses-grid');
             grid.innerHTML = '';
-            cursos.forEach(curso => {
+            
+            cursos.forEach((curso, index) => {
                 const courseComments = allComments.filter(c => c.cursoId === curso.id);
                 const avg = courseComments.length > 0 
                     ? (courseComments.reduce((sum, c) => sum + parseInt(c.estrellas), 0) / courseComments.length).toFixed(1)
                     : "0.0";
                 
                 const card = document.createElement('div');
-                card.className = "bg-white rounded-3xl shadow-soft overflow-hidden course-card flex flex-col h-full border border-slate-100";
+                card.className = "bg-white rounded-3xl p-8 shadow-soft border border-slate-100 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group";
                 
-                let imgSrc = processImageUrl(curso.imagen) || 'https://via.placeholder.com/500x300?text=Curso';
                 const linkCurso = curso.enlace || curso.Enlace || curso.ENLACE;
                 
-                // Procesar duración
-                let duracion = curso.duracion || curso.Duracion || curso.DURACION;
-                if (duracion && !isNaN(duracion)) {
-                    duracion += " Hs";
-                }
+                // Iconos cognitivos
+                const nameLower = curso.nombre.toLowerCase();
+                let wmIcon = 'fa-graduation-cap';
+                if(nameLower.includes('riesgo') || nameLower.includes('seguridad')) wmIcon = 'fa-shield-alt';
+                else if(nameLower.includes('auditor') || nameLower.includes('iso')) wmIcon = 'fa-clipboard-check';
+                else if(nameLower.includes('liderazgo') || nameLower.includes('gestión')) wmIcon = 'fa-users-cog';
+                else if(nameLower.includes('salud') || nameLower.includes('medicina')) wmIcon = 'fa-heartbeat';
 
-                // Procesar Modalidad (Columna G)
+                const borderGradient = gradientBorders[index % gradientBorders.length];
+
+                let duracion = curso.duracion || curso.Duracion || curso.DURACION;
+                if (duracion && !isNaN(duracion)) duracion += " Hs";
+
                 let modalidad = curso.modalidad || curso.Modalidad || curso.MODALIDAD;
                 let modalidadBadge = '';
                 if (modalidad) {
                     let icon = 'fa-laptop'; 
-                    let colorClass = 'bg-slate-50 text-slate-600 border-slate-100'; 
+                    let colorClass = 'bg-slate-50 text-slate-600 border-slate-200'; 
                     let text = modalidad;
-
                     const lowerMod = modalidad.toLowerCase();
                     if (lowerMod.includes('asincronico') || lowerMod.includes('asincrónica') || lowerMod.includes('asincrónico')) {
-                        icon = 'fa-play-circle';
-                        colorClass = 'bg-indigo-50 text-indigo-600 border-indigo-100';
-                        text = 'Asincrónico';
+                        icon = 'fa-play-circle'; colorClass = 'bg-indigo-50 text-indigo-700 border-indigo-100'; text = 'Asincrónico';
                     } else if (lowerMod.includes('sincronico') || lowerMod.includes('sincrónica') || lowerMod.includes('sincrónico')) {
-                        icon = 'fa-video';
-                        colorClass = 'bg-rose-50 text-rose-600 border-rose-100';
-                        text = 'Sincrónico';
+                        icon = 'fa-video'; colorClass = 'bg-rose-50 text-rose-700 border-rose-100'; text = 'Sincrónico';
                     } else if (lowerMod.includes('ambas') || lowerMod.includes('mixto') || lowerMod.includes('híbrido')) {
-                        icon = 'fa-layer-group';
-                        colorClass = 'bg-orange-50 text-orange-600 border-orange-100';
-                        text = 'Híbrido';
+                        icon = 'fa-layer-group'; colorClass = 'bg-orange-50 text-orange-700 border-orange-100'; text = 'Híbrido';
                     }
-                    
-                    modalidadBadge = `
-                    <span class="${colorClass} px-3 py-1 rounded-lg text-xs font-bold tech-data border flex items-center gap-1.5">
-                        <i class="fas ${icon}"></i> ${text}
-                    </span>`;
+                    modalidadBadge = `<span class="${colorClass} px-3 py-1.5 rounded-lg text-xs font-bold tech-data border flex items-center gap-1.5"><i class="fas ${icon}"></i> ${text}</span>`;
                 }
 
-                // Procesar Valor (Columna H)
                 let valor = curso.valor || curso.Valor || curso.VALOR || curso.precio || curso.Precio || curso.PRECIO;
-                let valorTexto = valor;
+                let valorBadge = '';
                 if (valor && !isNaN(valor) && valor > 0) {
-                    valorTexto = `$${valor} USD`;
-                } else if (valor == 0 || valor === "0") {
-                    valorTexto = "Gratis";
+                    valorBadge = `<span class="bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-widest shadow-sm">$${valor} USD</span>`;
+                } else if (valor == 0 || valor === "0" || (typeof valor === 'string' && valor.toLowerCase() === 'gratis')) {
+                    valorBadge = `<span class="bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-widest shadow-sm">GRATIS</span>`;
                 }
 
+                // CTA Principal
                 const linkButtonHtml = linkCurso 
-                    ? `<a href="${linkCurso}" target="_blank" class="flex-1 border border-slate-200 hover:border-teal-500 hover:text-teal-600 text-slate-600 text-center font-semibold py-3 px-4 rounded-2xl transition-all duration-200 flex items-center justify-center gap-2 group">
-                         <span>Ir al Curso</span> <i class="fas fa-external-link-alt text-xs group-hover:translate-x-1 transition-transform"></i>
+                    ? `<a href="${linkCurso}" target="_blank" class="flex-[1.5] bg-teal-600 hover:bg-teal-700 text-white font-extrabold py-3.5 px-4 rounded-2xl transition-all duration-300 shadow-lg shadow-teal-600/30 text-[14px] flex items-center justify-center gap-2 group/btn">
+                         <span>Inscribirse al Curso</span>
+                         <i class="fas fa-external-link-alt text-[11px] group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform"></i>
                        </a>`
                     : '';
 
+                const descFormateada = (curso.descripcion || 'Sin descripción disponible.').replace(/\n/g, '<br/>');
+
                 card.innerHTML = `
-                    <div class="h-56 overflow-hidden bg-slate-100 relative cursor-pointer group" onclick="openModal('${curso.id}')">
-                        <img src="${imgSrc}" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Error+Imagen'" alt="${curso.nombre}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-60"></div>
-                        <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-2xl shadow-lg flex items-center gap-2 border border-white/50">
-                            <i class="fas fa-star text-yellow-500 text-sm"></i> 
-                            <span class="font-bold text-slate-800 text-sm tech-data">${avg}</span>
+                    <i class="fas ${wmIcon} absolute -bottom-6 -right-6 text-[10rem] text-slate-50 opacity-60 z-0 rotate-12 pointer-events-none group-hover:scale-110 transition-transform duration-700"></i>
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${borderGradient} opacity-80 group-hover:opacity-100 transition-opacity z-0"></div>
+
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="bg-amber-50 text-amber-600 px-3 py-1.5 rounded-xl text-sm font-black flex items-center gap-1.5 border border-amber-100 cursor-pointer hover:bg-amber-100 transition-colors" onclick="openModal('${curso.id}')" title="Ver opiniones">
+                            <i class="fas fa-star"></i> <span class="tech-data">${avg}</span>
                         </div>
+                        ${valorBadge}
                     </div>
-                    <div class="p-8 flex-1 flex flex-col">
-                        <h3 class="text-2xl font-bold mb-3 text-slate-900 leading-tight hover:text-teal-600 cursor-pointer transition-colors" onclick="openModal('${curso.id}')">${curso.nombre}</h3>
-                        <p class="text-slate-500 mb-6 flex-1 text-sm leading-relaxed line-clamp-3">${curso.descripcion || 'Sin descripción disponible.'}</p>
-                        <div class="mt-auto">
-                            <!-- Metadatos del Curso (Reviews, Duración, Modalidad, Valor) -->
-                            <div class="flex flex-wrap items-center gap-2 mb-6">
-                                <span class="bg-teal-50 text-teal-700 px-3 py-1 rounded-lg text-xs font-bold tech-data border border-teal-100 flex items-center gap-1.5">
-                                    <i class="fas fa-users"></i> ${courseComments.length}
-                                </span>
-                                ${duracion ? `
-                                <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-xs font-bold tech-data border border-blue-100 flex items-center gap-1.5">
-                                    <i class="far fa-clock"></i> ${duracion}
-                                </span>` : ''}
-                                ${modalidadBadge}
-                                ${valorTexto ? `
-                                <span class="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-lg text-xs font-bold tech-data border border-emerald-100 flex items-center gap-1.5">
-                                    <i class="fas fa-tag"></i> ${valorTexto}
-                                </span>` : ''}
-                            </div>
-                            <div class="flex gap-3">
-                                <button onclick="openModal('${curso.id}')" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-2xl transition-all duration-200 shadow-lg shadow-slate-900/10 text-center">Ver / Valorar</button>
-                                ${linkButtonHtml}
-                            </div>
-                        </div>
+
+                    <h3 class="text-2xl font-extrabold mb-4 text-slate-800 leading-tight group-hover:text-teal-600 transition-colors cursor-pointer relative z-10" onclick="openModal('${curso.id}')">${curso.nombre}</h3>
+                    
+                    <p class="text-slate-600 mb-8 flex-1 text-sm leading-relaxed relative z-10">${descFormateada}</p>
+
+                    <div class="flex flex-wrap items-center gap-2 mb-6 relative z-10">
+                        ${duracion ? `<span class="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold tech-data border border-slate-200 flex items-center gap-1.5"><i class="far fa-clock"></i> ${duracion}</span>` : ''}
+                        ${modalidadBadge}
+                        <span class="bg-teal-50 text-teal-700 px-3 py-1.5 rounded-lg text-xs font-bold tech-data border border-teal-100 flex items-center gap-1.5 cursor-pointer hover:bg-teal-100 transition-colors" onclick="openModal('${curso.id}')">
+                            <i class="fas fa-users"></i> ${courseComments.length} Opiniones
+                        </span>
+                    </div>
+
+                    <div class="pt-6 mt-auto border-t border-slate-100 flex flex-col sm:flex-row gap-3 relative z-10">
+                        ${linkButtonHtml}
+                        <button onclick="openModal('${curso.id}')" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-100 hover:border-slate-200 text-slate-700 font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 text-sm flex items-center justify-center gap-2">
+                            <i class="far fa-star text-amber-500"></i>
+                            <span>Valorar</span>
+                        </button>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -902,12 +870,13 @@
                         allComments.push(newReview);
                         renderComments(newReview.cursoId);
                         renderCourses(allCourses);
+                        renderSocialProofBanner();
                         document.getElementById('review-form').reset();
                         resetStars();
                         btn.innerHTML = originalBtnText;
                         btn.disabled = false;
                         btn.classList.remove('opacity-75', 'cursor-not-allowed');
-                        alert("Comentario enviado (MODO DEMO).");
+                        showToast("Opinión publicada.");
                     }, 1000);
                 } else {
                     try {
@@ -921,9 +890,10 @@
                             allComments.push(newReview);
                             renderComments(newReview.cursoId);
                             renderCourses(allCourses);
+                            renderSocialProofBanner();
                             document.getElementById('review-form').reset();
                             resetStars();
-                            alert("¡Opinión publicada con éxito!");
+                            showToast("¡Opinión publicada con éxito!");
                         } else {
                             throw new Error(result.message);
                         }
