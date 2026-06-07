@@ -5,60 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
     
+    <!-- SEO y Meta Etiquetas -->
     <title>Academia Movida SST - Valoración de Cursos</title>
+    <meta name="description" content="Catálogo de cursos y valoraciones de la Academia Movida SST. Evoluciona tu carrera en Seguridad y Salud en el Trabajo.">
     
-    <!-- FUENTES: Outfit + JetBrains Mono -->
+    <!-- Open Graph -->
+    <meta property="og:title" content="Academia Movida SST - Valoración de Cursos">
+    <meta property="og:description" content="Catálogo de cursos y valoraciones de la Academia Movida SST. Evoluciona tu carrera en SST.">
+    <meta property="og:image" content="https://assets.poap.xyz/cec12a20-fefb-4199-9cc0-b1ece87fe44d.png">
+    <meta property="og:type" content="website">
+    
+    <!-- Datos Estructurados (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "La Movida de SST",
+      "description": "Formación y capacitación en Seguridad y Salud en el Trabajo",
+      "logo": "https://assets.poap.xyz/cec12a20-fefb-4199-9cc0-b1ece87fe44d.png",
+      "url": "https://movidasst.org"
+    }
+    </script>
+    
+    <!-- FUENTES: Únicamente Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <!-- Configuración personalizada de Tailwind -->
+    <!-- Configuración personalizada de Tailwind según Guía de Estilo -->
     <script>
         tailwind.config = {
+            darkMode: 'media',
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Outfit', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        teal: {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            400: '#2dd4bf',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                            700: '#0f766e',
-                            800: '#115e59',
-                            900: '#134e4a',
+                        brand: {
+                            teal: '#007b85',    /* Brand Color */
+                            dark: '#00205b',    /* Brand Dark */
+                            green: '#70ad47',   /* Brand Green */
+                            yellow: '#ffb600',  /* Brand Yellow */
                         },
                         slate: {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            200: '#e2e8f0',
-                            300: '#cbd5e1',
-                            400: '#94a3b8',
-                            700: '#334155',
-                            800: '#1e293b',
-                            900: '#0f172a',
-                        },
-                        emerald: { 
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            700: '#047857',
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a',
                         }
                     },
-                    borderRadius: {
-                        '3xl': '1.5rem',
-                        '2xl': '1rem',
-                        '4xl': '2rem',
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 6s ease-in-out infinite',
                     },
-                    boxShadow: {
-                        'soft': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)',
-                        'glow': '0 0 20px rgba(45, 212, 191, 0.15)',
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.05 },
+                            '50%': { opacity: 0.1 },
+                        }
                     }
                 }
             }
@@ -68,37 +77,48 @@
     <style>
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: #f8fafc;
-            color: #0f172a;
+            background-color: #f8fafc; /* Fondo Light Bg Oficial */
         }
 
-        .tech-data {
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: -0.5px;
+        /* Tech Grid Background */
+        .bg-grid-pattern {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 32, 91, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 32, 91, 0.02) 1px, transparent 1px);
+        }
+        @media (prefers-color-scheme: dark) {
+            .bg-grid-pattern {
+                background-image: 
+                    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            }
         }
 
         .star-rating i {
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
         .star-rating i.active {
-            color: #d97706; 
-            filter: drop-shadow(0 0 2px rgba(217, 119, 6, 0.3));
+            color: #ffb600; /* Brand Yellow */
+            filter: drop-shadow(0 0 2px rgba(255, 182, 0, 0.4));
         }
 
-        .hover-lift {
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-        }
-        .hover-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 30px -10px rgba(13, 148, 136, 0.15);
+        /* Utilidad para simular el antiguo tech-data pero con Outfit */
+        .tech-data {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #0d9488; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #007b85; }
+        
+        @media (prefers-color-scheme: dark) {
+            .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; }
+        }
 
         #toast {
             visibility: hidden;
@@ -114,58 +134,76 @@
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s ease-out;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: translateY(10px);
         }
         .tab-content.active {
             display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body class="antialiased min-h-screen pb-20">
+<body class="antialiased min-h-screen pb-20 text-slate-600 dark:text-slate-300 transition-colors duration-300 relative">
+
+    <!-- Fondo Tech Grid y Luces (Ambientación) -->
+    <div class="fixed inset-0 z-[-2] bg-slate-50 dark:bg-slate-900 bg-grid-pattern"></div>
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-teal blur-[120px] animate-pulse-glow"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-brand-green blur-[120px] animate-pulse-glow" style="animation-delay: 3s;"></div>
+        <div class="absolute top-[40%] left-[60%] w-[400px] h-[400px] rounded-full bg-brand-yellow blur-[120px] animate-pulse-glow" style="animation-delay: 1.5s;"></div>
+    </div>
 
     <script>
         const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx-rBNVVARQOt9SoL2G_OSJOL4ZydVlFDQeCVH4mIps-7MxOyYQQ1xTO-f0Wdc824Yy/exec"; 
         const MODO_DEMO = false; 
+
+        const mockData = {
+            cursos: [
+                { id: "c1", nombre: "Diplomado en Gestión de Riesgos", descripcion: "Aprende a identificar, evaluar y controlar riesgos laborales de manera efectiva.", duracion: "120", modalidad: "Asincrónico", valor: "50", enlace: "https://movidasst.org" },
+                { id: "c2", nombre: "Auditor Interno ISO 45001", descripcion: "Fórmate como auditor interno en sistemas de gestión de seguridad y salud en el trabajo.", duracion: "40", modalidad: "Sincrónico", valor: "0", enlace: "https://movidasst.org" },
+                { id: "c3", nombre: "Primeros Auxilios Avanzados", descripcion: "Técnicas avanzadas de primeros auxilios para entornos industriales.", duracion: "20", modalidad: "Híbrido", valor: "25", enlace: "https://movidasst.org" }
+            ],
+            comentarios: [
+                { cursoId: "c1", nombre: "Carlos Rodríguez", estrellas: "5", comentario: "Excelente curso, muy completo y con material actualizado. Lo recomiendo al 100%.", fecha: new Date().toISOString() },
+                { cursoId: "c2", nombre: "Ana Martínez", estrellas: "5", comentario: "El profesor explica con gran claridad. Aprendí muchísimo sobre la norma.", fecha: new Date(Date.now() - 86400000).toISOString() }
+            ]
+        };
     </script>
 
     <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z- border border-teal-500/30">
-        <i class="fas fa-check-circle text-teal-400"></i>
+    <div id="toast" role="alert" aria-live="assertive" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-brand-dark text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z-50 border border-brand-teal/30">
+        <i class="fas fa-check-circle text-brand-green"></i>
         <span id="toast-message" class="font-medium text-sm">Copiado al portapapeles</span>
     </div>
 
     <!-- Botón Flotante Volver -->
     <a href="https://www.movidasst.com" 
        title="Volver al Hub Principal"
-       class="group"
+       aria-label="Volver al inicio"
+       class="group bg-white/90 dark:bg-slate-800/90 backdrop-blur-md"
        style="
          position: fixed; 
          bottom: 24px; 
          right: 24px; 
-         background-color: #0f172a; 
-         color: #2dd4bf; 
+         color: #007b85; 
          padding: 10px 20px;
          border-radius: 16px; 
          text-decoration: none; 
-         font-family: 'JetBrains Mono', monospace; 
          font-weight: 700; 
          font-size: 13px;
          letter-spacing: 0.5px;
-         border: 1px solid #115e59; 
-         box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.5); 
+         border: 1px solid rgba(226, 232, 240, 0.6); 
+         box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05); 
          z-index: 40; 
          display: flex; 
          align-items: center; 
          gap: 10px; 
          transition: all 0.3s;
-         backdrop-filter: blur(10px);
        "
-       onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 20px 25px -5px rgba(13, 148, 136, 0.25)'; this.style.borderColor='#2dd4bf';" 
-       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 20px -5px rgba(15, 23, 42, 0.5)'; this.style.borderColor='#115e59';"
+       onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 20px 30px -10px rgba(0, 123, 133, 0.12)'; this.style.borderColor='#007b85';" 
+       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px -2px rgba(0, 0, 0, 0.05)'; this.style.borderColor='rgba(226, 232, 240, 0.6)';"
     >
         <svg class="group-hover:rotate-180 transition-transform duration-500" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
@@ -174,317 +212,299 @@
         <span>VOLVER</span>
     </a>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         
-        <!-- ENCABEZADO -->
-        <div class="flex flex-col items-center justify-center mb-8 relative">
-            <div class="relative mb-4 group">
-                <div class="absolute inset-0 bg-teal-400 rounded-full blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+        <!-- HEADER -->
+        <header class="flex flex-col items-center justify-center mb-8 relative">
+            <div class="relative mb-6 group">
+                <div class="absolute inset-0 bg-brand-teal rounded-full blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+                <!-- Logo Anterior Redondeado + Efectos -->
                 <img src="https://assets.poap.xyz/02f1b599-7092-4d3c-9b59-2fe4d3b0164e.png" 
                      alt="Logo Movida SST" 
-                     class="w-32 h-32 object-contain relative z-10 drop-shadow-xl transform group-hover:scale-105 transition-transform duration-500 rounded-full">
+                     class="w-32 h-32 object-contain relative z-10 drop-shadow-xl rounded-full animate-float group-hover:scale-105 transition-transform duration-500">
             </div>
 
-            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight text-center mb-1">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-brand-dark dark:text-white tracking-tight text-center mb-1">
                 Academia Movida SST
             </h1>
-            <p class="text-teal-600 font-bold tech-data text-xs tracking-widest uppercase mb-6">Evoluciona tu carrera en Seguridad y Salud</p>
+            <p class="text-brand-teal font-bold tech-data text-xs mb-8">Evoluciona tu carrera en Seguridad y Salud</p>
 
-            <!-- NAVEGACIÓN -->
-            <div class="bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-center gap-2 max-w-2xl w-full mx-auto">
-                <button onclick="switchTab('cursos')" id="btn-cursos" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-teal-600 text-white shadow-lg shadow-teal-500/30">
-                    <i class="fas fa-graduation-cap"></i> Cursos
+            <!-- NAVEGACIÓN (Glassmorphism Premium) -->
+            <nav aria-label="Navegación principal de secciones" class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-1.5 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200/60 dark:border-slate-700/60 flex flex-wrap justify-center gap-2 max-w-2xl w-full mx-auto">
+                <button aria-controls="view-cursos" onclick="switchTab('cursos')" id="btn-cursos" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-lg shadow-brand-teal/30">
+                    <i class="fas fa-graduation-cap" aria-hidden="true"></i> Cursos
                 </button>
-                <button onclick="switchTab('pagos')" id="btn-pagos" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50">
-                    <i class="fas fa-wallet"></i> Pagos
+                <button aria-controls="view-pagos" onclick="switchTab('pagos')" id="btn-pagos" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">
+                    <i class="fas fa-wallet" aria-hidden="true"></i> Pagos
                 </button>
-                <button onclick="switchTab('comunidad')" id="btn-comunidad" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50">
-                    <i class="fas fa-users"></i> Comunidad
+                <button aria-controls="view-comunidad" onclick="switchTab('comunidad')" id="btn-comunidad" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">
+                    <i class="fas fa-users" aria-hidden="true"></i> Comunidad
                 </button>
-            </div>
-        </div>
+            </nav>
+        </header>
 
-        <!-- VISTA 1: CURSOS -->
-        <div id="view-cursos" class="tab-content active">
-            
-            <!-- PRUEBA SOCIAL BANNER -->
-            <div id="social-proof-banner" class="hidden mb-10 w-full max-w-5xl mx-auto">
-                <!-- Se inyecta por JS si hay opiniones -->
-            </div>
+        <main>
+            <!-- VISTA 1: CURSOS -->
+            <section id="view-cursos" class="tab-content active" aria-labelledby="cursos-heading">
+                
+                <div id="social-proof-banner" class="hidden mb-10 w-full max-w-5xl mx-auto"></div>
 
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-slate-800">Catálogo de Cursos</h2>
-                <div class="w-12 h-1 bg-teal-500 rounded-full mx-auto mt-2 mb-4"></div>
-                <p class="text-slate-600 font-light max-w-2xl mx-auto text-sm">
-                    Explora y valora nuestras experiencias educativas.
-                </p>
-            </div>
-
-            <!-- Recordatorio -->
-            <div class="bg-gradient-to-r from-teal-50 to-white border border-teal-100 rounded-2xl p-4 max-w-2xl mx-auto flex items-start sm:items-center gap-4 shadow-sm mb-10">
-                <div class="bg-white p-2 rounded-xl text-teal-600 shadow-sm border border-teal-50 shrink-0">
-                    <i class="fas fa-user-check text-lg"></i>
-                </div>
-                <div class="text-left">
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        <span class="font-bold text-teal-800 block mb-0.5">¿Listo para comenzar?</span>
-                        Recuerda que para participar y obtener tu certificado, es necesario <a href="https://movidasst.org/login/index.php" target="_blank" class="text-teal-600 font-bold hover:text-teal-800 underline decoration-teal-300 underline-offset-2 transition-colors">crear tu usuario</a> en nuestra Academia.
+                <div class="text-center mb-8">
+                    <h2 id="cursos-heading" class="text-2xl font-bold text-brand-dark dark:text-slate-100">Catálogo de Cursos</h2>
+                    <div class="w-12 h-1 bg-brand-teal rounded-full mx-auto mt-2 mb-4"></div>
+                    <p class="text-slate-600 dark:text-slate-400 font-light max-w-2xl mx-auto text-sm">
+                        Explora y valora nuestras experiencias educativas.
                     </p>
                 </div>
-            </div>
 
-            <!-- Skeleton Loading UI -->
-            <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto">
-                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-72 animate-pulse">
-                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 rounded-xl"></div></div>
-                    <div class="w-3/4 h-6 bg-slate-200 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 rounded mb-8"></div>
-                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 rounded-2xl"></div></div>
-                </div>
-                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-72 animate-pulse hidden md:flex">
-                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 rounded-xl"></div></div>
-                    <div class="w-3/4 h-6 bg-slate-200 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 rounded mb-8"></div>
-                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 rounded-2xl"></div></div>
-                </div>
-                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-72 animate-pulse hidden lg:flex">
-                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 rounded-xl"></div></div>
-                    <div class="w-3/4 h-6 bg-slate-200 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 rounded mb-8"></div>
-                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 rounded-2xl"></div></div>
-                </div>
-            </div>
-
-            <!-- Error State -->
-            <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-2xl relative mb-6 text-center shadow-sm max-w-2xl mx-auto" role="alert">
-                <div class="flex items-center justify-center gap-2 mb-1">
-                    <i class="fas fa-wifi"></i>
-                    <strong class="font-bold font-sans">Error de conexión</strong>
-                </div>
-                <span class="block sm:inline text-sm opacity-90" id="error-text">No se pudo conectar.</span>
-                <button onclick="fetchData()" class="mt-2 text-xs font-bold underline">Reintentar</button>
-            </div>
-
-            <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-                <!-- Dinámico -->
-            </div>
-        </div>
-
-        <!-- VISTA 2: MEDIOS DE PAGO -->
-        <div id="view-pagos" class="tab-content">
-            <div class="w-full max-w-5xl mx-auto">
-                <div class="text-center mb-8">
-                    <span class="bg-teal-50 text-teal-700 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border border-teal-100">Zona de Pagos</span>
-                    <h2 class="text-2xl font-bold text-slate-800 mt-2">Medios de Pago Oficiales</h2>
-                    <p class="text-slate-500 text-sm mt-2">Haz clic en el botón para copiar los datos completos</p>
+                <!-- Recordatorio -->
+                <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-brand-teal/20 dark:border-brand-teal/30 rounded-3xl p-5 max-w-2xl mx-auto flex items-start sm:items-center gap-4 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] mb-10 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 h-full w-1 bg-brand-teal"></div>
+                    <div class="bg-brand-teal/10 dark:bg-brand-teal/20 p-3 rounded-2xl text-brand-teal shadow-sm shrink-0">
+                        <i class="fas fa-user-check text-lg" aria-hidden="true"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                            <span class="font-bold text-brand-dark dark:text-white block mb-0.5">¿Listo para comenzar?</span>
+                            Recuerda que para participar y obtener tu certificado, es necesario <a href="https://movidasst.org/login/index.php" target="_blank" class="text-brand-teal font-bold hover:text-brand-dark dark:hover:text-teal-300 underline decoration-brand-teal/40 underline-offset-2 transition-colors">crear tu usuario</a> en nuestra Academia.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    
-                    <!-- 1. VENEZUELA -->
-                    <div class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 flex flex-col relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-red-50 rounded-bl-3xl -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
-                        <div class="flex items-center gap-3 mb-4 relative z-10">
-                            <div class="w-10 h-10 bg-red-100 text-red-600 rounded-xl flex items-center justify-center text-lg shadow-sm">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-800 text-sm">Transferencia Venezuela</h3>
-                        </div>
-                        <div class="space-y-3 text-xs relative z-10 mb-4 text-slate-600 font-mono">
-                            <p>Banco de Venezuela</p>
-                            <p>Corriente</p>
-                            <p class="font-bold">0102-0236-1500-0033-6732</p>
-                            <p>Ezequiel Linares</p>
-                            <p>30.407.087</p>
-                        </div>
-                        <button onclick="copyPaymentData('transfer')" class="mt-auto w-full bg-slate-900 hover:bg-teal-600 text-white font-bold py-2.5 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-xs">
-                            <span>Copiar Datos Completos</span> <i class="far fa-copy"></i>
-                        </button>
+                <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto" aria-busy="true" aria-label="Cargando cursos"></div>
+
+                <div id="error-message" class="hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-400 px-6 py-4 rounded-3xl relative mb-6 text-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] max-w-2xl mx-auto backdrop-blur-md" role="alert">
+                    <div class="flex items-center justify-center gap-2 mb-1">
+                        <i class="fas fa-wifi" aria-hidden="true"></i>
+                        <strong class="font-bold">Error de conexión</strong>
+                    </div>
+                    <span class="block sm:inline text-sm opacity-90" id="error-text">No se pudo conectar.</span>
+                    <button onclick="fetchData()" class="mt-2 text-xs font-bold underline hover:text-red-800 dark:hover:text-red-300">Reintentar</button>
+                </div>
+
+                <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10" aria-live="polite">
+                    <!-- Dinámico -->
+                </div>
+            </section>
+
+            <!-- VISTA 2: MEDIOS DE PAGO -->
+            <section id="view-pagos" class="tab-content" aria-labelledby="pagos-heading">
+                <div class="w-full max-w-5xl mx-auto">
+                    <div class="text-center mb-10">
+                        <span class="bg-brand-teal/10 text-brand-teal px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border border-brand-teal/20">Zona de Pagos</span>
+                        <h2 id="pagos-heading" class="text-2xl font-bold text-brand-dark dark:text-slate-100 mt-2">Medios de Pago Oficiales</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Haz clic en el botón para copiar los datos completos</p>
                     </div>
 
-                    <!-- 2. PAGO MÓVIL -->
-                    <div class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 flex flex-col relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-purple-50 rounded-bl-3xl -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
-                        <div class="flex items-center gap-3 mb-4 relative z-10">
-                            <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-lg shadow-sm">
-                                <i class="fas fa-mobile-alt"></i>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- 1. VENEZUELA -->
+                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 flex flex-col relative overflow-hidden group transition-all duration-300">
+                            <!-- Línea Mágica -->
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <div class="flex items-center gap-4 mb-5 relative z-10">
+                                <div class="w-12 h-12 bg-red-50 dark:bg-red-900/40 text-red-600 dark:text-red-400 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-red-100 dark:border-red-800/50">
+                                    <i class="fas fa-university" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="font-bold text-brand-dark dark:text-slate-200 text-base">Transferencia Venezuela</h3>
                             </div>
-                            <h3 class="font-bold text-slate-800 text-sm">Pago Móvil (Bs)</h3>
+                            <div class="space-y-3 text-sm relative z-10 mb-6 text-slate-600 dark:text-slate-400">
+                                <p>Banco de Venezuela &bull; Corriente</p>
+                                <p class="font-bold text-brand-dark dark:text-white text-lg font-mono">0102-0236-1500-0033-6732</p>
+                                <p>Ezequiel Linares &bull; C.I. 30.407.087</p>
+                            </div>
+                            <button onclick="copyPaymentData('transfer', this)" aria-label="Copiar datos de transferencia" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3 px-4 rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-brand-dark/20">
+                                <span>Copiar Datos</span> <i class="far fa-copy" aria-hidden="true"></i>
+                            </button>
                         </div>
-                        <div class="space-y-3 text-xs relative z-10 mb-4 text-slate-600 font-mono">
-                            <p>Banco de Venezuela</p>
-                            <p class="font-bold">0412-6372223</p>
-                            <p class="font-bold">V-30.407.087</p>
-                            <p>Ezequiel Linares</p>
+
+                        <!-- 2. PAGO MÓVIL -->
+                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 flex flex-col relative overflow-hidden group transition-all duration-300">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <div class="flex items-center gap-4 mb-5 relative z-10">
+                                <div class="w-12 h-12 bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-purple-100 dark:border-purple-800/50">
+                                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="font-bold text-brand-dark dark:text-slate-200 text-base">Pago Móvil (Bs)</h3>
+                            </div>
+                            <div class="space-y-3 text-sm relative z-10 mb-6 text-slate-600 dark:text-slate-400">
+                                <p>Banco de Venezuela</p>
+                                <p class="font-bold text-brand-dark dark:text-white text-lg font-mono">0412-6372223 <span class="text-sm font-sans text-slate-500 font-normal">/ V-30.407.087</span></p>
+                                <p>Ezequiel Linares</p>
+                            </div>
+                            <button onclick="copyPaymentData('pagoMovil', this)" aria-label="Copiar datos de pago móvil" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3 px-4 rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-brand-dark/20">
+                                <span>Copiar Datos</span> <i class="far fa-copy" aria-hidden="true"></i>
+                            </button>
                         </div>
-                        <button onclick="copyPaymentData('pagoMovil')" class="mt-auto w-full bg-slate-900 hover:bg-teal-600 text-white font-bold py-2.5 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-xs">
-                            <span>Copiar Datos Completos</span> <i class="far fa-copy"></i>
-                        </button>
+
+                        <!-- 3. BINANCE -->
+                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 flex flex-col relative overflow-hidden group transition-all duration-300">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <div class="flex items-center gap-4 mb-5 relative z-10">
+                                <div class="w-12 h-12 bg-yellow-50 dark:bg-yellow-900/40 text-[#f3ba2f] dark:text-[#f3ba2f] rounded-2xl flex items-center justify-center text-xl shadow-sm border border-yellow-100 dark:border-yellow-800/50">
+                                    <i class="fab fa-bitcoin" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="font-bold text-brand-dark dark:text-slate-200 text-base">Binance (USDT)</h3>
+                            </div>
+                            <div class="space-y-3 text-sm relative z-10 mb-6 text-slate-600 dark:text-slate-400">
+                                <p>Red: BEP20 (BSC)</p>
+                                <p>ID: <span class="font-bold text-brand-dark dark:text-white font-mono text-lg">176067584</span></p>
+                                <p class="truncate font-bold text-brand-dark dark:text-white">david.linaresb@gmail.com</p>
+                            </div>
+                            <button onclick="copyPaymentData('binance', this)" aria-label="Copiar datos de Binance" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3 px-4 rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-brand-dark/20">
+                                <span>Copiar Datos</span> <i class="far fa-copy" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- 4. PAYPAL -->
+                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 flex flex-col relative overflow-hidden group transition-all duration-300">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <div class="flex items-center gap-4 mb-5 relative z-10">
+                                <div class="w-12 h-12 bg-[#0070ba]/10 text-[#0070ba] dark:text-[#0070ba] rounded-2xl flex items-center justify-center text-xl shadow-sm border border-[#0070ba]/20">
+                                    <i class="fab fa-paypal" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="font-bold text-brand-dark dark:text-slate-200 text-base">PayPal Directo</h3>
+                            </div>
+                            <div class="space-y-3 text-sm relative z-10 mb-6 text-slate-600 dark:text-slate-400">
+                                <p class="font-bold text-brand-dark dark:text-white text-lg">movidasst@gmail.com</p>
+                                <p class="text-brand-yellow font-semibold bg-brand-yellow/10 inline-block px-3 py-1 rounded-lg border border-brand-yellow/20">Pago: "Amigo/Familiar"</p>
+                            </div>
+                            <a href="https://paypal.me/movidasst" target="_blank" aria-label="Ir a pagar con PayPal" class="mt-auto w-full bg-[#0070ba] hover:bg-[#003087] text-white font-bold py-3 px-4 rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-[#0070ba]/30">
+                                <span>Ir a PayPal</span> <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA 3: COMUNIDAD Y ACCESOS -->
+            <section id="view-comunidad" class="tab-content" aria-labelledby="comunidad-heading">
+                <div class="w-full max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 id="comunidad-heading" class="text-2xl font-bold text-brand-dark dark:text-slate-100">Comunidad y Accesos</h2>
+                        <p class="text-slate-600 dark:text-slate-400 font-light mt-2 text-sm">
+                            Conecta con nosotros y accede a la plataforma.
+                        </p>
                     </div>
 
-                    <!-- 3. BINANCE -->
-                    <div class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 flex flex-col relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-yellow-50 rounded-bl-3xl -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
-                        <div class="flex items-center gap-3 mb-4 relative z-10">
-                            <div class="w-10 h-10 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center text-lg shadow-sm">
-                                <i class="fab fa-bitcoin"></i>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                        
+                        <a href="https://chat.whatsapp.com/Fv0CmlSqTVyDB0diXAyPCI" target="_blank" 
+                           class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <div class="w-16 h-16 bg-[#25D366]/10 text-[#25D366] rounded-full flex items-center justify-center text-3xl mb-5 group-hover:scale-110 transition-transform border border-[#25D366]/20 shadow-sm">
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
                             </div>
-                            <h3 class="font-bold text-slate-800 text-sm">Binance (USDT)</h3>
-                        </div>
-                        <div class="space-y-3 text-xs relative z-10 mb-4 text-slate-600 font-mono">
-                            <p>Red: BEP20 (BSC)</p>
-                            <p>ID: 176067584</p>
-                            <p class="truncate">david.linaresb@gmail.com</p>
-                        </div>
-                        <button onclick="copyPaymentData('binance')" class="mt-auto w-full bg-slate-900 hover:bg-teal-600 text-white font-bold py-2.5 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-xs">
-                            <span>Copiar Datos Completos</span> <i class="far fa-copy"></i>
-                        </button>
-                    </div>
+                            <h3 class="font-bold text-brand-dark dark:text-slate-200 text-lg mb-2">Grupo Academia</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Comunidad de estudio</p>
+                        </a>
 
-                    <!-- 4. PAYPAL -->
-                    <div class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 flex flex-col relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-blue-50 rounded-bl-3xl -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
-                        <div class="flex items-center gap-3 mb-4 relative z-10">
-                            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-lg shadow-sm">
-                                <i class="fab fa-paypal"></i>
+                        <a href="https://whatsapp.com/channel/0029Va0mlH5Jf05mrcCz8r3e" target="_blank"
+                           class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                            <div class="w-16 h-16 bg-brand-teal/10 text-brand-teal rounded-full flex items-center justify-center text-3xl mb-5 group-hover:scale-110 transition-transform border border-brand-teal/20 shadow-sm">
+                                <i class="fas fa-bullhorn" aria-hidden="true"></i>
                             </div>
-                            <h3 class="font-bold text-slate-800 text-sm">PayPal Directo</h3>
-                        </div>
-                        <div class="space-y-3 text-xs relative z-10 mb-4 text-slate-600 font-mono">
-                            <p class="font-bold">movidasst@gmail.com</p>
-                            <p class="text-orange-500 italic font-sans font-semibold">Nota: Pagar como "Amigo/Familiar"</p>
-                        </div>
-                        <a href="https://paypal.me/movidasst" target="_blank" class="mt-auto w-full bg-[#0070ba] hover:bg-[#003087] text-white font-bold py-2.5 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-xs">
-                            <span>Pagar en PayPal</span> <i class="fas fa-external-link-alt"></i>
+                            <h3 class="font-bold text-brand-dark dark:text-slate-200 text-lg mb-2">Canal Oficial</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Noticias y novedades</p>
+                        </a>
+
+                        <a href="https://movidasst.org/login/index.php" target="_blank"
+                           class="bg-brand-dark p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.2)] hover:-translate-y-2 border border-slate-800 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                            <div class="w-16 h-16 bg-white/10 text-brand-teal rounded-full flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform border border-white/10 backdrop-blur-md">
+                                <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-2">Ingresar</h3>
+                            <p class="text-slate-300 text-sm">Acceso a estudiantes</p>
                         </a>
                     </div>
 
+                    <!-- CONTACTO -->
+                    <div class="flex flex-wrap justify-center gap-5">
+                        <a href="https://wa.me/56968615650" target="_blank" 
+                           class="flex items-center gap-4 px-6 py-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/60 rounded-full shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:border-brand-teal hover:shadow-[0_10px_20px_-5px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 group">
+                            <i class="fab fa-whatsapp text-[#25D366] text-2xl group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                            <div class="flex flex-col text-left">
+                                <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">WhatsApp Directo</span>
+                                <span class="font-bold text-brand-dark dark:text-slate-200 group-hover:text-brand-teal text-sm transition-colors">+56 9 6861 5650</span>
+                            </div>
+                        </a>
+                        <a href="mailto:movidasst@gmail.com" 
+                           class="flex items-center gap-4 px-6 py-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/60 rounded-full shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:border-brand-teal hover:shadow-[0_10px_20px_-5px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 group">
+                            <i class="far fa-envelope text-brand-teal text-2xl group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                            <div class="flex flex-col text-left">
+                                <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Correo Electrónico</span>
+                                <span class="font-bold text-brand-dark dark:text-slate-200 group-hover:text-brand-teal text-sm transition-colors">movidasst@gmail.com</span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- VISTA 3: COMUNIDAD Y ACCESOS -->
-        <div id="view-comunidad" class="tab-content">
-            <div class="w-full max-w-4xl mx-auto">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-slate-800">Comunidad y Accesos</h2>
-                    <p class="text-slate-600 font-light mt-2 text-sm">
-                        Conecta con nosotros y accede a la plataforma.
-                    </p>
-                </div>
-
-                <!-- ACTION CENTER -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    
-                    <a href="https://chat.whatsapp.com/Fv0CmlSqTVyDB0diXAyPCI" target="_blank" 
-                       class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 group flex flex-col items-center text-center relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
-                        <div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:rotate-12 transition-transform">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-lg mb-1">Grupo de la Academia</h3>
-                        <p class="text-slate-500 text-sm">Únete a la comunidad de estudio</p>
-                    </a>
-
-                    <a href="https://whatsapp.com/channel/0029Va0mlH5Jf05mrcCz8r3e" target="_blank"
-                       class="bg-white p-6 rounded-3xl shadow-soft hover-lift border border-slate-100 group flex flex-col items-center text-center relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-20 h-20 bg-teal-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
-                        <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:rotate-12 transition-transform">
-                            <i class="fas fa-bullhorn"></i>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-lg mb-1">Canal La Movida SST</h3>
-                        <p class="text-slate-500 text-sm">Noticias y novedades oficiales</p>
-                    </a>
-
-                    <a href="https://movidasst.org/login/index.php" target="_blank"
-                       class="bg-slate-900 p-6 rounded-3xl shadow-soft hover-lift border border-slate-800 group flex flex-col items-center text-center relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-20 h-20 bg-slate-800 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
-                        <div class="w-14 h-14 bg-slate-800 text-teal-400 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:rotate-12 transition-transform border border-slate-700">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <h3 class="font-bold text-white text-lg mb-1">Ingresar a la Academia</h3>
-                        <p class="text-slate-400 text-sm">Acceso a plataforma de estudiantes</p>
-                    </a>
-                </div>
-
-                <!-- SECCIÓN DE CONTACTO -->
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="https://wa.me/56968615650" target="_blank" 
-                       class="flex items-center gap-3 pl-2 pr-6 py-2 bg-white border border-slate-200 rounded-full shadow-sm hover:shadow-lg hover:border-teal-400 hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center text-green-600 group-hover:bg-green-500 group-hover:text-white transition-colors duration-300">
-                            <i class="fab fa-whatsapp text-lg"></i>
-                        </div>
-                        <div class="flex flex-col text-left">
-                            <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">WhatsApp Directo</span>
-                            <span class="font-bold text-slate-700 group-hover:text-teal-700 text-sm tech-data">+56 9 6861 5650</span>
-                        </div>
-                    </a>
-                    <a href="mailto:movidasst@gmail.com" 
-                       class="flex items-center gap-3 pl-2 pr-6 py-2 bg-white border border-slate-200 rounded-full shadow-sm hover:shadow-lg hover:border-teal-400 hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
-                            <i class="far fa-envelope text-lg"></i>
-                        </div>
-                        <div class="flex flex-col text-left">
-                            <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Correo Electrónico</span>
-                            <span class="font-bold text-slate-700 group-hover:text-teal-700 text-sm tech-data">movidasst@gmail.com</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
+            </section>
+        </main>
     </div>
 
-    <!-- EL MODAL CON Z-INDEX CORREGIDO AL MÁXIMO -->
-    <div id="review-modal" class="fixed inset-0 bg-slate-900/80 overflow-y-auto h-full w-full hidden z-50 flex items-center justify-center backdrop-blur-md transition-opacity duration-300" style="z-index: 99999;">
-        <div class="relative mx-auto p-0 border-0 w-full max-w-2xl shadow-2xl rounded-3xl bg-white m-4 cursor-default transform transition-all scale-100 overflow-hidden" onclick="event.stopPropagation()">
+    <!-- Modal Reseñas -->
+    <div id="review-modal" role="dialog" aria-modal="true" aria-labelledby="modal-course-title" class="fixed inset-0 bg-slate-900/60 overflow-y-auto h-full w-full hidden z-50 flex items-center justify-center backdrop-blur-md transition-opacity duration-300" style="z-index: 99999;">
+        <div class="relative mx-auto p-0 border border-slate-200/20 w-full max-w-2xl shadow-2xl rounded-3xl bg-white dark:bg-slate-800 m-4 cursor-default transform transition-all scale-100 overflow-hidden" onclick="event.stopPropagation()">
             
-            <div class="bg-gradient-to-br from-teal-800 to-slate-900 p-6 sm:p-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
-                <button onclick="closeModal()" class="absolute top-4 right-4 text-white/60 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all duration-200 z-10">
-                    <i class="fas fa-times text-xl"></i>
+            <div class="bg-gradient-to-br from-brand-dark to-[#001030] p-6 sm:p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-teal/20 rounded-full blur-2xl"></div>
+                <button aria-label="Cerrar modal" onclick="closeModal()" class="absolute top-4 right-4 text-white/60 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all duration-200 z-10">
+                    <i class="fas fa-times text-xl" aria-hidden="true"></i>
                 </button>
-                <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2 relative z-10" id="modal-course-title">Nombre del Curso</h3>
-                <p class="text-teal-100 text-sm font-light relative z-10">Tu opinión es valiosa para la comunidad.</p>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 relative z-10" id="modal-course-title">Nombre del Curso</h3>
+                <p class="text-brand-teal text-sm font-medium relative z-10">Tu opinión es valiosa para la comunidad.</p>
             </div>
 
             <div class="p-6 sm:p-8">
-                <form id="review-form" class="mb-8 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                <form id="review-form" class="mb-8 bg-slate-50 dark:bg-slate-700/30 p-6 rounded-3xl border border-slate-200/60 dark:border-slate-600">
                     <input type="hidden" id="course-id">
                     <div class="grid grid-cols-1 gap-6">
                         <div>
-                            <label class="block text-slate-700 text-sm font-semibold mb-2" for="user-name">Tu Nombre</label>
-                            <input class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-teal-500 focus:border-teal-500 block p-3 transition-all outline-none" id="user-name" type="text" placeholder="Ej: Ana García" required>
+                            <label class="block text-brand-dark dark:text-slate-200 text-sm font-bold mb-2" for="user-name">Tu Nombre</label>
+                            <input class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-slate-100 text-sm rounded-2xl focus:ring-brand-teal focus:border-brand-teal block p-3.5 transition-all outline-none shadow-sm" id="user-name" type="text" placeholder="Ej: Ana García" required>
                         </div>
                         <div>
-                            <label class="block text-slate-700 text-sm font-semibold mb-2">Tu Calificación</label>
+                            <label class="block text-brand-dark dark:text-slate-200 text-sm font-bold mb-2">Tu Calificación</label>
                             <div class="flex flex-col sm:flex-row sm:items-center gap-4">
-                                <div class="star-rating text-3xl flex gap-2 text-slate-300" id="star-input">
-                                    <i class="fas fa-star hover:scale-110" data-value="1"></i>
-                                    <i class="fas fa-star hover:scale-110" data-value="2"></i>
-                                    <i class="fas fa-star hover:scale-110" data-value="3"></i>
-                                    <i class="fas fa-star hover:scale-110" data-value="4"></i>
-                                    <i class="fas fa-star hover:scale-110" data-value="5"></i>
+                                <div class="star-rating text-3xl flex gap-2 text-slate-300 dark:text-slate-600" id="star-input" role="radiogroup" aria-label="Puntuación de 1 a 5 estrellas">
+                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="1" aria-label="1 estrella"></i>
+                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="2" aria-label="2 estrellas"></i>
+                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="3" aria-label="3 estrellas"></i>
+                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="4" aria-label="4 estrellas"></i>
+                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="5" aria-label="5 estrellas"></i>
                                 </div>
-                                <div id="rating-badge" class="hidden bg-slate-100 px-3 py-1 rounded-lg">
-                                    <span id="rating-text-simple" class="tech-data text-sm font-bold text-slate-700">0/5</span>
+                                <div id="rating-badge" class="hidden bg-white dark:bg-slate-600 px-3 py-1 rounded-lg border border-slate-200 dark:border-transparent shadow-sm">
+                                    <span id="rating-text-simple" class="tech-data text-sm text-brand-dark dark:text-slate-200">0/5</span>
                                 </div>
                             </div>
-                            <p id="rating-text" class="text-xs text-slate-400 mt-2 font-medium h-4">Haz clic para puntuar</p>
+                            <p id="rating-text" class="text-xs text-slate-400 dark:text-slate-400 mt-2 font-medium h-4" aria-live="polite">Haz clic para puntuar</p>
                             <input type="hidden" id="rating-value" value="0" required>
                         </div>
                         <div>
-                            <label class="block text-slate-700 text-sm font-semibold mb-2" for="user-comment">Comentario</label>
-                            <textarea class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-teal-500 focus:border-teal-500 block p-3 transition-all outline-none resize-none" id="user-comment" rows="3" placeholder="¿Qué fue lo mejor del curso?" required></textarea>
+                            <label class="block text-brand-dark dark:text-slate-200 text-sm font-bold mb-2" for="user-comment">Comentario</label>
+                            <textarea class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-slate-100 text-sm rounded-2xl focus:ring-brand-teal focus:border-brand-teal block p-3.5 transition-all outline-none resize-none shadow-sm" id="user-comment" rows="3" placeholder="¿Qué fue lo mejor del curso?" required></textarea>
                         </div>
                     </div>
                     <div class="flex items-center justify-end gap-3 pt-6 mt-2">
-                        <button type="button" onclick="closeModal()" class="px-5 py-2.5 text-slate-500 font-medium hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-colors duration-200">Cancelar</button>
-                        <button class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-teal-600/20 focus:outline-none focus:ring-4 focus:ring-teal-500/30 transition-all duration-200 transform active:scale-95" type="submit" id="submit-btn">Publicar Opinión</button>
+                        <button type="button" onclick="closeModal()" class="px-5 py-2.5 text-slate-500 dark:text-slate-400 font-bold hover:text-brand-dark dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-2xl transition-colors duration-200">Cancelar</button>
+                        <button class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-6 rounded-2xl shadow-lg shadow-brand-teal/30 focus:outline-none focus:ring-4 focus:ring-brand-teal/30 transition-all duration-200 transform active:scale-95" type="submit" id="submit-btn">Publicar Opinión</button>
                     </div>
                 </form>
-                <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
-                    <div class="bg-teal-50 p-2 rounded-lg text-teal-600">
-                        <i class="far fa-comments text-lg"></i>
+                <div class="flex items-center gap-3 mb-5 border-b border-slate-100 dark:border-slate-700 pb-3">
+                    <div class="bg-brand-teal/10 p-2.5 rounded-xl text-brand-teal">
+                        <i class="far fa-comments text-lg" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-slate-800">Reseñas de la comunidad</h4>
+                    <h4 class="text-lg font-bold text-brand-dark dark:text-slate-200">Reseñas de la comunidad</h4>
                 </div>
                 <div id="comments-list" class="max-h-60 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
                     <div class="text-center text-slate-400 py-6 tech-data text-sm">Cargando datos...</div>
@@ -493,7 +513,6 @@
         </div>
     </div>
 
-    <!-- Scripts de Lógica -->
     <script>
         const paymentInfo = {
             transfer: `DATOS PARA TRANSFERENCIA BANCARIA (VENEZUELA)\nBanco: Banco de Venezuela\nTipo de cuenta: Corriente\nNº de cuenta: 0102-0236-1500-0033-6732\nTitular: Ezequiel Linares\nC.I.: 30.407.087`,
@@ -505,45 +524,81 @@
         let allComments = [];
         let allCourses = [];
         const ratingLabels = ["Malo", "Regular", "Bueno", "Muy Bueno", "Excelente"];
-        const gradientBorders = ['from-teal-400 to-emerald-400', 'from-blue-400 to-indigo-400', 'from-orange-400 to-rose-400', 'from-purple-400 to-pink-400'];
 
         document.addEventListener('DOMContentLoaded', () => {
+            renderSkeletons();
             fetchData();
             setupStarRating();
             setupForm();
             setupModalEvents();
         });
 
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+                }[tag])
+            );
+        }
+
+        function renderSkeletons() {
+            const container = document.getElementById('loading');
+            let html = '';
+            for(let i=0; i<3; i++) {
+                let hideClass = '';
+                if(i===1) hideClass = 'hidden md:flex';
+                if(i===2) hideClass = 'hidden lg:flex';
+                
+                html += `
+                <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-3xl p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200/60 dark:border-slate-700/60 flex flex-col h-72 animate-pulse ${hideClass}">
+                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 dark:bg-slate-700 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 dark:bg-slate-700 rounded-xl"></div></div>
+                    <div class="w-3/4 h-6 bg-slate-200 dark:bg-slate-700 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 dark:bg-slate-700 rounded mb-8"></div>
+                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 dark:bg-slate-700 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 dark:bg-slate-700 rounded-2xl"></div></div>
+                </div>`;
+            }
+            container.innerHTML = html;
+        }
+
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            document.getElementById(`view-${tabName}`).classList.add('active');
+            setTimeout(() => {
+                document.getElementById(`view-${tabName}`).classList.add('active');
+            }, 10);
 
             const buttons = ['cursos', 'pagos', 'comunidad'];
             buttons.forEach(btn => {
                 const buttonEl = document.getElementById(`btn-${btn}`);
                 if (btn === tabName) {
-                    buttonEl.className = "flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-teal-600 text-white shadow-lg shadow-teal-500/30 transform scale-105";
+                    buttonEl.className = "flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-lg shadow-brand-teal/30 transform scale-105";
                 } else {
-                    buttonEl.className = "flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50";
+                    buttonEl.className = "flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700";
                 }
             });
         }
 
-        function copyPaymentData(type) {
+        function copyPaymentData(type, btnElement) {
             const textToCopy = paymentInfo[type];
             if (textToCopy) {
-                copyText(textToCopy, 'Datos completos copiados al portapapeles');
-            }
-        }
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showToast('Datos completos copiados al portapapeles');
+                    
+                    const originalHtml = btnElement.innerHTML;
+                    const originalClasses = btnElement.className;
+                    
+                    btnElement.innerHTML = `<span>¡Copiado!</span> <i class="fas fa-check"></i>`;
+                    btnElement.classList.remove('bg-brand-dark', 'dark:bg-slate-700', 'hover:bg-brand-teal');
+                    btnElement.classList.add('bg-brand-green', 'hover:bg-[#60963b]');
+                    
+                    setTimeout(() => {
+                        btnElement.innerHTML = originalHtml;
+                        btnElement.className = originalClasses;
+                    }, 2500);
 
-        function copyText(text, message) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(message);
-            }).catch(err => {
-                console.error('Error al copiar: ', err);
-            });
+                }).catch(err => console.error('Error al copiar: ', err));
+            }
         }
 
         function showToast(message) {
@@ -551,12 +606,14 @@
             const toastMsg = document.getElementById('toast-message');
             toastMsg.textContent = message;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         async function fetchData() {
+            document.getElementById('error-message').classList.add('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('courses-grid').classList.add('hidden');
+
             if (MODO_DEMO) {
                 setTimeout(() => {
                     allCourses = mockData.cursos;
@@ -567,8 +624,12 @@
                     document.getElementById('courses-grid').classList.remove('hidden');
                 }, 1000);
             } else {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); 
+
                 try {
-                    const response = await fetch(URL_GOOGLE_SCRIPT);
+                    const response = await fetch(URL_GOOGLE_SCRIPT, { signal: controller.signal });
+                    clearTimeout(timeoutId); 
                     const data = await response.json();
                     
                     if(data.status === "success") {
@@ -586,32 +647,37 @@
                         throw new Error("El script devolvió un error: " + (data.message || "Desconocido"));
                     }
                 } catch (error) {
+                    clearTimeout(timeoutId);
                     console.error("Error:", error);
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('error-message').classList.remove('hidden');
-                    document.getElementById('error-text').textContent = "No se pudo conectar con el servidor.";
+                    if (error.name === 'AbortError') {
+                        document.getElementById('error-text').textContent = "Tiempo de espera agotado. Revisa tu conexión.";
+                    } else {
+                        document.getElementById('error-text').textContent = "No se pudo conectar con el servidor.";
+                    }
                 }
             }
         }
 
-        // PRUEBA SOCIAL
         function renderSocialProofBanner() {
             const banner = document.getElementById('social-proof-banner');
             const topReviews = allComments.filter(c => parseInt(c.estrellas) === 5);
             
             if (topReviews.length > 0) {
                 const recent = topReviews.slice(-2);
-                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">';
                 recent.forEach(r => {
-                    let com = r.comentario.length > 90 ? r.comentario.substring(0, 90) + '...' : r.comentario;
+                    let com = r.comentario.length > 90 ? escapeHTML(r.comentario.substring(0, 90)) + '...' : escapeHTML(r.comentario);
+                    let nombreSafe = escapeHTML(r.nombre);
                     html += `
-                        <div class="bg-white border border-slate-100 p-5 rounded-2xl flex gap-4 items-center shadow-sm">
-                            <div class="flex-shrink-0 text-amber-300 text-3xl"><i class="fas fa-quote-left"></i></div>
+                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/60 p-6 rounded-3xl flex gap-5 items-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300">
+                            <div class="flex-shrink-0 text-brand-yellow/80 text-4xl"><i class="fas fa-quote-left"></i></div>
                             <div>
-                                <p class="text-sm text-slate-700 italic font-medium leading-tight mb-2">"${com}"</p>
+                                <p class="text-sm text-slate-700 dark:text-slate-300 italic font-medium leading-relaxed mb-3">"${com}"</p>
                                 <div class="flex items-center gap-2">
-                                    <div class="flex text-amber-400 text-[10px]">${generateStars(5)}</div>
-                                    <span class="text-xs font-bold text-slate-900">${r.nombre}</span>
+                                    <div class="flex text-brand-yellow text-xs" aria-label="5 estrellas">${generateStars(5)}</div>
+                                    <span class="text-xs font-bold text-brand-dark dark:text-white uppercase tracking-wide">${nombreSafe}</span>
                                 </div>
                             </div>
                         </div>`;
@@ -622,7 +688,6 @@
             }
         }
 
-        // REDISEÑO TARJETAS
         function renderCourses(cursos) {
             const grid = document.getElementById('courses-grid');
             grid.innerHTML = '';
@@ -633,20 +698,18 @@
                     ? (courseComments.reduce((sum, c) => sum + parseInt(c.estrellas), 0) / courseComments.length).toFixed(1)
                     : "0.0";
                 
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-3xl p-8 shadow-soft border border-slate-100 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group";
+                const card = document.createElement('article');
+                // Premium Glassmorphism Card
+                card.className = "bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-3xl p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] border border-slate-200/60 dark:border-slate-700/60 flex flex-col h-full hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group";
                 
                 const linkCurso = curso.enlace || curso.Enlace || curso.ENLACE;
                 
-                // Iconos cognitivos
                 const nameLower = curso.nombre.toLowerCase();
                 let wmIcon = 'fa-graduation-cap';
                 if(nameLower.includes('riesgo') || nameLower.includes('seguridad')) wmIcon = 'fa-shield-alt';
                 else if(nameLower.includes('auditor') || nameLower.includes('iso')) wmIcon = 'fa-clipboard-check';
                 else if(nameLower.includes('liderazgo') || nameLower.includes('gestión')) wmIcon = 'fa-users-cog';
                 else if(nameLower.includes('salud') || nameLower.includes('medicina')) wmIcon = 'fa-heartbeat';
-
-                const borderGradient = gradientBorders[index % gradientBorders.length];
 
                 let duracion = curso.duracion || curso.Duracion || curso.DURACION;
                 if (duracion && !isNaN(duracion)) duracion += " Hs";
@@ -655,64 +718,65 @@
                 let modalidadBadge = '';
                 if (modalidad) {
                     let icon = 'fa-laptop'; 
-                    let colorClass = 'bg-slate-50 text-slate-600 border-slate-200'; 
+                    let colorClass = 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600'; 
                     let text = modalidad;
                     const lowerMod = modalidad.toLowerCase();
                     if (lowerMod.includes('asincronico') || lowerMod.includes('asincrónica') || lowerMod.includes('asincrónico')) {
-                        icon = 'fa-play-circle'; colorClass = 'bg-indigo-50 text-indigo-700 border-indigo-100'; text = 'Asincrónico';
+                        icon = 'fa-play-circle'; colorClass = 'bg-brand-dark/10 text-brand-dark dark:text-slate-200 border-brand-dark/20'; text = 'Asincrónico';
                     } else if (lowerMod.includes('sincronico') || lowerMod.includes('sincrónica') || lowerMod.includes('sincrónico')) {
-                        icon = 'fa-video'; colorClass = 'bg-rose-50 text-rose-700 border-rose-100'; text = 'Sincrónico';
+                        icon = 'fa-video'; colorClass = 'bg-brand-teal/10 text-brand-teal dark:text-brand-teal border-brand-teal/20'; text = 'Sincrónico';
                     } else if (lowerMod.includes('ambas') || lowerMod.includes('mixto') || lowerMod.includes('híbrido')) {
-                        icon = 'fa-layer-group'; colorClass = 'bg-orange-50 text-orange-700 border-orange-100'; text = 'Híbrido';
+                        icon = 'fa-layer-group'; colorClass = 'bg-brand-green/10 text-brand-green dark:text-brand-green border-brand-green/20'; text = 'Híbrido';
                     }
-                    modalidadBadge = `<span class="${colorClass} px-3 py-1.5 rounded-lg text-xs font-bold tech-data border flex items-center gap-1.5"><i class="fas ${icon}"></i> ${text}</span>`;
+                    modalidadBadge = `<span class="${colorClass} px-3 py-1.5 rounded-xl text-xs font-bold tech-data border flex items-center gap-1.5"><i class="fas ${icon}"></i> ${text}</span>`;
                 }
 
                 let valor = curso.valor || curso.Valor || curso.VALOR || curso.precio || curso.Precio || curso.PRECIO;
                 let valorBadge = '';
                 if (valor && !isNaN(valor) && valor > 0) {
-                    valorBadge = `<span class="bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-widest shadow-sm">$${valor} USD</span>`;
+                    valorBadge = `<span class="bg-brand-dark text-white px-3 py-1.5 rounded-xl text-xs font-bold tech-data shadow-sm">$${valor} USD</span>`;
                 } else if (valor == 0 || valor === "0" || (typeof valor === 'string' && valor.toLowerCase() === 'gratis')) {
-                    valorBadge = `<span class="bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-widest shadow-sm">GRATIS</span>`;
+                    valorBadge = `<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold tech-data shadow-sm">GRATIS</span>`;
                 }
 
-                // CTA Principal
                 const linkButtonHtml = linkCurso 
-                    ? `<a href="${linkCurso}" target="_blank" class="flex-[1.5] bg-teal-600 hover:bg-teal-700 text-white font-extrabold py-3.5 px-4 rounded-2xl transition-all duration-300 shadow-lg shadow-teal-600/30 text-[14px] flex items-center justify-center gap-2 group/btn">
-                         <span>Inscribirse al Curso</span>
-                         <i class="fas fa-external-link-alt text-[11px] group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform"></i>
+                    ? `<a href="${linkCurso}" target="_blank" aria-label="Inscribirse en ${escapeHTML(curso.nombre)}" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-[14px] flex items-center justify-center gap-2 group/btn">
+                         <span>Inscribirse</span>
+                         <i class="fas fa-external-link-alt text-[11px] group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform" aria-hidden="true"></i>
                        </a>`
                     : '';
 
                 const descFormateada = (curso.descripcion || 'Sin descripción disponible.').replace(/\n/g, '<br/>');
 
                 card.innerHTML = `
-                    <i class="fas ${wmIcon} absolute -bottom-6 -right-6 text-[10rem] text-slate-50 opacity-60 z-0 rotate-12 pointer-events-none group-hover:scale-110 transition-transform duration-700"></i>
-                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${borderGradient} opacity-80 group-hover:opacity-100 transition-opacity z-0"></div>
+                    <i class="fas ${wmIcon} absolute -bottom-6 -right-6 text-[10rem] text-slate-100 dark:text-slate-700/30 opacity-60 z-0 rotate-12 pointer-events-none group-hover:scale-110 transition-transform duration-700"></i>
+                    
+                    <!-- Línea Mágica -->
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
 
                     <div class="flex justify-between items-start mb-6 relative z-10">
-                        <div class="bg-amber-50 text-amber-600 px-3 py-1.5 rounded-xl text-sm font-black flex items-center gap-1.5 border border-amber-100 cursor-pointer hover:bg-amber-100 transition-colors" onclick="openModal('${curso.id}')" title="Ver opiniones">
-                            <i class="fas fa-star"></i> <span class="tech-data">${avg}</span>
-                        </div>
+                        <button class="bg-brand-yellow/10 text-brand-yellow px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5 border border-brand-yellow/20 cursor-pointer hover:bg-brand-yellow/20 transition-colors" onclick="openModal('${curso.id}')" aria-label="Ver opiniones. Calificación ${avg}">
+                            <i class="fas fa-star" aria-hidden="true"></i> <span class="tech-data">${avg}</span>
+                        </button>
                         ${valorBadge}
                     </div>
 
-                    <h3 class="text-2xl font-extrabold mb-4 text-slate-800 leading-tight group-hover:text-teal-600 transition-colors cursor-pointer relative z-10" onclick="openModal('${curso.id}')">${curso.nombre}</h3>
+                    <h3 class="text-2xl font-extrabold mb-4 text-brand-dark dark:text-white leading-tight group-hover:text-brand-teal transition-colors cursor-pointer relative z-10" onclick="openModal('${curso.id}')">${escapeHTML(curso.nombre)}</h3>
                     
-                    <p class="text-slate-600 mb-8 flex-1 text-sm leading-relaxed relative z-10">${descFormateada}</p>
+                    <p class="text-slate-600 dark:text-slate-300 mb-8 flex-1 text-sm leading-relaxed relative z-10">${descFormateada}</p>
 
                     <div class="flex flex-wrap items-center gap-2 mb-6 relative z-10">
-                        ${duracion ? `<span class="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold tech-data border border-slate-200 flex items-center gap-1.5"><i class="far fa-clock"></i> ${duracion}</span>` : ''}
+                        ${duracion ? `<span class="bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold tech-data border border-slate-200/60 dark:border-slate-600 flex items-center gap-1.5"><i class="far fa-clock" aria-hidden="true"></i> ${duracion}</span>` : ''}
                         ${modalidadBadge}
-                        <span class="bg-teal-50 text-teal-700 px-3 py-1.5 rounded-lg text-xs font-bold tech-data border border-teal-100 flex items-center gap-1.5 cursor-pointer hover:bg-teal-100 transition-colors" onclick="openModal('${curso.id}')">
-                            <i class="fas fa-users"></i> ${courseComments.length} Opiniones
-                        </span>
+                        <button class="bg-brand-teal/10 text-brand-teal px-3 py-1.5 rounded-xl text-xs font-bold tech-data border border-brand-teal/20 flex items-center gap-1.5 cursor-pointer hover:bg-brand-teal/20 transition-colors" onclick="openModal('${curso.id}')">
+                            <i class="fas fa-users" aria-hidden="true"></i> ${courseComments.length} Op.
+                        </button>
                     </div>
 
-                    <div class="pt-6 mt-auto border-t border-slate-100 flex flex-col sm:flex-row gap-3 relative z-10">
+                    <div class="pt-6 mt-auto border-t border-slate-200/60 dark:border-slate-700/60 flex flex-col sm:flex-row gap-3 relative z-10">
                         ${linkButtonHtml}
-                        <button onclick="openModal('${curso.id}')" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-100 hover:border-slate-200 text-slate-700 font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 text-sm flex items-center justify-center gap-2">
-                            <i class="far fa-star text-amber-500"></i>
+                        <button onclick="openModal('${curso.id}')" class="flex-1 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border-2 border-slate-200/60 dark:border-slate-600 hover:border-slate-300 dark:hover:border-slate-500 text-brand-dark dark:text-slate-200 font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 text-sm flex items-center justify-center gap-2">
+                            <i class="far fa-star text-brand-yellow" aria-hidden="true"></i>
                             <span>Valorar</span>
                         </button>
                     </div>
@@ -724,7 +788,37 @@
         function setupModalEvents() {
             const modal = document.getElementById('review-modal');
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+            
+            document.addEventListener('keydown', (e) => { 
+                if (modal.classList.contains('hidden')) return;
+
+                if (e.key === 'Escape') closeModal();
+
+                if (e.key === 'Tab') {
+                    const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+
+                    if (e.shiftKey) { 
+                        if (document.activeElement === firstElement) {
+                            lastElement.focus(); e.preventDefault();
+                        }
+                    } else { 
+                        if (document.activeElement === lastElement) {
+                            firstElement.focus(); e.preventDefault();
+                        }
+                    }
+                }
+            });
+
+            const stars = document.querySelectorAll('#star-input i');
+            stars.forEach(star => {
+                star.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault(); this.click();
+                    }
+                });
+            });
         }
 
         function openModal(courseId) {
@@ -735,8 +829,11 @@
             document.getElementById('review-form').reset();
             resetStars();
             renderComments(courseId);
-            document.getElementById('review-modal').classList.remove('hidden');
+            const modal = document.getElementById('review-modal');
+            modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => document.getElementById('user-name').focus(), 100);
         }
 
         function closeModal() {
@@ -749,38 +846,41 @@
             const comments = allComments.filter(c => c.cursoId === courseId);
             if (comments.length === 0) {
                 container.innerHTML = `
-                    <div class="text-center py-10 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-slate-300"><i class="far fa-edit text-xl"></i></div>
-                        <p class="text-slate-500 font-medium">Sé el primero en opinar</p>
-                        <p class="text-xs text-teal-500 mt-1">Tu feedback es importante</p>
+                    <div class="text-center py-10 bg-slate-50 dark:bg-slate-700/30 rounded-3xl border border-dashed border-slate-200 dark:border-slate-600">
+                        <div class="w-14 h-14 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-slate-300 dark:text-slate-500"><i class="far fa-edit text-2xl" aria-hidden="true"></i></div>
+                        <p class="text-brand-dark dark:text-slate-300 font-bold">Sé el primero en opinar</p>
+                        <p class="text-sm text-brand-teal mt-1">Tu feedback es importante</p>
                     </div>`;
                 return;
             }
             const reversedComments = [...comments].reverse();
-            container.innerHTML = reversedComments.map(c => `
-                <div class="bg-white p-4 rounded-2xl border border-slate-100 hover:border-teal-100 hover:shadow-md transition-all duration-200">
-                    <div class="flex justify-between items-start mb-2">
+            container.innerHTML = reversedComments.map(c => {
+                const nombreSafe = escapeHTML(c.nombre);
+                const comentarioSafe = escapeHTML(c.comentario);
+                return `
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-3xl border border-slate-200/60 dark:border-slate-700 hover:border-brand-teal/50 hover:shadow-md transition-all duration-200">
+                    <div class="flex justify-between items-start mb-3">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-50 to-white border border-teal-100 text-teal-700 flex items-center justify-center font-bold text-sm shadow-sm tech-data">${c.nombre.charAt(0)}</div>
+                            <div class="w-10 h-10 rounded-2xl bg-brand-teal/10 border border-brand-teal/20 text-brand-teal flex items-center justify-center font-extrabold text-sm shadow-sm">${nombreSafe.charAt(0)}</div>
                             <div>
-                                <span class="font-bold text-slate-800 text-sm block">${c.nombre}</span>
-                                <div class="flex items-center gap-1.5">
-                                    <div class="flex text-yellow-500 text-[10px]">${generateStars(c.estrellas)}</div>
-                                    <span class="text-[10px] text-slate-400 font-mono pt-0.5">(${c.estrellas}.0)</span>
+                                <span class="font-bold text-brand-dark dark:text-slate-200 text-sm block">${nombreSafe}</span>
+                                <div class="flex items-center gap-1.5 mt-0.5">
+                                    <div class="flex text-brand-yellow text-[10px]" aria-label="${c.estrellas} estrellas">${generateStars(c.estrellas)}</div>
+                                    <span class="text-[10px] text-slate-400 font-bold">(${c.estrellas}.0)</span>
                                 </div>
                             </div>
                         </div>
-                        <span class="text-[10px] text-slate-400 font-mono bg-slate-50 px-2 py-1 rounded-md border border-slate-100">${new Date(c.fecha || Date.now()).toLocaleDateString()}</span>
+                        <span class="text-[10px] text-slate-500 font-bold bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-xl">${new Date(c.fecha || Date.now()).toLocaleDateString()}</span>
                     </div>
-                    <p class="text-slate-600 text-sm leading-relaxed pl-[52px]">${c.comentario}</p>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed pl-[52px]">${comentarioSafe}</p>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function generateStars(count) {
             let html = '';
             for(let i=0; i<5; i++) {
-                html += `<i class="${i < count ? 'fas' : 'far'} fa-star"></i>`;
+                html += `<i class="${i < count ? 'fas text-brand-yellow drop-shadow-sm' : 'far text-slate-300 dark:text-slate-600'} fa-star" aria-hidden="true"></i>`;
             }
             return html;
         }
@@ -804,6 +904,10 @@
                     updateRatingText(value, true);
                     ratingBadge.classList.remove('hidden');
                     ratingTextSimple.textContent = `${value}/5`;
+                    
+                    stars.forEach(s => s.setAttribute('aria-checked', 'false'));
+                    this.setAttribute('aria-checked', 'true');
+
                     this.style.transform = "scale(1.3)";
                     setTimeout(() => this.style.transform = "scale(1)", 150);
                 });
@@ -823,7 +927,7 @@
         function updateRatingText(value) {
             const ratingText = document.getElementById('rating-text');
             const label = ratingLabels[value - 1];
-            if (value > 0) ratingText.innerHTML = `<span class="text-teal-600 font-bold">${label}</span>`;
+            if (value > 0) ratingText.innerHTML = `<span class="text-brand-teal font-bold">${label}</span>`;
         }
 
         function updateStarVisuals(value) {
@@ -831,11 +935,11 @@
             stars.forEach(star => {
                 const starVal = star.getAttribute('data-value');
                 if (starVal <= value) {
-                    star.classList.add('active');
-                    star.classList.remove('text-slate-300');
+                    star.classList.add('active', 'fas', 'text-brand-yellow', 'drop-shadow-sm');
+                    star.classList.remove('far', 'text-slate-300', 'dark:text-slate-600');
                 } else {
-                    star.classList.remove('active');
-                    star.classList.add('text-slate-300');
+                    star.classList.remove('active', 'fas', 'text-brand-yellow', 'drop-shadow-sm');
+                    star.classList.add('far', 'text-slate-300', 'dark:text-slate-600');
                 }
             });
         }
@@ -844,6 +948,8 @@
             document.getElementById('rating-value').value = 0;
             document.getElementById('rating-text').textContent = "Haz clic para puntuar";
             document.getElementById('rating-badge').classList.add('hidden');
+            const stars = document.querySelectorAll('#star-input i');
+            stars.forEach(s => s.setAttribute('aria-checked', 'false'));
             updateStarVisuals(0);
         }
 
@@ -879,11 +985,20 @@
                         showToast("Opinión publicada.");
                     }, 1000);
                 } else {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
                     try {
                         const formData = new FormData();
                         formData.append('action', 'addComment');
                         formData.append('data', JSON.stringify(newReview));
-                        const response = await fetch(URL_GOOGLE_SCRIPT, { method: 'POST', body: formData });
+                        const response = await fetch(URL_GOOGLE_SCRIPT, { 
+                            method: 'POST', 
+                            body: formData,
+                            signal: controller.signal
+                        });
+                        clearTimeout(timeoutId);
+                        
                         const result = await response.json();
                         if(result.status === "success") {
                             newReview.fecha = new Date().toISOString();
@@ -898,8 +1013,13 @@
                             throw new Error(result.message);
                         }
                     } catch (error) {
+                        clearTimeout(timeoutId);
                         console.error(error);
-                        alert("Hubo un error al guardar tu comentario.");
+                        if (error.name === 'AbortError') {
+                            alert("Tiempo de espera agotado. Revisa tu conexión de internet y vuelve a intentar.");
+                        } else {
+                            alert("Hubo un error al guardar tu comentario.");
+                        }
                     } finally {
                         btn.innerHTML = originalBtnText;
                         btn.disabled = false;
