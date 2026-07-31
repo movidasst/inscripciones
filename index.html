@@ -719,8 +719,11 @@
             if (!cursos || cursos.length === 0) return;
 
             cursos.forEach((curso, index) => {
-                const safeId = curso.id || `temp_${index}`;
-                const safeNombre = curso.nombre || 'Curso sin nombre';
+                // FIX: Detectar cualquier variante de "ID" desde Google Sheets o crear uno temporal seguro
+                const safeId = curso.id || curso.Id || curso.ID || `temp_${index}`;
+                curso._safeId = safeId; // Lo guardamos en memoria para que el botón lo encuentre
+                
+                const safeNombre = curso.nombre || curso.Nombre || curso.NOMBRE || 'Curso sin nombre';
                 
                 const courseComments = allComments.filter(c => c.cursoId === safeId);
                 const avg = courseComments.length > 0 
@@ -869,8 +872,16 @@
         }
 
         function openModal(courseId) {
-            const curso = allCourses.find(c => c.id === courseId);
-            if (!curso) return;
+            // FIX: Buscar el curso usando el ID ultra-seguro que generamos al renderizar
+            const curso = allCourses.find((c, index) => {
+                const cId = c._safeId || c.id || c.Id || c.ID || `temp_${index}`;
+                return cId === courseId;
+            });
+            
+            if (!curso) {
+                console.error("Error: No se pudo localizar el curso.");
+                return;
+            }
             
             const titleEl = document.getElementById('modal-course-title');
             const idEl = document.getElementById('course-id');
