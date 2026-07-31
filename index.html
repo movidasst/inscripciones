@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="referrer" content="no-referrer">
     
     <!-- SEO y Meta Etiquetas -->
@@ -35,10 +35,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <!-- Configuración personalizada de Tailwind según Guía de Estilo -->
     <script>
         tailwind.config = {
-            darkMode: 'media',
+            darkMode: 'class', /* Forzamos modo claro ignorando el sistema del usuario */
             theme: {
                 extend: {
                     fontFamily: {
@@ -78,6 +77,7 @@
         body {
             font-family: 'Outfit', sans-serif;
             background-color: #f8fafc; /* Fondo Light Bg Oficial */
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Tech Grid Background */
@@ -86,13 +86,6 @@
             background-image: 
                 linear-gradient(to right, rgba(0, 32, 91, 0.02) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(0, 32, 91, 0.02) 1px, transparent 1px);
-        }
-        @media (prefers-color-scheme: dark) {
-            .bg-grid-pattern {
-                background-image: 
-                    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            }
         }
 
         .star-rating i {
@@ -104,7 +97,6 @@
             filter: drop-shadow(0 0 2px rgba(255, 182, 0, 0.4));
         }
 
-        /* Utilidad para simular el antiguo tech-data pero con Outfit */
         .tech-data {
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -116,10 +108,6 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #007b85; }
         
-        @media (prefers-color-scheme: dark) {
-            .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; }
-        }
-
         #toast {
             visibility: hidden;
             opacity: 0;
@@ -143,16 +131,31 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Estilos de Bottom Nav activo */
+        .mobile-nav-btn.active-nav {
+            color: #007b85;
+            position: relative;
+        }
+        .mobile-nav-btn.active-nav::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 20%;
+            width: 60%;
+            height: 3px;
+            background: #007b85;
+            border-radius: 4px;
+        }
     </style>
 </head>
-<body class="antialiased min-h-screen pb-20 text-slate-600 dark:text-slate-300 transition-colors duration-300 relative">
+<body class="antialiased min-h-screen pb-24 md:pb-12 text-slate-600 transition-colors duration-300 relative">
 
-    <!-- Fondo Tech Grid y Luces (Ambientación) -->
-    <div class="fixed inset-0 z-[-2] bg-slate-50 dark:bg-slate-900 bg-grid-pattern"></div>
+    <!-- Fondo Tech Grid y Luces (Ambientación) anclado a los bordes -->
+    <div class="fixed inset-0 z-[-2] bg-slate-50 bg-grid-pattern"></div>
     <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-teal blur-[120px] animate-pulse-glow"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-brand-green blur-[120px] animate-pulse-glow" style="animation-delay: 3s;"></div>
-        <div class="absolute top-[40%] left-[60%] w-[400px] h-[400px] rounded-full bg-brand-yellow blur-[120px] animate-pulse-glow" style="animation-delay: 1.5s;"></div>
     </div>
 
     <script>
@@ -173,37 +176,17 @@
     </script>
 
     <!-- TOAST NOTIFICATION -->
-    <div id="toast" role="alert" aria-live="assertive" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-brand-dark text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z-50 border border-brand-teal/30">
+    <div id="toast" role="alert" aria-live="assertive" class="fixed bottom-24 md:bottom-12 left-1/2 transform -translate-x-1/2 bg-brand-dark text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z-[100] border border-brand-teal/30">
         <i class="fas fa-check-circle text-brand-green"></i>
         <span id="toast-message" class="font-medium text-sm">Copiado al portapapeles</span>
     </div>
 
-    <!-- Botón Flotante Volver -->
+    <!-- Botón Flotante Volver (Escritorio) -->
     <a href="https://www.movidasst.com" 
        title="Volver al Hub Principal"
        aria-label="Volver al inicio"
-       class="group bg-white/90 dark:bg-slate-800/90 backdrop-blur-md"
-       style="
-         position: fixed; 
-         bottom: 24px; 
-         right: 24px; 
-         color: #007b85; 
-         padding: 10px 20px;
-         border-radius: 16px; 
-         text-decoration: none; 
-         font-weight: 700; 
-         font-size: 13px;
-         letter-spacing: 0.5px;
-         border: 1px solid rgba(226, 232, 240, 0.6); 
-         box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05); 
-         z-index: 40; 
-         display: flex; 
-         align-items: center; 
-         gap: 10px; 
-         transition: all 0.3s;
-       "
-       onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 20px 30px -10px rgba(0, 123, 133, 0.12)'; this.style.borderColor='#007b85';" 
-       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px -2px rgba(0, 0, 0, 0.05)'; this.style.borderColor='rgba(226, 232, 240, 0.6)';"
+       class="hidden md:flex group bg-white/90 backdrop-blur-[16px] items-center gap-[10px] fixed bottom-6 right-6 text-brand-teal px-5 py-2.5 rounded-2xl font-bold text-[13px] tracking-[0.5px] border border-slate-200/60 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.05)] z-40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:border-brand-teal active:scale-95"
+       style="text-decoration: none;"
     >
         <svg class="group-hover:rotate-180 transition-transform duration-500" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
@@ -212,238 +195,251 @@
         <span>VOLVER</span>
     </a>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+    <!-- Barra de Navegación Inferior Móvil -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-[16px] border-t border-slate-200 z-50 flex justify-around items-center px-2 py-1 shadow-[0_-10px_30px_-10px_rgba(0,0,0,0.05)] pb-safe">
+        <button onclick="switchTab('cursos')" id="btn-mobile-cursos" class="mobile-nav-btn active-nav flex-1 flex flex-col items-center p-2 pt-3 text-slate-400 transition-colors active:scale-95">
+            <i class="fas fa-graduation-cap text-[22px] mb-1"></i>
+            <span class="text-[10px] font-bold tracking-wide">Cursos</span>
+        </button>
+        <button onclick="switchTab('pagos')" id="btn-mobile-pagos" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 pt-3 text-slate-400 transition-colors active:scale-95">
+            <i class="fas fa-wallet text-[22px] mb-1"></i>
+            <span class="text-[10px] font-bold tracking-wide">Pagos</span>
+        </button>
+        <button onclick="switchTab('comunidad')" id="btn-mobile-comunidad" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 pt-3 text-slate-400 transition-colors active:scale-95">
+            <i class="fas fa-users text-[22px] mb-1"></i>
+            <span class="text-[10px] font-bold tracking-wide">Comunidad</span>
+        </button>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 relative z-10">
         
-        <!-- HEADER -->
         <header class="flex flex-col items-center justify-center mb-8 relative">
-            <div class="relative mb-6 group">
-                <div class="absolute inset-0 bg-brand-teal rounded-full blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
-                <!-- Logo Anterior Redondeado + Efectos -->
+            <div class="relative mb-6 group cursor-pointer" onclick="window.location.href='https://www.movidasst.com'">
+                <div class="absolute inset-0 bg-brand-teal rounded-full blur-[24px] opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
                 <img src="https://assets.poap.xyz/02f1b599-7092-4d3c-9b59-2fe4d3b0164e.png" 
                      alt="Logo Movida SST" 
-                     class="w-32 h-32 object-contain relative z-10 drop-shadow-xl rounded-full animate-float group-hover:scale-105 transition-transform duration-500">
+                     class="w-28 h-28 md:w-32 md:h-32 object-contain relative z-10 drop-shadow-xl rounded-full animate-float group-hover:scale-105 transition-transform duration-500">
             </div>
 
-            <h1 class="text-3xl md:text-4xl font-extrabold text-brand-dark dark:text-white tracking-tight text-center mb-1">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-brand-dark tracking-tight text-center mb-1">
                 Academia Movida SST
             </h1>
-            <p class="text-brand-teal font-bold tech-data text-xs mb-8">Evoluciona tu carrera en Seguridad y Salud</p>
+            <p class="text-brand-teal font-bold tech-data text-xs mb-8 text-center px-4">Evoluciona tu carrera en Seguridad y Salud</p>
 
-            <!-- NAVEGACIÓN (Glassmorphism Premium) -->
-            <nav aria-label="Navegación principal de secciones" class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-1.5 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200/60 dark:border-slate-700/60 flex flex-wrap justify-center gap-2 max-w-2xl w-full mx-auto">
-                <button aria-controls="view-cursos" onclick="switchTab('cursos')" id="btn-cursos" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-lg shadow-brand-teal/30">
+            <!-- NAVEGACIÓN DESKTOP -->
+            <nav aria-label="Navegación principal de secciones" class="hidden md:flex bg-white/90 backdrop-blur-[16px] p-1.5 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200/60 flex-wrap justify-center gap-2 max-w-2xl w-full mx-auto">
+                <button aria-controls="view-cursos" onclick="switchTab('cursos')" id="btn-cursos" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-lg shadow-brand-teal/30 active:scale-95">
                     <i class="fas fa-graduation-cap" aria-hidden="true"></i> Cursos
                 </button>
-                <button aria-controls="view-pagos" onclick="switchTab('pagos')" id="btn-pagos" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">
+                <button aria-controls="view-pagos" onclick="switchTab('pagos')" id="btn-pagos" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95">
                     <i class="fas fa-wallet" aria-hidden="true"></i> Pagos
                 </button>
-                <button aria-controls="view-comunidad" onclick="switchTab('comunidad')" id="btn-comunidad" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">
+                <button aria-controls="view-comunidad" onclick="switchTab('comunidad')" id="btn-comunidad" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95">
                     <i class="fas fa-users" aria-hidden="true"></i> Comunidad
                 </button>
             </nav>
         </header>
 
         <main>
-            <!-- VISTA 1: CURSOS -->
             <section id="view-cursos" class="tab-content active" aria-labelledby="cursos-heading">
                 
                 <div id="social-proof-banner" class="hidden mb-10 w-full max-w-5xl mx-auto"></div>
 
                 <div class="text-center mb-8">
-                    <h2 id="cursos-heading" class="text-2xl font-bold text-brand-dark dark:text-slate-100">Catálogo de Cursos</h2>
+                    <h2 id="cursos-heading" class="text-2xl font-extrabold text-brand-dark">Catálogo de Cursos</h2>
                     <div class="w-12 h-1 bg-brand-teal rounded-full mx-auto mt-2 mb-4"></div>
-                    <p class="text-slate-600 dark:text-slate-400 font-light max-w-2xl mx-auto text-sm">
-                        Explora y valora nuestras experiencias educativas.
+                    <p class="text-slate-500 font-light max-w-2xl mx-auto text-sm">
+                        Explora, aprende y valora nuestras experiencias educativas.
                     </p>
                 </div>
 
-                <!-- Recordatorio -->
-                <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-brand-teal/20 dark:border-brand-teal/30 rounded-3xl p-5 max-w-2xl mx-auto flex items-start sm:items-center gap-4 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] mb-10 relative overflow-hidden">
+                <div class="bg-white/90 backdrop-blur-[16px] border border-brand-teal/20 rounded-3xl p-5 max-w-2xl mx-auto flex items-start sm:items-center gap-4 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] mb-10 relative overflow-hidden">
                     <div class="absolute left-0 top-0 h-full w-1 bg-brand-teal"></div>
-                    <div class="bg-brand-teal/10 dark:bg-brand-teal/20 p-3 rounded-2xl text-brand-teal shadow-sm shrink-0">
+                    <div class="bg-brand-teal/10 p-3 rounded-2xl text-brand-teal shadow-sm shrink-0">
                         <i class="fas fa-user-check text-lg" aria-hidden="true"></i>
                     </div>
                     <div class="text-left">
-                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-                            <span class="font-bold text-brand-dark dark:text-white block mb-0.5">¿Listo para comenzar?</span>
-                            Recuerda que para participar y obtener tu certificado, es necesario <a href="https://movidasst.org/login/index.php" target="_blank" class="text-brand-teal font-bold hover:text-brand-dark dark:hover:text-teal-300 underline decoration-brand-teal/40 underline-offset-2 transition-colors">crear tu usuario</a> en nuestra Academia.
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            <span class="font-bold text-brand-dark block mb-0.5">¿Listo para comenzar?</span>
+                            Para participar y obtener certificados, es necesario <a href="https://movidasst.org/login/index.php" target="_blank" class="text-brand-teal font-bold hover:text-brand-dark underline decoration-brand-teal/40 underline-offset-2 transition-colors">crear tu usuario</a> en nuestra Academia.
                         </p>
                     </div>
                 </div>
 
                 <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto" aria-busy="true" aria-label="Cargando cursos"></div>
 
-                <div id="error-message" class="hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-400 px-6 py-4 rounded-3xl relative mb-6 text-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] max-w-2xl mx-auto backdrop-blur-md" role="alert">
+                <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-3xl relative mb-6 text-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] max-w-2xl mx-auto backdrop-blur-[16px]" role="alert">
                     <div class="flex items-center justify-center gap-2 mb-1">
                         <i class="fas fa-wifi" aria-hidden="true"></i>
                         <strong class="font-bold">Error de conexión</strong>
                     </div>
                     <span class="block sm:inline text-sm opacity-90" id="error-text">No se pudo conectar.</span>
-                    <button onclick="fetchData()" class="mt-2 text-xs font-bold underline hover:text-red-800 dark:hover:text-red-300">Reintentar</button>
+                    <button onclick="fetchData()" class="mt-2 text-xs font-bold underline hover:text-red-800 active:scale-95">Reintentar</button>
                 </div>
 
-                <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10" aria-live="polite">
+                <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-10" aria-live="polite">
                     <!-- Dinámico -->
                 </div>
             </section>
 
-            <!-- VISTA 2: MEDIOS DE PAGO -->
             <section id="view-pagos" class="tab-content" aria-labelledby="pagos-heading">
                 <div class="w-full max-w-5xl mx-auto">
-                    <div class="text-center mb-10">
+                    <div class="text-center mb-8">
                         <span class="bg-brand-teal/10 text-brand-teal px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border border-brand-teal/20">Zona de Pagos</span>
-                        <h2 id="pagos-heading" class="text-2xl font-bold text-brand-dark dark:text-slate-100 mt-2">Medios de Pago Oficiales</h2>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Haz clic en el botón para copiar los datos completos</p>
+                        <h2 id="pagos-heading" class="text-2xl font-extrabold text-brand-dark mt-2">Medios Oficiales</h2>
+                        <p class="text-slate-500 text-sm mt-2">Haz clic en el botón para copiar los datos</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 md:gap-6">
                         
-                        <!-- 1. VENEZUELA -->
-                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 flex flex-col relative overflow-hidden group transition-all duration-300">
-                            <!-- Línea Mágica -->
+                        <!-- VENEZUELA -->
+                        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 flex flex-col relative overflow-hidden group transition-all duration-300 payment-card">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
-                            <div class="flex items-center gap-4 mb-5 relative z-10">
-                                <div class="w-12 h-12 bg-red-50 dark:bg-red-900/40 text-red-600 dark:text-red-400 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-red-100 dark:border-red-800/50">
+                            <div class="flex items-start gap-4 mb-4 relative z-10">
+                                <div class="w-12 h-12 shrink-0 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-red-100">
                                     <i class="fas fa-university" aria-hidden="true"></i>
                                 </div>
-                                <h3 class="font-bold text-brand-dark dark:text-slate-200 text-base">Transferencia Venezuela</h3>
-                            </div>
-                            <div class="space-y-3 text-sm relative z-10 mb-6 text-slate-600 dark:text-slate-400">
-                                <p>Banco de Venezuela &bull; Corriente</p>
-                                <p class="font-bold text-brand-dark dark:text-white text-lg font-mono">0102-0236-1500-0033-6732</p>
-                                <p>Ezequiel Linares &bull; C.I. 30.407.087</p>
-                            </div>
-                            <button onclick="copyPaymentData('transfer', this)" aria-label="Copiar datos de transferencia" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3 px-4 rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-brand-dark/20">
-                                <span>Copiar Datos</span> <i class="far fa-copy" aria-hidden="true"></i>
-                            </button>
-                        </div>
-
-                        <!-- 2. PAGO MÓVIL -->
-                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 flex flex-col relative overflow-hidden group transition-all duration-300">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            
-                            <div class="flex items-center gap-4 mb-5 relative z-10">
-                                <div class="w-12 h-12 bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-purple-100 dark:border-purple-800/50">
-                                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                                <div>
+                                    <h3 class="font-extrabold text-brand-dark text-lg leading-tight">Transferencia<br>Venezuela</h3>
                                 </div>
-                                <h3 class="font-bold text-brand-dark dark:text-slate-200 text-base">Pago Móvil (Bs)</h3>
                             </div>
-                            <div class="space-y-3 text-sm relative z-10 mb-6 text-slate-600 dark:text-slate-400">
-                                <p>Banco de Venezuela</p>
-                                <p class="font-bold text-brand-dark dark:text-white text-lg font-mono">0412-6372223 <span class="text-sm font-sans text-slate-500 font-normal">/ V-30.407.087</span></p>
+                            <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
+                                <p>Cta. Corriente <span class="font-bold text-slate-700">0102-0236...</span></p>
                                 <p>Ezequiel Linares</p>
                             </div>
-                            <button onclick="copyPaymentData('pagoMovil', this)" aria-label="Copiar datos de pago móvil" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3 px-4 rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-brand-dark/20">
-                                <span>Copiar Datos</span> <i class="far fa-copy" aria-hidden="true"></i>
+                            <button onclick="copyPaymentData('transfer', this)" aria-label="Copiar datos de transferencia" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md active:scale-95">
+                                <span>Copiar Datos Completos</span> <i class="far fa-copy" aria-hidden="true"></i>
                             </button>
                         </div>
 
-                        <!-- 3. BINANCE -->
-                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 flex flex-col relative overflow-hidden group transition-all duration-300">
+                        <!-- PAGO MÓVIL -->
+                        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 flex flex-col relative overflow-hidden group transition-all duration-300 payment-card">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
-                            <div class="flex items-center gap-4 mb-5 relative z-10">
-                                <div class="w-12 h-12 bg-yellow-50 dark:bg-yellow-900/40 text-[#f3ba2f] dark:text-[#f3ba2f] rounded-2xl flex items-center justify-center text-xl shadow-sm border border-yellow-100 dark:border-yellow-800/50">
+                            <div class="flex items-start gap-4 mb-4 relative z-10">
+                                <div class="w-12 h-12 shrink-0 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-purple-100">
+                                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-extrabold text-brand-dark text-lg leading-tight">Pago Móvil<br>(Bs)</h3>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
+                                <p>Banco de Venezuela</p>
+                                <p class="font-bold text-slate-700">0412-6372223</p>
+                            </div>
+                            <button onclick="copyPaymentData('pagoMovil', this)" aria-label="Copiar datos de pago móvil" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md active:scale-95">
+                                <span>Copiar Datos Completos</span> <i class="far fa-copy" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- BINANCE -->
+                        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 flex flex-col relative overflow-hidden group transition-all duration-300 payment-card">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <div class="flex items-start gap-4 mb-4 relative z-10">
+                                <div class="w-12 h-12 shrink-0 bg-yellow-50 text-[#f3ba2f] rounded-2xl flex items-center justify-center text-xl shadow-sm border border-yellow-100">
                                     <i class="fab fa-bitcoin" aria-hidden="true"></i>
                                 </div>
-                                <h3 class="font-bold text-brand-dark dark:text-slate-200 text-base">Binance (USDT)</h3>
+                                <div>
+                                    <h3 class="font-extrabold text-brand-dark text-lg leading-tight">Binance<br>(USDT)</h3>
+                                </div>
                             </div>
-                            <div class="space-y-3 text-sm relative z-10 mb-6 text-slate-600 dark:text-slate-400">
+                            <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
                                 <p>Red: BEP20 (BSC)</p>
-                                <p>ID: <span class="font-bold text-brand-dark dark:text-white font-mono text-lg">176067584</span></p>
-                                <p class="truncate font-bold text-brand-dark dark:text-white">david.linaresb@gmail.com</p>
+                                <p>ID: <span class="font-bold text-slate-700">176067584</span></p>
                             </div>
-                            <button onclick="copyPaymentData('binance', this)" aria-label="Copiar datos de Binance" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3 px-4 rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-brand-dark/20">
-                                <span>Copiar Datos</span> <i class="far fa-copy" aria-hidden="true"></i>
+                            <button onclick="copyPaymentData('binance', this)" aria-label="Copiar datos de Binance" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md active:scale-95">
+                                <span>Copiar Datos Completos</span> <i class="far fa-copy" aria-hidden="true"></i>
                             </button>
                         </div>
 
-                        <!-- 4. PAYPAL -->
-                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 flex flex-col relative overflow-hidden group transition-all duration-300">
+                        <!-- PAYPAL -->
+                        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 flex flex-col relative overflow-hidden group transition-all duration-300">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
-                            <div class="flex items-center gap-4 mb-5 relative z-10">
-                                <div class="w-12 h-12 bg-[#0070ba]/10 text-[#0070ba] dark:text-[#0070ba] rounded-2xl flex items-center justify-center text-xl shadow-sm border border-[#0070ba]/20">
+                            <div class="flex items-start gap-4 mb-4 relative z-10">
+                                <div class="w-12 h-12 shrink-0 bg-[#0070ba]/10 text-[#0070ba] rounded-2xl flex items-center justify-center text-xl shadow-sm border border-[#0070ba]/20">
                                     <i class="fab fa-paypal" aria-hidden="true"></i>
                                 </div>
-                                <h3 class="font-bold text-brand-dark dark:text-slate-200 text-base">PayPal Directo</h3>
+                                <div>
+                                    <h3 class="font-extrabold text-brand-dark text-lg leading-tight">PayPal<br>Directo</h3>
+                                </div>
                             </div>
-                            <div class="space-y-3 text-sm relative z-10 mb-6 text-slate-600 dark:text-slate-400">
-                                <p class="font-bold text-brand-dark dark:text-white text-lg">movidasst@gmail.com</p>
-                                <p class="text-brand-yellow font-semibold bg-brand-yellow/10 inline-block px-3 py-1 rounded-lg border border-brand-yellow/20">Pago: "Amigo/Familiar"</p>
+                            <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
+                                <p class="font-bold text-slate-700">movidasst@gmail.com</p>
+                                <p class="text-[11px] text-brand-yellow font-bold uppercase tracking-wider bg-brand-yellow/10 inline-block px-2 py-1 rounded">Pago: "Amigo/Familiar"</p>
                             </div>
-                            <a href="https://paypal.me/movidasst" target="_blank" aria-label="Ir a pagar con PayPal" class="mt-auto w-full bg-[#0070ba] hover:bg-[#003087] text-white font-bold py-3 px-4 rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-[#0070ba]/30">
-                                <span>Ir a PayPal</span> <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                            <a href="https://paypal.me/movidasst" target="_blank" aria-label="Ir a pagar con PayPal" class="mt-auto w-full bg-[#0070ba] hover:bg-[#003087] text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-[#0070ba]/30 active:scale-95">
+                                <span>Ir a Pagar</span> <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                             </a>
                         </div>
-
                     </div>
                 </div>
             </section>
 
-            <!-- VISTA 3: COMUNIDAD Y ACCESOS -->
             <section id="view-comunidad" class="tab-content" aria-labelledby="comunidad-heading">
                 <div class="w-full max-w-4xl mx-auto">
                     <div class="text-center mb-10">
-                        <h2 id="comunidad-heading" class="text-2xl font-bold text-brand-dark dark:text-slate-100">Comunidad y Accesos</h2>
-                        <p class="text-slate-600 dark:text-slate-400 font-light mt-2 text-sm">
+                        <h2 id="comunidad-heading" class="text-2xl font-extrabold text-brand-dark">Comunidad y Accesos</h2>
+                        <p class="text-slate-500 font-light mt-2 text-sm">
                             Conecta con nosotros y accede a la plataforma.
                         </p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mb-10">
                         
                         <a href="https://chat.whatsapp.com/Fv0CmlSqTVyDB0diXAyPCI" target="_blank" 
-                           class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300">
+                           class="bg-white p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
-                            <div class="w-16 h-16 bg-[#25D366]/10 text-[#25D366] rounded-full flex items-center justify-center text-3xl mb-5 group-hover:scale-110 transition-transform border border-[#25D366]/20 shadow-sm">
+                            <div class="w-16 h-16 bg-[#25D366]/10 text-[#25D366] rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform border border-[#25D366]/20 shadow-sm">
                                 <i class="fab fa-whatsapp" aria-hidden="true"></i>
                             </div>
-                            <h3 class="font-bold text-brand-dark dark:text-slate-200 text-lg mb-2">Grupo Academia</h3>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm">Comunidad de estudio</p>
+                            <h3 class="font-bold text-brand-dark text-lg mb-1">Grupo Academia</h3>
+                            <p class="text-slate-500 text-xs">Comunidad de estudio</p>
                         </a>
 
                         <a href="https://whatsapp.com/channel/0029Va0mlH5Jf05mrcCz8r3e" target="_blank"
-                           class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-2 border border-slate-200/60 dark:border-slate-700/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300">
+                           class="bg-white p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                            <div class="w-16 h-16 bg-brand-teal/10 text-brand-teal rounded-full flex items-center justify-center text-3xl mb-5 group-hover:scale-110 transition-transform border border-brand-teal/20 shadow-sm">
+                            <div class="w-16 h-16 bg-brand-teal/10 text-brand-teal rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform border border-brand-teal/20 shadow-sm">
                                 <i class="fas fa-bullhorn" aria-hidden="true"></i>
                             </div>
-                            <h3 class="font-bold text-brand-dark dark:text-slate-200 text-lg mb-2">Canal Oficial</h3>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm">Noticias y novedades</p>
+                            <h3 class="font-bold text-brand-dark text-lg mb-1">Canal Oficial</h3>
+                            <p class="text-slate-500 text-xs">Noticias y novedades</p>
                         </a>
 
                         <a href="https://movidasst.org/login/index.php" target="_blank"
-                           class="bg-brand-dark p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.2)] hover:-translate-y-2 border border-slate-800 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300">
+                           class="bg-brand-dark p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.2)] hover:-translate-y-1.5 border border-slate-800 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95 sm:col-span-2 md:col-span-1">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                            <div class="w-16 h-16 bg-white/10 text-brand-teal rounded-full flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform border border-white/10 backdrop-blur-md">
+                            <div class="w-16 h-16 bg-white/10 text-brand-teal rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform border border-white/10">
                                 <i class="fas fa-user-graduate" aria-hidden="true"></i>
                             </div>
-                            <h3 class="font-bold text-white text-lg mb-2">Ingresar</h3>
-                            <p class="text-slate-300 text-sm">Acceso a estudiantes</p>
+                            <h3 class="font-bold text-white text-lg mb-1">Ingresar</h3>
+                            <p class="text-slate-300 text-xs">Acceso a estudiantes</p>
                         </a>
                     </div>
 
-                    <!-- CONTACTO -->
-                    <div class="flex flex-wrap justify-center gap-5">
+                    <!-- CONTACTO DIRECTO -->
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
                         <a href="https://wa.me/56968615650" target="_blank" 
-                           class="flex items-center gap-4 px-6 py-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/60 rounded-full shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:border-brand-teal hover:shadow-[0_10px_20px_-5px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 group">
-                            <i class="fab fa-whatsapp text-[#25D366] text-2xl group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                           class="flex items-center gap-4 px-6 py-4 bg-white border border-slate-200/60 rounded-2xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:border-brand-teal hover:shadow-[0_10px_20px_-5px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 group active:scale-95">
+                            <i class="fab fa-whatsapp text-[#25D366] text-3xl group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                             <div class="flex flex-col text-left">
                                 <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">WhatsApp Directo</span>
-                                <span class="font-bold text-brand-dark dark:text-slate-200 group-hover:text-brand-teal text-sm transition-colors">+56 9 6861 5650</span>
+                                <span class="font-bold text-brand-dark group-hover:text-brand-teal text-sm transition-colors">+56 9 6861 5650</span>
                             </div>
                         </a>
                         <a href="mailto:movidasst@gmail.com" 
-                           class="flex items-center gap-4 px-6 py-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/60 rounded-full shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:border-brand-teal hover:shadow-[0_10px_20px_-5px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 group">
-                            <i class="far fa-envelope text-brand-teal text-2xl group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                           class="flex items-center gap-4 px-6 py-4 bg-white border border-slate-200/60 rounded-2xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:border-brand-teal hover:shadow-[0_10px_20px_-5px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 group active:scale-95">
+                            <i class="far fa-envelope text-brand-teal text-3xl group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                             <div class="flex flex-col text-left">
                                 <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Correo Electrónico</span>
-                                <span class="font-bold text-brand-dark dark:text-slate-200 group-hover:text-brand-teal text-sm transition-colors">movidasst@gmail.com</span>
+                                <span class="font-bold text-brand-dark group-hover:text-brand-teal text-sm transition-colors">movidasst@gmail.com</span>
                             </div>
                         </a>
                     </div>
@@ -452,62 +448,63 @@
         </main>
     </div>
 
-    <!-- Modal Reseñas -->
-    <div id="review-modal" role="dialog" aria-modal="true" aria-labelledby="modal-course-title" class="fixed inset-0 bg-slate-900/60 overflow-y-auto h-full w-full hidden z-50 flex items-center justify-center backdrop-blur-md transition-opacity duration-300" style="z-index: 99999;">
-        <div class="relative mx-auto p-0 border border-slate-200/20 w-full max-w-2xl shadow-2xl rounded-3xl bg-white dark:bg-slate-800 m-4 cursor-default transform transition-all scale-100 overflow-hidden" onclick="event.stopPropagation()">
+    <div id="review-modal" role="dialog" aria-modal="true" aria-labelledby="modal-course-title" class="fixed inset-0 bg-slate-900/60 overflow-y-auto h-full w-full hidden z-[9999] flex items-center justify-center backdrop-blur-[16px] transition-opacity duration-300 pb-16 md:pb-0" onclick="closeModal()">
+        
+        <div class="relative mx-auto p-0 border border-slate-200/60 w-full max-w-2xl shadow-2xl rounded-3xl bg-white m-4 cursor-default transform transition-all scale-100 overflow-hidden" onclick="event.stopPropagation()">
             
-            <div class="bg-gradient-to-br from-brand-dark to-[#001030] p-6 sm:p-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-teal/20 rounded-full blur-2xl"></div>
-                <button aria-label="Cerrar modal" onclick="closeModal()" class="absolute top-4 right-4 text-white/60 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all duration-200 z-10">
+            <div class="bg-gradient-to-br from-brand-dark to-[#001030] p-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-teal/20 rounded-full blur-[120px]"></div>
+                <button aria-label="Cerrar modal" onclick="closeModal()" class="absolute top-4 right-4 text-white/60 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all duration-200 z-10 active:scale-95">
                     <i class="fas fa-times text-xl" aria-hidden="true"></i>
                 </button>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 relative z-10" id="modal-course-title">Nombre del Curso</h3>
-                <p class="text-brand-teal text-sm font-medium relative z-10">Tu opinión es valiosa para la comunidad.</p>
+                <h3 class="text-xl sm:text-2xl font-extrabold text-white mb-1 relative z-10 pr-8" id="modal-course-title">Nombre del Curso</h3>
+                <p class="text-brand-teal text-xs font-medium relative z-10">Tu opinión es valiosa para la comunidad.</p>
             </div>
 
-            <div class="p-6 sm:p-8">
-                <form id="review-form" class="mb-8 bg-slate-50 dark:bg-slate-700/30 p-6 rounded-3xl border border-slate-200/60 dark:border-slate-600">
+            <div class="p-5 sm:p-8 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                <form id="review-form" class="mb-6 bg-slate-50 p-5 rounded-3xl border border-slate-200/60">
                     <input type="hidden" id="course-id">
-                    <div class="grid grid-cols-1 gap-6">
+                    <div class="grid grid-cols-1 gap-5">
                         <div>
-                            <label class="block text-brand-dark dark:text-slate-200 text-sm font-bold mb-2" for="user-name">Tu Nombre</label>
-                            <input class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-slate-100 text-sm rounded-2xl focus:ring-brand-teal focus:border-brand-teal block p-3.5 transition-all outline-none shadow-sm" id="user-name" type="text" placeholder="Ej: Ana García" required>
+                            <label class="block text-brand-dark text-sm font-bold mb-1.5" for="user-name">Tu Nombre</label>
+                            <input class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-brand-teal focus:border-transparent block p-3 transition-all outline-none shadow-sm" id="user-name" type="text" placeholder="Ej: Ana García" required>
                         </div>
                         <div>
-                            <label class="block text-brand-dark dark:text-slate-200 text-sm font-bold mb-2">Tu Calificación</label>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-4">
-                                <div class="star-rating text-3xl flex gap-2 text-slate-300 dark:text-slate-600" id="star-input" role="radiogroup" aria-label="Puntuación de 1 a 5 estrellas">
-                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="1" aria-label="1 estrella"></i>
-                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="2" aria-label="2 estrellas"></i>
-                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="3" aria-label="3 estrellas"></i>
-                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="4" aria-label="4 estrellas"></i>
-                                    <i class="fas fa-star hover:scale-110" role="radio" aria-checked="false" tabindex="0" data-value="5" aria-label="5 estrellas"></i>
+                            <label class="block text-brand-dark text-sm font-bold mb-1.5">Tu Calificación</label>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                                <div class="star-rating text-3xl flex gap-1.5 text-slate-300" id="star-input" role="radiogroup" aria-label="Puntuación de 1 a 5 estrellas">
+                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="1" aria-label="1 estrella"></i>
+                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="2" aria-label="2 estrellas"></i>
+                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="3" aria-label="3 estrellas"></i>
+                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="4" aria-label="4 estrellas"></i>
+                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="5" aria-label="5 estrellas"></i>
                                 </div>
-                                <div id="rating-badge" class="hidden bg-white dark:bg-slate-600 px-3 py-1 rounded-lg border border-slate-200 dark:border-transparent shadow-sm">
-                                    <span id="rating-text-simple" class="tech-data text-sm text-brand-dark dark:text-slate-200">0/5</span>
+                                <div id="rating-badge" class="hidden bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-sm">
+                                    <span id="rating-text-simple" class="tech-data text-sm text-brand-dark">0/5</span>
                                 </div>
                             </div>
-                            <p id="rating-text" class="text-xs text-slate-400 dark:text-slate-400 mt-2 font-medium h-4" aria-live="polite">Haz clic para puntuar</p>
+                            <p id="rating-text" class="text-xs text-slate-400 mt-1 font-medium h-4" aria-live="polite">Haz clic para puntuar</p>
                             <input type="hidden" id="rating-value" value="0" required>
                         </div>
                         <div>
-                            <label class="block text-brand-dark dark:text-slate-200 text-sm font-bold mb-2" for="user-comment">Comentario</label>
-                            <textarea class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-slate-100 text-sm rounded-2xl focus:ring-brand-teal focus:border-brand-teal block p-3.5 transition-all outline-none resize-none shadow-sm" id="user-comment" rows="3" placeholder="¿Qué fue lo mejor del curso?" required></textarea>
+                            <label class="block text-brand-dark text-sm font-bold mb-1.5" for="user-comment">Comentario</label>
+                            <textarea class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-brand-teal focus:border-transparent block p-3 transition-all outline-none resize-none shadow-sm" id="user-comment" rows="2" placeholder="¿Qué fue lo mejor del curso?" required></textarea>
                         </div>
                     </div>
-                    <div class="flex items-center justify-end gap-3 pt-6 mt-2">
-                        <button type="button" onclick="closeModal()" class="px-5 py-2.5 text-slate-500 dark:text-slate-400 font-bold hover:text-brand-dark dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-2xl transition-colors duration-200">Cancelar</button>
-                        <button class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-6 rounded-2xl shadow-lg shadow-brand-teal/30 focus:outline-none focus:ring-4 focus:ring-brand-teal/30 transition-all duration-200 transform active:scale-95" type="submit" id="submit-btn">Publicar Opinión</button>
+                    <div class="flex items-center justify-end gap-3 pt-5 mt-2 border-t border-slate-200/60">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 text-slate-500 font-bold hover:text-brand-dark hover:bg-slate-100 rounded-xl transition-colors duration-200 active:scale-95 text-sm">Cancelar</button>
+                        <button class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-brand-teal/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-teal transition-all duration-200 active:scale-95 text-sm" type="submit" id="submit-btn">Publicar Opinión</button>
                     </div>
                 </form>
-                <div class="flex items-center gap-3 mb-5 border-b border-slate-100 dark:border-slate-700 pb-3">
-                    <div class="bg-brand-teal/10 p-2.5 rounded-xl text-brand-teal">
-                        <i class="far fa-comments text-lg" aria-hidden="true"></i>
+                
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-brand-teal/10 p-2 rounded-xl text-brand-teal">
+                        <i class="far fa-comments" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-brand-dark dark:text-slate-200">Reseñas de la comunidad</h4>
+                    <h4 class="text-base font-bold text-brand-dark">Reseñas de la comunidad</h4>
                 </div>
-                <div id="comments-list" class="max-h-60 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
-                    <div class="text-center text-slate-400 py-6 tech-data text-sm">Cargando datos...</div>
+                <div id="comments-list" class="space-y-4 pr-1">
+                    <div class="text-center text-slate-400 py-6 tech-data text-xs">Cargando datos...</div>
                 </div>
             </div>
         </div>
@@ -533,28 +530,25 @@
             setupModalEvents();
         });
 
+        // Utilidad de seguridad contra fallas de inyección HTML
         function escapeHTML(str) {
             if (!str) return '';
             return str.replace(/[&<>'"]/g, 
-                tag => ({
-                    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-                }[tag])
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])
             );
         }
 
+        // Animación de carga optimizada (Skeletons)
         function renderSkeletons() {
             const container = document.getElementById('loading');
             let html = '';
             for(let i=0; i<3; i++) {
-                let hideClass = '';
-                if(i===1) hideClass = 'hidden md:flex';
-                if(i===2) hideClass = 'hidden lg:flex';
-                
+                let hideClass = i===1 ? 'hidden md:flex' : (i===2 ? 'hidden lg:flex' : '');
                 html += `
-                <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-3xl p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200/60 dark:border-slate-700/60 flex flex-col h-72 animate-pulse ${hideClass}">
-                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 dark:bg-slate-700 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 dark:bg-slate-700 rounded-xl"></div></div>
-                    <div class="w-3/4 h-6 bg-slate-200 dark:bg-slate-700 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 dark:bg-slate-700 rounded mb-8"></div>
-                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 dark:bg-slate-700 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 dark:bg-slate-700 rounded-2xl"></div></div>
+                <div class="bg-white rounded-3xl p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200/60 flex flex-col h-72 animate-pulse ${hideClass}">
+                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 rounded-xl"></div></div>
+                    <div class="w-3/4 h-6 bg-slate-200 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 rounded mb-8"></div>
+                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 rounded-2xl"></div></div>
                 </div>`;
             }
             container.innerHTML = html;
@@ -565,16 +559,30 @@
                 content.classList.remove('active');
             });
             setTimeout(() => {
-                document.getElementById(`view-${tabName}`).classList.add('active');
+                const target = document.getElementById(`view-${tabName}`);
+                if (target) target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 10);
 
             const buttons = ['cursos', 'pagos', 'comunidad'];
             buttons.forEach(btn => {
-                const buttonEl = document.getElementById(`btn-${btn}`);
+                // Escritorio
+                const deskBtn = document.getElementById(`btn-${btn}`);
+                // Móvil
+                const mobBtn = document.getElementById(`btn-mobile-${btn}`);
+
                 if (btn === tabName) {
-                    buttonEl.className = "flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-lg shadow-brand-teal/30 transform scale-105";
+                    if (deskBtn) deskBtn.className = "flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-lg shadow-brand-teal/30 transform scale-105 active:scale-95";
+                    if (mobBtn) {
+                        mobBtn.classList.remove('text-slate-400');
+                        mobBtn.classList.add('active-nav');
+                    }
                 } else {
-                    buttonEl.className = "flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700";
+                    if (deskBtn) deskBtn.className = "flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95";
+                    if (mobBtn) {
+                        mobBtn.classList.add('text-slate-400');
+                        mobBtn.classList.remove('active-nav');
+                    }
                 }
             });
         }
@@ -583,13 +591,19 @@
             const textToCopy = paymentInfo[type];
             if (textToCopy) {
                 navigator.clipboard.writeText(textToCopy).then(() => {
-                    showToast('Datos completos copiados al portapapeles');
+                    showToast('Datos copiados con éxito');
                     
                     const originalHtml = btnElement.innerHTML;
                     const originalClasses = btnElement.className;
+                    const card = btnElement.closest('.payment-card');
                     
+                    if(card) {
+                        card.classList.add('ring-4', 'ring-brand-green/30', 'bg-brand-green/5');
+                        setTimeout(() => card.classList.remove('ring-4', 'ring-brand-green/30', 'bg-brand-green/5'), 800);
+                    }
+
                     btnElement.innerHTML = `<span>¡Copiado!</span> <i class="fas fa-check"></i>`;
-                    btnElement.classList.remove('bg-brand-dark', 'dark:bg-slate-700', 'hover:bg-brand-teal');
+                    btnElement.classList.remove('bg-brand-dark', 'hover:bg-brand-teal');
                     btnElement.classList.add('bg-brand-green', 'hover:bg-[#60963b]');
                     
                     setTimeout(() => {
@@ -610,18 +624,22 @@
         }
 
         async function fetchData() {
-            document.getElementById('error-message').classList.add('hidden');
-            document.getElementById('loading').classList.remove('hidden');
-            document.getElementById('courses-grid').classList.add('hidden');
+            const errorElement = document.getElementById('error-message');
+            const loadingElement = document.getElementById('loading');
+            const gridElement = document.getElementById('courses-grid');
+
+            if (errorElement) errorElement.classList.add('hidden');
+            if (loadingElement) loadingElement.classList.remove('hidden');
+            if (gridElement) gridElement.classList.add('hidden');
 
             if (MODO_DEMO) {
                 setTimeout(() => {
-                    allCourses = mockData.cursos;
-                    allComments = mockData.comentarios;
+                    allCourses = mockData.cursos || [];
+                    allComments = mockData.comentarios || [];
                     renderSocialProofBanner();
                     renderCourses(allCourses);
-                    document.getElementById('loading').classList.add('hidden');
-                    document.getElementById('courses-grid').classList.remove('hidden');
+                    if(loadingElement) loadingElement.classList.add('hidden');
+                    if(gridElement) gridElement.classList.remove('hidden');
                 }, 1000);
             } else {
                 const controller = new AbortController();
@@ -633,28 +651,30 @@
                     const data = await response.json();
                     
                     if(data.status === "success") {
-                        allCourses = data.cursos;
-                        allComments = data.comentarios;
-                        if (allCourses.length === 0) {
+                        allCourses = data.cursos || [];
+                        allComments = data.comentarios || [];
+                        
+                        if (allCourses.length === 0 && errorElement) {
                              document.getElementById('error-text').textContent = "Conexión exitosa, pero la hoja 'Cursos' está vacía.";
-                             document.getElementById('error-message').classList.remove('hidden');
+                             errorElement.classList.remove('hidden');
                         }
+                        
                         renderSocialProofBanner();
                         renderCourses(allCourses);
-                        document.getElementById('loading').classList.add('hidden');
-                        document.getElementById('courses-grid').classList.remove('hidden');
+                        
+                        if(loadingElement) loadingElement.classList.add('hidden');
+                        if(gridElement) gridElement.classList.remove('hidden');
                     } else {
-                        throw new Error("El script devolvió un error: " + (data.message || "Desconocido"));
+                        throw new Error(data.message || "Error Desconocido");
                     }
                 } catch (error) {
                     clearTimeout(timeoutId);
-                    console.error("Error:", error);
-                    document.getElementById('loading').classList.add('hidden');
-                    document.getElementById('error-message').classList.remove('hidden');
-                    if (error.name === 'AbortError') {
-                        document.getElementById('error-text').textContent = "Tiempo de espera agotado. Revisa tu conexión.";
-                    } else {
-                        document.getElementById('error-text').textContent = "No se pudo conectar con el servidor.";
+                    if(loadingElement) loadingElement.classList.add('hidden');
+                    if(errorElement) {
+                        errorElement.classList.remove('hidden');
+                        document.getElementById('error-text').textContent = error.name === 'AbortError' 
+                            ? "Tiempo de espera agotado." 
+                            : "No se pudo conectar con el servidor.";
                     }
                 }
             }
@@ -662,22 +682,25 @@
 
         function renderSocialProofBanner() {
             const banner = document.getElementById('social-proof-banner');
+            if (!banner || !allComments) return;
+
             const topReviews = allComments.filter(c => parseInt(c.estrellas) === 5);
-            
             if (topReviews.length > 0) {
                 const recent = topReviews.slice(-2);
-                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">';
+                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-5">';
                 recent.forEach(r => {
-                    let com = r.comentario.length > 90 ? escapeHTML(r.comentario.substring(0, 90)) + '...' : escapeHTML(r.comentario);
+                    let com = (r.comentario || '').length > 85 ? escapeHTML((r.comentario || '').substring(0, 85)) + '...' : escapeHTML(r.comentario);
                     let nombreSafe = escapeHTML(r.nombre);
                     html += `
-                        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/60 p-6 rounded-3xl flex gap-5 items-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300">
-                            <div class="flex-shrink-0 text-brand-yellow/80 text-4xl"><i class="fas fa-quote-left"></i></div>
-                            <div>
-                                <p class="text-sm text-slate-700 dark:text-slate-300 italic font-medium leading-relaxed mb-3">"${com}"</p>
+                        <div class="bg-white border border-slate-200/60 p-5 rounded-3xl flex gap-4 items-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+                            
+                            <div class="flex-shrink-0 text-brand-yellow/80 text-3xl relative z-10"><i class="fas fa-quote-left"></i></div>
+                            <div class="relative z-10">
+                                <p class="text-[13px] text-slate-600 italic font-medium leading-relaxed mb-2">"${com}"</p>
                                 <div class="flex items-center gap-2">
-                                    <div class="flex text-brand-yellow text-xs" aria-label="5 estrellas">${generateStars(5)}</div>
-                                    <span class="text-xs font-bold text-brand-dark dark:text-white uppercase tracking-wide">${nombreSafe}</span>
+                                    <div class="flex text-brand-yellow text-[10px]">${generateStars(5)}</div>
+                                    <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wide">${nombreSafe}</span>
                                 </div>
                             </div>
                         </div>`;
@@ -690,123 +713,149 @@
 
         function renderCourses(cursos) {
             const grid = document.getElementById('courses-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             
+            if (!cursos || cursos.length === 0) return;
+
             cursos.forEach((curso, index) => {
-                const courseComments = allComments.filter(c => c.cursoId === curso.id);
+                const safeId = curso.id || `temp_${index}`;
+                const safeNombre = curso.nombre || 'Curso sin nombre';
+                
+                const courseComments = allComments.filter(c => c.cursoId === safeId);
                 const avg = courseComments.length > 0 
-                    ? (courseComments.reduce((sum, c) => sum + parseInt(c.estrellas), 0) / courseComments.length).toFixed(1)
+                    ? (courseComments.reduce((sum, c) => sum + parseInt(c.estrellas || 0), 0) / courseComments.length).toFixed(1)
                     : "0.0";
                 
-                const card = document.createElement('article');
-                // Premium Glassmorphism Card
-                card.className = "bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-3xl p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] border border-slate-200/60 dark:border-slate-700/60 flex flex-col h-full hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group";
+                const linkCurso = curso.enlace || curso.Enlace || curso.ENLACE || '';
+                const nameLower = safeNombre.toLowerCase();
                 
-                const linkCurso = curso.enlace || curso.Enlace || curso.ENLACE;
-                
-                const nameLower = curso.nombre.toLowerCase();
                 let wmIcon = 'fa-graduation-cap';
                 if(nameLower.includes('riesgo') || nameLower.includes('seguridad')) wmIcon = 'fa-shield-alt';
                 else if(nameLower.includes('auditor') || nameLower.includes('iso')) wmIcon = 'fa-clipboard-check';
                 else if(nameLower.includes('liderazgo') || nameLower.includes('gestión')) wmIcon = 'fa-users-cog';
                 else if(nameLower.includes('salud') || nameLower.includes('medicina')) wmIcon = 'fa-heartbeat';
 
-                let duracion = curso.duracion || curso.Duracion || curso.DURACION;
+                let duracion = curso.duracion || curso.Duracion || curso.DURACION || '';
                 if (duracion && !isNaN(duracion)) duracion += " Hs";
 
-                let modalidad = curso.modalidad || curso.Modalidad || curso.MODALIDAD;
-                let modalidadBadge = '';
+                let modalidad = curso.modalidad || curso.Modalidad || curso.MODALIDAD || '';
+                let modalIcon = 'fa-laptop';
+                let modalColor = 'text-slate-600 bg-slate-100';
                 if (modalidad) {
-                    let icon = 'fa-laptop'; 
-                    let colorClass = 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600'; 
-                    let text = modalidad;
                     const lowerMod = modalidad.toLowerCase();
                     if (lowerMod.includes('asincronico') || lowerMod.includes('asincrónica') || lowerMod.includes('asincrónico')) {
-                        icon = 'fa-play-circle'; colorClass = 'bg-brand-dark/10 text-brand-dark dark:text-slate-200 border-brand-dark/20'; text = 'Asincrónico';
+                        modalIcon = 'fa-play-circle'; modalColor = 'text-brand-dark bg-brand-dark/10'; modalidad = 'Asincrónico';
                     } else if (lowerMod.includes('sincronico') || lowerMod.includes('sincrónica') || lowerMod.includes('sincrónico')) {
-                        icon = 'fa-video'; colorClass = 'bg-brand-teal/10 text-brand-teal dark:text-brand-teal border-brand-teal/20'; text = 'Sincrónico';
+                        modalIcon = 'fa-video'; modalColor = 'text-brand-teal bg-brand-teal/10'; modalidad = 'Sincrónico';
                     } else if (lowerMod.includes('ambas') || lowerMod.includes('mixto') || lowerMod.includes('híbrido')) {
-                        icon = 'fa-layer-group'; colorClass = 'bg-brand-green/10 text-brand-green dark:text-brand-green border-brand-green/20'; text = 'Híbrido';
+                        modalIcon = 'fa-layer-group'; modalColor = 'text-brand-green bg-brand-green/10'; modalidad = 'Híbrido';
                     }
-                    modalidadBadge = `<span class="${colorClass} px-3 py-1.5 rounded-xl text-xs font-bold tech-data border flex items-center gap-1.5"><i class="fas ${icon}"></i> ${text}</span>`;
                 }
 
                 let valor = curso.valor || curso.Valor || curso.VALOR || curso.precio || curso.Precio || curso.PRECIO;
                 let valorBadge = '';
                 if (valor && !isNaN(valor) && valor > 0) {
-                    valorBadge = `<span class="bg-brand-dark text-white px-3 py-1.5 rounded-xl text-xs font-bold tech-data shadow-sm">$${valor} USD</span>`;
+                    valorBadge = `<span class="bg-brand-dark text-white px-3 py-1.5 rounded-xl text-xs font-bold tech-data shadow-sm whitespace-nowrap">$${valor} USD</span>`;
                 } else if (valor == 0 || valor === "0" || (typeof valor === 'string' && valor.toLowerCase() === 'gratis')) {
-                    valorBadge = `<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold tech-data shadow-sm">GRATIS</span>`;
+                    valorBadge = `<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold tech-data shadow-sm whitespace-nowrap">GRATIS</span>`;
                 }
 
-                const linkButtonHtml = linkCurso 
-                    ? `<a href="${linkCurso}" target="_blank" aria-label="Inscribirse en ${escapeHTML(curso.nombre)}" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-[14px] flex items-center justify-center gap-2 group/btn">
-                         <span>Inscribirse</span>
-                         <i class="fas fa-external-link-alt text-[11px] group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform" aria-hidden="true"></i>
-                       </a>`
-                    : '';
+                const descFormateada = (curso.descripcion || '').replace(/\n/g, '<br/>');
 
-                const descFormateada = (curso.descripcion || 'Sin descripción disponible.').replace(/\n/g, '<br/>');
+                // Lógica de Bento Grid
+                const isFeatured = index === 0;
+                
+                let cardClasses = "bg-white rounded-3xl p-6 sm:p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] border border-slate-200/60 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group flex flex-col";
+                
+                if (isFeatured) {
+                    cardClasses += " md:col-span-2 lg:col-span-2 md:flex-row gap-6 items-stretch";
+                }
 
-                card.innerHTML = `
-                    <i class="fas ${wmIcon} absolute -bottom-6 -right-6 text-[10rem] text-slate-100 dark:text-slate-700/30 opacity-60 z-0 rotate-12 pointer-events-none group-hover:scale-110 transition-transform duration-700"></i>
-                    
-                    <!-- Línea Mágica -->
+                const card = document.createElement('article');
+                card.className = cardClasses;
+                
+                let internalHtml = `
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+                    <i class="fas ${wmIcon} absolute ${isFeatured ? '-bottom-10 -right-4 text-[14rem]' : '-bottom-6 -right-6 text-[10rem]'} text-slate-100 opacity-60 z-0 rotate-12 pointer-events-none group-hover:scale-110 transition-transform duration-700"></i>
+                `;
 
-                    <div class="flex justify-between items-start mb-6 relative z-10">
-                        <button class="bg-brand-yellow/10 text-brand-yellow px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5 border border-brand-yellow/20 cursor-pointer hover:bg-brand-yellow/20 transition-colors" onclick="openModal('${curso.id}')" aria-label="Ver opiniones. Calificación ${avg}">
-                            <i class="fas fa-star" aria-hidden="true"></i> <span class="tech-data">${avg}</span>
+                if (isFeatured) {
+                    internalHtml += `
+                    <div class="flex-1 flex flex-col relative z-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-brand-yellow/20 text-brand-yellow px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-brand-yellow/30 flex items-center gap-1.5"><i class="fas fa-fire"></i> Destacado</span>
+                            ${valorBadge}
+                        </div>
+                        <h3 class="text-3xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors cursor-pointer" onclick="openModal('${safeId}')">${escapeHTML(safeNombre)}</h3>
+                        <p class="text-slate-500 mb-6 flex-1 text-sm leading-relaxed max-w-lg">${descFormateada}</p>
+                        
+                        <div class="flex flex-wrap gap-3 mt-auto">
+                            ${linkCurso ? `<a href="${linkCurso}" target="_blank" class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-sm flex items-center gap-2 active:scale-95"><i class="fas fa-bolt"></i> Inscribirse Ahora</a>` : ''}
+                            <button onclick="openModal('${safeId}')" class="bg-white border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 text-sm flex items-center gap-2 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar y Valorar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full md:w-64 shrink-0 flex flex-col gap-3 relative z-10 justify-center">
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl text-brand-yellow"><i class="fas fa-star"></i></div>
+                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Calificación</span><span class="font-extrabold text-xl text-brand-dark">${avg} <span class="text-sm font-normal text-slate-500">(${courseComments.length})</span></span></div>
+                        </div>
+                        ${duracion ? `
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl text-slate-600"><i class="far fa-clock"></i></div>
+                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Duración</span><span class="font-bold text-slate-700">${duracion}</span></div>
+                        </div>` : ''}
+                        ${modalidad ? `
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl ${modalColor.split(' ')[0]}"><i class="fas ${modalIcon}"></i></div>
+                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Modalidad</span><span class="font-bold text-slate-700">${modalidad}</span></div>
+                        </div>` : ''}
+                    </div>
+                    `;
+                } else {
+                    internalHtml += `
+                    <div class="flex justify-between items-start mb-5 relative z-10">
+                        <button class="bg-brand-yellow/10 text-brand-yellow px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5 border border-brand-yellow/20 hover:bg-brand-yellow/20 transition-colors active:scale-95" onclick="openModal('${safeId}')">
+                            <i class="fas fa-star"></i> <span class="tech-data">${avg}</span>
                         </button>
                         ${valorBadge}
                     </div>
-
-                    <h3 class="text-2xl font-extrabold mb-4 text-brand-dark dark:text-white leading-tight group-hover:text-brand-teal transition-colors cursor-pointer relative z-10" onclick="openModal('${curso.id}')">${escapeHTML(curso.nombre)}</h3>
+                    <h3 class="text-xl sm:text-2xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors cursor-pointer relative z-10" onclick="openModal('${safeId}')">${escapeHTML(safeNombre)}</h3>
+                    <p class="text-slate-500 mb-6 flex-1 text-[13px] sm:text-sm leading-relaxed relative z-10">${descFormateada}</p>
                     
-                    <p class="text-slate-600 dark:text-slate-300 mb-8 flex-1 text-sm leading-relaxed relative z-10">${descFormateada}</p>
-
-                    <div class="flex flex-wrap items-center gap-2 mb-6 relative z-10">
-                        ${duracion ? `<span class="bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold tech-data border border-slate-200/60 dark:border-slate-600 flex items-center gap-1.5"><i class="far fa-clock" aria-hidden="true"></i> ${duracion}</span>` : ''}
-                        ${modalidadBadge}
-                        <button class="bg-brand-teal/10 text-brand-teal px-3 py-1.5 rounded-xl text-xs font-bold tech-data border border-brand-teal/20 flex items-center gap-1.5 cursor-pointer hover:bg-brand-teal/20 transition-colors" onclick="openModal('${curso.id}')">
-                            <i class="fas fa-users" aria-hidden="true"></i> ${courseComments.length} Op.
-                        </button>
+                    <div class="flex flex-wrap items-center gap-2 mb-5 relative z-10">
+                        ${duracion ? `<span class="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 flex items-center gap-1.5"><i class="far fa-clock"></i> ${duracion}</span>` : ''}
+                        ${modalidad ? `<span class="${modalColor} border-transparent px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5"><i class="fas ${modalIcon}"></i> ${modalidad}</span>` : ''}
                     </div>
 
-                    <div class="pt-6 mt-auto border-t border-slate-200/60 dark:border-slate-700/60 flex flex-col sm:flex-row gap-3 relative z-10">
-                        ${linkButtonHtml}
-                        <button onclick="openModal('${curso.id}')" class="flex-1 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border-2 border-slate-200/60 dark:border-slate-600 hover:border-slate-300 dark:hover:border-slate-500 text-brand-dark dark:text-slate-200 font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 text-sm flex items-center justify-center gap-2">
-                            <i class="far fa-star text-brand-yellow" aria-hidden="true"></i>
-                            <span>Valorar</span>
-                        </button>
+                    <div class="pt-5 mt-auto border-t border-slate-200/60 flex flex-col sm:flex-row gap-3 relative z-10">
+                        ${linkCurso ? `<a href="${linkCurso}" target="_blank" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-md shadow-brand-teal/20 text-sm flex items-center justify-center gap-2 active:scale-95"><span>Inscribirse</span><i class="fas fa-external-link-alt text-[11px]"></i></a>` : ''}
+                        <button onclick="openModal('${safeId}')" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3 px-3 rounded-xl transition-all duration-300 text-sm flex items-center justify-center gap-1.5 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar</button>
                     </div>
-                `;
+                    `;
+                }
+
+                card.innerHTML = internalHtml;
                 grid.appendChild(card);
             });
         }
 
         function setupModalEvents() {
             const modal = document.getElementById('review-modal');
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            if (!modal) return;
             
             document.addEventListener('keydown', (e) => { 
                 if (modal.classList.contains('hidden')) return;
-
                 if (e.key === 'Escape') closeModal();
-
                 if (e.key === 'Tab') {
                     const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
                     const firstElement = focusableElements[0];
                     const lastElement = focusableElements[focusableElements.length - 1];
-
                     if (e.shiftKey) { 
-                        if (document.activeElement === firstElement) {
-                            lastElement.focus(); e.preventDefault();
-                        }
+                        if (document.activeElement === firstElement) { lastElement.focus(); e.preventDefault(); }
                     } else { 
-                        if (document.activeElement === lastElement) {
-                            firstElement.focus(); e.preventDefault();
-                        }
+                        if (document.activeElement === lastElement) { firstElement.focus(); e.preventDefault(); }
                     }
                 }
             });
@@ -814,9 +863,7 @@
             const stars = document.querySelectorAll('#star-input i');
             stars.forEach(star => {
                 star.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault(); this.click();
-                    }
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
                 });
             });
         }
@@ -824,55 +871,71 @@
         function openModal(courseId) {
             const curso = allCourses.find(c => c.id === courseId);
             if (!curso) return;
-            document.getElementById('modal-course-title').textContent = curso.nombre;
-            document.getElementById('course-id').value = courseId;
-            document.getElementById('review-form').reset();
+            
+            const titleEl = document.getElementById('modal-course-title');
+            const idEl = document.getElementById('course-id');
+            const formEl = document.getElementById('review-form');
+            const modal = document.getElementById('review-modal');
+            
+            if (titleEl) titleEl.textContent = curso.nombre || 'Curso';
+            if (idEl) idEl.value = courseId;
+            if (formEl) formEl.reset();
+            
             resetStars();
             renderComments(courseId);
-            const modal = document.getElementById('review-modal');
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
             
-            setTimeout(() => document.getElementById('user-name').focus(), 100);
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+            setTimeout(() => {
+                const nameInput = document.getElementById('user-name');
+                if (nameInput) nameInput.focus();
+            }, 100);
         }
 
         function closeModal() {
-            document.getElementById('review-modal').classList.add('hidden');
+            const modal = document.getElementById('review-modal');
+            if (modal) modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
 
         function renderComments(courseId) {
             const container = document.getElementById('comments-list');
+            if (!container) return;
+            
             const comments = allComments.filter(c => c.cursoId === courseId);
             if (comments.length === 0) {
                 container.innerHTML = `
-                    <div class="text-center py-10 bg-slate-50 dark:bg-slate-700/30 rounded-3xl border border-dashed border-slate-200 dark:border-slate-600">
-                        <div class="w-14 h-14 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-slate-300 dark:text-slate-500"><i class="far fa-edit text-2xl" aria-hidden="true"></i></div>
-                        <p class="text-brand-dark dark:text-slate-300 font-bold">Sé el primero en opinar</p>
-                        <p class="text-sm text-brand-teal mt-1">Tu feedback es importante</p>
+                    <div class="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-slate-300"><i class="far fa-edit text-xl" aria-hidden="true"></i></div>
+                        <p class="text-brand-dark font-bold text-sm">Sé el primero en opinar</p>
+                        <p class="text-xs text-brand-teal mt-1">Tu feedback es importante</p>
                     </div>`;
                 return;
             }
             const reversedComments = [...comments].reverse();
             container.innerHTML = reversedComments.map(c => {
-                const nombreSafe = escapeHTML(c.nombre);
-                const comentarioSafe = escapeHTML(c.comentario);
+                const nombreSafe = escapeHTML(c.nombre || 'Anónimo');
+                const comentarioSafe = escapeHTML(c.comentario || '');
+                const estrellasNum = parseInt(c.estrellas) || 0;
+                const charInicial = nombreSafe.charAt(0) || 'U';
+                
                 return `
-                <div class="bg-white dark:bg-slate-800 p-5 rounded-3xl border border-slate-200/60 dark:border-slate-700 hover:border-brand-teal/50 hover:shadow-md transition-all duration-200">
-                    <div class="flex justify-between items-start mb-3">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-teal/30 transition-all duration-200">
+                    <div class="flex justify-between items-start mb-2">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-2xl bg-brand-teal/10 border border-brand-teal/20 text-brand-teal flex items-center justify-center font-extrabold text-sm shadow-sm">${nombreSafe.charAt(0)}</div>
+                            <div class="w-9 h-9 rounded-xl bg-brand-teal/10 text-brand-teal flex items-center justify-center font-extrabold text-sm shadow-sm">${charInicial}</div>
                             <div>
-                                <span class="font-bold text-brand-dark dark:text-slate-200 text-sm block">${nombreSafe}</span>
+                                <span class="font-bold text-brand-dark text-sm block">${nombreSafe}</span>
                                 <div class="flex items-center gap-1.5 mt-0.5">
-                                    <div class="flex text-brand-yellow text-[10px]" aria-label="${c.estrellas} estrellas">${generateStars(c.estrellas)}</div>
-                                    <span class="text-[10px] text-slate-400 font-bold">(${c.estrellas}.0)</span>
+                                    <div class="flex text-brand-yellow text-[10px]">${generateStars(estrellasNum)}</div>
                                 </div>
                             </div>
                         </div>
-                        <span class="text-[10px] text-slate-500 font-bold bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-xl">${new Date(c.fecha || Date.now()).toLocaleDateString()}</span>
+                        <span class="text-[9px] text-slate-400 font-bold bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">${new Date(c.fecha || Date.now()).toLocaleDateString()}</span>
                     </div>
-                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed pl-[52px]">${comentarioSafe}</p>
+                    <p class="text-slate-600 text-[13px] leading-relaxed pl-12">${comentarioSafe}</p>
                 </div>
             `}).join('');
         }
@@ -880,7 +943,7 @@
         function generateStars(count) {
             let html = '';
             for(let i=0; i<5; i++) {
-                html += `<i class="${i < count ? 'fas text-brand-yellow drop-shadow-sm' : 'far text-slate-300 dark:text-slate-600'} fa-star" aria-hidden="true"></i>`;
+                html += `<i class="${i < count ? 'fas text-brand-yellow drop-shadow-sm' : 'far text-slate-300'} fa-star" aria-hidden="true"></i>`;
             }
             return html;
         }
@@ -891,19 +954,23 @@
             const ratingText = document.getElementById('rating-text');
             const ratingBadge = document.getElementById('rating-badge');
             const ratingTextSimple = document.getElementById('rating-text-simple');
+            const starContainer = document.getElementById('star-input');
+            
+            if(!starContainer) return;
+
             stars.forEach(star => {
                 star.addEventListener('mouseenter', function() {
                     const value = this.getAttribute('data-value');
-                    updateStarVisuals(value, true); 
+                    updateStarVisuals(value); 
                     updateRatingText(value);
                 });
                 star.addEventListener('click', function() {
                     const value = this.getAttribute('data-value');
-                    ratingInput.value = value;
-                    updateStarVisuals(value, false); 
-                    updateRatingText(value, true);
-                    ratingBadge.classList.remove('hidden');
-                    ratingTextSimple.textContent = `${value}/5`;
+                    if (ratingInput) ratingInput.value = value;
+                    updateStarVisuals(value); 
+                    updateRatingText(value);
+                    if (ratingBadge) ratingBadge.classList.remove('hidden');
+                    if (ratingTextSimple) ratingTextSimple.textContent = `${value}/5`;
                     
                     stars.forEach(s => s.setAttribute('aria-checked', 'false'));
                     this.setAttribute('aria-checked', 'true');
@@ -912,20 +979,23 @@
                     setTimeout(() => this.style.transform = "scale(1)", 150);
                 });
             });
-            document.getElementById('star-input').addEventListener('mouseleave', function() {
+            
+            starContainer.addEventListener('mouseleave', function() {
+                if (!ratingInput) return;
                 const currentValue = ratingInput.value;
-                updateStarVisuals(currentValue, false);
-                if(currentValue == 0) {
+                updateStarVisuals(currentValue);
+                if(currentValue == 0 && ratingText && ratingBadge) {
                     ratingText.textContent = "Haz clic para puntuar";
                     ratingBadge.classList.add('hidden');
                 } else {
-                    updateRatingText(currentValue, true);
+                    updateRatingText(currentValue);
                 }
             });
         }
 
         function updateRatingText(value) {
             const ratingText = document.getElementById('rating-text');
+            if (!ratingText) return;
             const label = ratingLabels[value - 1];
             if (value > 0) ratingText.innerHTML = `<span class="text-brand-teal font-bold">${label}</span>`;
         }
@@ -933,39 +1003,57 @@
         function updateStarVisuals(value) {
             const stars = document.querySelectorAll('#star-input i');
             stars.forEach(star => {
-                const starVal = star.getAttribute('data-value');
+                const starVal = parseInt(star.getAttribute('data-value'));
                 if (starVal <= value) {
                     star.classList.add('active', 'fas', 'text-brand-yellow', 'drop-shadow-sm');
-                    star.classList.remove('far', 'text-slate-300', 'dark:text-slate-600');
+                    star.classList.remove('far', 'text-slate-300');
                 } else {
                     star.classList.remove('active', 'fas', 'text-brand-yellow', 'drop-shadow-sm');
-                    star.classList.add('far', 'text-slate-300', 'dark:text-slate-600');
+                    star.classList.add('far', 'text-slate-300');
                 }
             });
         }
 
         function resetStars() {
-            document.getElementById('rating-value').value = 0;
-            document.getElementById('rating-text').textContent = "Haz clic para puntuar";
-            document.getElementById('rating-badge').classList.add('hidden');
+            const ratingInput = document.getElementById('rating-value');
+            const ratingText = document.getElementById('rating-text');
+            const ratingBadge = document.getElementById('rating-badge');
+            
+            if (ratingInput) ratingInput.value = 0;
+            if (ratingText) ratingText.textContent = "Haz clic para puntuar";
+            if (ratingBadge) ratingBadge.classList.add('hidden');
+            
             const stars = document.querySelectorAll('#star-input i');
             stars.forEach(s => s.setAttribute('aria-checked', 'false'));
             updateStarVisuals(0);
         }
 
         function setupForm() {
-            document.getElementById('review-form').addEventListener('submit', async (e) => {
+            const form = document.getElementById('review-form');
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const btn = document.getElementById('submit-btn');
+                const ratingInput = document.getElementById('rating-value');
+                const courseInput = document.getElementById('course-id');
+                const nameInput = document.getElementById('user-name');
+                const commentInput = document.getElementById('user-comment');
+
+                if (!btn || !ratingInput || !courseInput || !nameInput || !commentInput) return;
+
                 const originalBtnText = btn.innerHTML;
-                const rating = document.getElementById('rating-value').value;
-                if(rating == 0) { alert("Por favor selecciona una calificación."); return; }
+                const rating = ratingInput.value;
+                
+                if(rating == 0) { showToast("Por favor selecciona una calificación."); return; }
+                
                 const newReview = {
-                    cursoId: document.getElementById('course-id').value,
-                    nombre: document.getElementById('user-name').value,
+                    cursoId: courseInput.value,
+                    nombre: nameInput.value,
                     estrellas: rating,
-                    comentario: document.getElementById('user-comment').value
+                    comentario: commentInput.value
                 };
+                
                 btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Publicando...';
                 btn.disabled = true;
                 btn.classList.add('opacity-75', 'cursor-not-allowed');
@@ -977,7 +1065,7 @@
                         renderComments(newReview.cursoId);
                         renderCourses(allCourses);
                         renderSocialProofBanner();
-                        document.getElementById('review-form').reset();
+                        form.reset();
                         resetStars();
                         btn.innerHTML = originalBtnText;
                         btn.disabled = false;
@@ -992,11 +1080,7 @@
                         const formData = new FormData();
                         formData.append('action', 'addComment');
                         formData.append('data', JSON.stringify(newReview));
-                        const response = await fetch(URL_GOOGLE_SCRIPT, { 
-                            method: 'POST', 
-                            body: formData,
-                            signal: controller.signal
-                        });
+                        const response = await fetch(URL_GOOGLE_SCRIPT, { method: 'POST', body: formData, signal: controller.signal });
                         clearTimeout(timeoutId);
                         
                         const result = await response.json();
@@ -1006,7 +1090,7 @@
                             renderComments(newReview.cursoId);
                             renderCourses(allCourses);
                             renderSocialProofBanner();
-                            document.getElementById('review-form').reset();
+                            form.reset();
                             resetStars();
                             showToast("¡Opinión publicada con éxito!");
                         } else {
@@ -1014,12 +1098,7 @@
                         }
                     } catch (error) {
                         clearTimeout(timeoutId);
-                        console.error(error);
-                        if (error.name === 'AbortError') {
-                            alert("Tiempo de espera agotado. Revisa tu conexión de internet y vuelve a intentar.");
-                        } else {
-                            alert("Hubo un error al guardar tu comentario.");
-                        }
+                        showToast(error.name === 'AbortError' ? "Tiempo de espera agotado." : "Error al guardar el comentario.");
                     } finally {
                         btn.innerHTML = originalBtnText;
                         btn.disabled = false;
