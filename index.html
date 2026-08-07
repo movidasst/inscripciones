@@ -2,17 +2,17 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="referrer" content="no-referrer">
     
     <!-- SEO y Meta Etiquetas -->
-    <title>Academia Movida SST - Valoración de Cursos</title>
-    <meta name="description" content="Catálogo de cursos y valoraciones de la Academia Movida SST. Evoluciona tu carrera en Seguridad y Salud en el Trabajo.">
+    <title>Academia La Movida de SST | Cursos, valoraciones y comunidad</title>
+    <meta name="description" content="Explora los cursos de la Academia La Movida de SST, consulta valoraciones de la comunidad, accede a la plataforma y conoce los medios oficiales.">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Academia Movida SST - Valoración de Cursos">
-    <meta property="og:description" content="Catálogo de cursos y valoraciones de la Academia Movida SST. Evoluciona tu carrera en SST.">
-    <meta property="og:image" content="https://assets.poap.xyz/cec12a20-fefb-4199-9cc0-b1ece87fe44d.png">
+    <meta property="og:title" content="Academia La Movida de SST | Cursos y valoraciones">
+    <meta property="og:description" content="Cursos, valoraciones y accesos oficiales de la Academia La Movida de SST.">
+    <meta property="og:image" content="https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&sz=w1000">
     <meta property="og:type" content="website">
     
     <!-- Datos Estructurados (Schema.org) -->
@@ -22,8 +22,9 @@
       "@type": "EducationalOrganization",
       "name": "La Movida de SST",
       "description": "Formación y capacitación en Seguridad y Salud en el Trabajo",
-      "logo": "https://assets.poap.xyz/cec12a20-fefb-4199-9cc0-b1ece87fe44d.png",
-      "url": "https://movidasst.org"
+      "logo": "https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&sz=w1000",
+      "url": "https://www.movidasst.com",
+      "sameAs": ["https://movidasst.org", "https://registro.movidasst.com"]
     }
     </script>
     
@@ -33,7 +34,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -147,19 +148,70 @@
             background: #007b85;
             border-radius: 4px;
         }
+
+
+        :root {
+            --movida-dark: #082b5c;
+            --movida-blue: #0f4c81;
+            --movida-teal: #007f87;
+            --movida-green: #68a842;
+            --ven-yellow: #f4c430;
+            --ven-blue: #003893;
+            --ven-red: #cf142b;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { overflow-x: hidden; }
+        button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+        button, a { touch-action: manipulation; }
+
+        .venezuela-line {
+            height: 4px;
+            background: linear-gradient(90deg, var(--ven-yellow) 0 33.333%, var(--ven-blue) 33.333% 66.666%, var(--ven-red) 66.666% 100%);
+        }
+
+        .surface-card {
+            background: rgba(255,255,255,.94);
+            border: 1px solid rgba(203,213,225,.72);
+            box-shadow: 0 10px 30px rgba(15,23,42,.055);
+        }
+
+        .touch-target { min-height: 44px; }
+
+        .mobile-nav-safe {
+            padding-bottom: max(.35rem, env(safe-area-inset-bottom));
+        }
+
+        .course-search:focus {
+            box-shadow: 0 0 0 4px rgba(0,123,133,.10);
+        }
+
+        @media (max-width: 767px) {
+            .chart-card, .surface-card { border-radius: 1.15rem; }
+            .mobile-compact { padding-left: 1rem; padding-right: 1rem; }
+            #review-modal { align-items: flex-end; }
+            #review-modal > div { border-radius: 1.5rem 1.5rem 0 0; margin: 0; max-height: 92dvh; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
     </style>
 </head>
-<body class="antialiased min-h-screen pb-24 md:pb-12 text-slate-600 transition-colors duration-300 relative">
+<body class="antialiased min-h-screen pt-1 pb-24 md:pb-12 text-slate-600 transition-colors duration-300 relative">
 
-    <!-- Fondo Tech Grid y Luces (Ambientación) anclado a los bordes -->
+    <div class="fixed inset-x-0 top-0 z-[60] venezuela-line" aria-hidden="true"></div>
     <div class="fixed inset-0 z-[-2] bg-slate-50 bg-grid-pattern"></div>
-    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-teal blur-[120px] animate-pulse-glow"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-brand-green blur-[120px] animate-pulse-glow" style="animation-delay: 3s;"></div>
-    </div>
+    <div class="fixed inset-0 z-[-1] pointer-events-none bg-[radial-gradient(circle_at_top_left,rgba(0,123,133,0.08),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(0,32,91,0.06),transparent_38%)]"></div>
 
     <script>
-        const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx-rBNVVARQOt9SoL2G_OSJOL4ZydVlFDQeCVH4mIps-7MxOyYQQ1xTO-f0Wdc824Yy/exec"; 
+        const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx2nf5FqE-q8PUxvy305rDBYpeyZmi-p1fUIC2pUvHss9Q6VjswXkHcN2-8iFa8dl9Kfg/exec"; 
         const MODO_DEMO = false; 
 
         const mockData = {
@@ -196,47 +248,55 @@
     </a>
 
     <!-- Barra de Navegación Inferior Móvil -->
-    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-[16px] border-t border-slate-200 z-50 flex justify-around items-center px-2 py-1 shadow-[0_-10px_30px_-10px_rgba(0,0,0,0.05)] pb-safe">
-        <button onclick="switchTab('cursos')" id="btn-mobile-cursos" class="mobile-nav-btn active-nav flex-1 flex flex-col items-center p-2 pt-3 text-slate-400 transition-colors active:scale-95">
+    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-200 z-50 flex justify-around items-center px-2 pt-1 shadow-[0_-8px_28px_rgba(15,23,42,0.08)] mobile-nav-safe">
+        <button onclick="switchTab('cursos')" id="btn-mobile-cursos" class="mobile-nav-btn active-nav flex-1 flex flex-col items-center p-2 pt-2.5 min-h-[58px] text-slate-400 transition-colors active:scale-95">
             <i class="fas fa-graduation-cap text-[22px] mb-1"></i>
             <span class="text-[10px] font-bold tracking-wide">Cursos</span>
         </button>
-        <button onclick="switchTab('pagos')" id="btn-mobile-pagos" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 pt-3 text-slate-400 transition-colors active:scale-95">
+        <button onclick="switchTab('pagos')" id="btn-mobile-pagos" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 pt-2.5 min-h-[58px] text-slate-400 transition-colors active:scale-95">
             <i class="fas fa-wallet text-[22px] mb-1"></i>
             <span class="text-[10px] font-bold tracking-wide">Pagos</span>
         </button>
-        <button onclick="switchTab('comunidad')" id="btn-mobile-comunidad" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 pt-3 text-slate-400 transition-colors active:scale-95">
+        <button onclick="switchTab('comunidad')" id="btn-mobile-comunidad" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 pt-2.5 min-h-[58px] text-slate-400 transition-colors active:scale-95">
             <i class="fas fa-users text-[22px] mb-1"></i>
             <span class="text-[10px] font-bold tracking-wide">Comunidad</span>
         </button>
     </nav>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 relative z-10">
-        
-        <header class="flex flex-col items-center justify-center mb-8 relative">
-            <div class="relative mb-6 group cursor-pointer" onclick="window.location.href='https://www.movidasst.com'">
-                <div class="absolute inset-0 bg-brand-teal rounded-full blur-[24px] opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
-                <img src="https://assets.poap.xyz/02f1b599-7092-4d3c-9b59-2fe4d3b0164e.png" 
-                     alt="Logo Movida SST" 
-                     class="w-28 h-28 md:w-32 md:h-32 object-contain relative z-10 drop-shadow-xl rounded-full animate-float group-hover:scale-105 transition-transform duration-500">
+
+        <header class="mb-6 md:mb-8 relative">
+            <div class="surface-card rounded-[1.35rem] md:rounded-[1.75rem] overflow-hidden">
+                <div class="venezuela-line" aria-hidden="true"></div>
+                <div class="p-4 sm:p-6 md:p-7">
+                    <div class="flex items-center gap-3 sm:gap-4">
+                        <a href="https://www.movidasst.com" aria-label="Ir al inicio de La Movida de SST" class="shrink-0">
+                            <img src="https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&sz=w1000" alt="Logo La Movida de SST" class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain drop-shadow-sm" loading="eager">
+                        </a>
+                        <div class="min-w-0 flex-1">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-extrabold uppercase tracking-[.12em] text-brand-teal mb-1">
+                                <i class="fas fa-graduation-cap" aria-hidden="true"></i> Academia
+                            </span>
+                            <h1 class="text-[1.65rem] leading-[1.05] sm:text-3xl md:text-4xl font-extrabold text-brand-dark tracking-tight">La Movida de SST</h1>
+                            <p class="text-xs sm:text-sm text-slate-500 mt-1 leading-snug">Actualización profesional, cursos y experiencias educativas en SST.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5 mt-4">
+                        <a href="https://registro.movidasst.com/" target="_blank" rel="noopener" class="touch-target inline-flex items-center justify-center gap-2 rounded-xl bg-brand-teal text-white font-extrabold text-sm px-3.5 py-3 shadow-md shadow-brand-teal/20 active:scale-[.98] transition">
+                            <i class="fas fa-id-card" aria-hidden="true"></i><span>Registro</span>
+                        </a>
+                        <a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener" class="touch-target inline-flex items-center justify-center gap-2 rounded-xl bg-brand-dark text-white font-extrabold text-sm px-3.5 py-3 shadow-md active:scale-[.98] transition">
+                            <i class="fas fa-right-to-bracket" aria-hidden="true"></i><span>Ingresar</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <h1 class="text-3xl md:text-4xl font-extrabold text-brand-dark tracking-tight text-center mb-1">
-                Academia Movida SST
-            </h1>
-            <p class="text-brand-teal font-bold tech-data text-xs mb-8 text-center px-4">Evoluciona tu carrera en Seguridad y Salud</p>
-
-            <!-- NAVEGACIÓN DESKTOP -->
-            <nav aria-label="Navegación principal de secciones" class="hidden md:flex bg-white/90 backdrop-blur-[16px] p-1.5 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200/60 flex-wrap justify-center gap-2 max-w-2xl w-full mx-auto">
-                <button aria-controls="view-cursos" onclick="switchTab('cursos')" id="btn-cursos" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-lg shadow-brand-teal/30 active:scale-95">
-                    <i class="fas fa-graduation-cap" aria-hidden="true"></i> Cursos
-                </button>
-                <button aria-controls="view-pagos" onclick="switchTab('pagos')" id="btn-pagos" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95">
-                    <i class="fas fa-wallet" aria-hidden="true"></i> Pagos
-                </button>
-                <button aria-controls="view-comunidad" onclick="switchTab('comunidad')" id="btn-comunidad" class="flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95">
-                    <i class="fas fa-users" aria-hidden="true"></i> Comunidad
-                </button>
+            <nav aria-label="Secciones de la Academia" class="hidden md:flex mt-4 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200 max-w-xl w-full mx-auto gap-1.5">
+                <button aria-controls="view-cursos" onclick="switchTab('cursos')" id="btn-cursos" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 bg-brand-teal text-white shadow-md active:scale-95"><i class="fas fa-graduation-cap"></i>Cursos</button>
+                <button aria-controls="view-pagos" onclick="switchTab('pagos')" id="btn-pagos" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95"><i class="fas fa-wallet"></i>Pagos</button>
+                <button aria-controls="view-comunidad" onclick="switchTab('comunidad')" id="btn-comunidad" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95"><i class="fas fa-users"></i>Comunidad</button>
             </nav>
         </header>
 
@@ -245,39 +305,48 @@
                 
                 <div id="social-proof-banner" class="hidden mb-10 w-full max-w-5xl mx-auto"></div>
 
-                <div class="text-center mb-8">
-                    <h2 id="cursos-heading" class="text-2xl font-extrabold text-brand-dark">Catálogo de Cursos</h2>
-                    <div class="w-12 h-1 bg-brand-teal rounded-full mx-auto mt-2 mb-4"></div>
-                    <p class="text-slate-500 font-light max-w-2xl mx-auto text-sm">
-                        Explora, aprende y valora nuestras experiencias educativas.
-                    </p>
+                <div class="text-left sm:text-center mb-5 md:mb-7">
+                    <span class="inline-flex items-center gap-2 rounded-full bg-brand-teal/10 text-brand-teal border border-brand-teal/15 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider mb-2">Formación y actualización</span>
+                    <h2 id="cursos-heading" class="text-2xl sm:text-3xl font-extrabold text-brand-dark">Catálogo de cursos</h2>
+                    <p class="text-slate-500 max-w-2xl sm:mx-auto text-sm mt-1.5">Consulta la oferta disponible, revisa la experiencia de otros participantes y comparte tu valoración.</p>
                 </div>
 
-                <div class="bg-white/90 backdrop-blur-[16px] border border-brand-teal/20 rounded-3xl p-5 max-w-2xl mx-auto flex items-start sm:items-center gap-4 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] mb-10 relative overflow-hidden">
-                    <div class="absolute left-0 top-0 h-full w-1 bg-brand-teal"></div>
-                    <div class="bg-brand-teal/10 p-3 rounded-2xl text-brand-teal shadow-sm shrink-0">
-                        <i class="fas fa-user-check text-lg" aria-hidden="true"></i>
-                    </div>
-                    <div class="text-left">
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            <span class="font-bold text-brand-dark block mb-0.5">¿Listo para comenzar?</span>
-                            Para participar y obtener certificados, es necesario <a href="https://movidasst.org/login/index.php" target="_blank" class="text-brand-teal font-bold hover:text-brand-dark underline decoration-brand-teal/40 underline-offset-2 transition-colors">crear tu usuario</a> en nuestra Academia.
-                        </p>
+                <div class="surface-card rounded-2xl p-4 sm:p-5 max-w-3xl mx-auto mb-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-11 h-11 bg-brand-teal/10 rounded-xl text-brand-teal flex items-center justify-center shrink-0"><i class="fas fa-user-check"></i></div>
+                        <div class="min-w-0 flex-1">
+                            <h3 class="font-extrabold text-brand-dark text-base">Dos accesos, dos funciones</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed mt-1"><strong class="text-slate-700">Registro La Movida:</strong> actualiza tu perfil y credencial. <strong class="text-slate-700">Academia:</strong> ingresa a los cursos y certificados.</p>
+                            <div class="flex flex-wrap gap-2 mt-3">
+                                <a href="https://registro.movidasst.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-brand-teal text-white px-3.5 py-2.5 rounded-xl text-xs font-extrabold"><i class="fas fa-id-card"></i> Ir al Registro</a>
+                                <a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-slate-100 text-brand-dark px-3.5 py-2.5 rounded-xl text-xs font-extrabold border border-slate-200"><i class="fas fa-right-to-bracket"></i> Ingresar a Academia</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto" aria-busy="true" aria-label="Cargando cursos"></div>
+                <div class="max-w-3xl mx-auto mb-6 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2.5">
+                    <label class="relative block">
+                        <span class="sr-only">Buscar cursos</span>
+                        <i class="fas fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input id="course-search" type="search" inputmode="search" autocomplete="off" placeholder="Buscar curso por nombre, modalidad o tema…" class="course-search w-full h-12 rounded-xl bg-white border border-slate-200 pl-11 pr-4 text-sm text-slate-800 outline-none transition">
+                    </label>
+                    <button onclick="fetchData()" class="h-12 px-4 rounded-xl border border-slate-200 bg-white text-brand-dark font-extrabold text-sm inline-flex items-center justify-center gap-2 active:scale-[.98]"><i class="fas fa-rotate"></i><span>Actualizar</span></button>
+                </div>
+                <div id="catalog-status" class="max-w-3xl mx-auto -mt-3 mb-6 text-center text-xs text-slate-400" aria-live="polite">Conectando con el catálogo…</div>
+
+                <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full max-w-7xl mx-auto" aria-busy="true" aria-label="Cargando cursos"></div>
 
                 <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-3xl relative mb-6 text-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] max-w-2xl mx-auto backdrop-blur-[16px]" role="alert">
                     <div class="flex items-center justify-center gap-2 mb-1">
                         <i class="fas fa-wifi" aria-hidden="true"></i>
-                        <strong class="font-bold">Error de conexión</strong>
+                        <strong class="font-bold">No pudimos cargar el catálogo</strong>
                     </div>
-                    <span class="block sm:inline text-sm opacity-90" id="error-text">No se pudo conectar.</span>
+                    <span class="block sm:inline text-sm opacity-90" id="error-text">Revisa la conexión o el estado del servicio.</span>
                     <button onclick="fetchData()" class="mt-2 text-xs font-bold underline hover:text-red-800 active:scale-95">Reintentar</button>
                 </div>
 
-                <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-10" aria-live="polite">
+                <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 relative z-10" aria-live="polite">
                     <!-- Dinámico -->
                 </div>
             </section>
@@ -388,10 +457,10 @@
                         </p>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mb-10">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-8">
                         
                         <a href="https://chat.whatsapp.com/Fv0CmlSqTVyDB0diXAyPCI" target="_blank" 
-                           class="bg-white p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95">
+                           class="bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
                             <div class="w-16 h-16 bg-[#25D366]/10 text-[#25D366] rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform border border-[#25D366]/20 shadow-sm">
@@ -401,8 +470,8 @@
                             <p class="text-slate-500 text-xs">Comunidad de estudio</p>
                         </a>
 
-                        <a href="https://whatsapp.com/channel/0029Va0mlH5Jf05mrcCz8r3e" target="_blank"
-                           class="bg-white p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95">
+                        <a href="https://whatsapp.com/channel/0029Va0mlH5Jf05mrcCz8r3e" target="_blank" rel="noopener"
+                           class="bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                             <div class="w-16 h-16 bg-brand-teal/10 text-brand-teal rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform border border-brand-teal/20 shadow-sm">
@@ -412,8 +481,15 @@
                             <p class="text-slate-500 text-xs">Noticias y novedades</p>
                         </a>
 
-                        <a href="https://movidasst.org/login/index.php" target="_blank"
-                           class="bg-brand-dark p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.2)] hover:-translate-y-1.5 border border-slate-800 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95 sm:col-span-2 md:col-span-1">
+                        <a href="https://registro.movidasst.com/" target="_blank" rel="noopener"
+                           class="bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-lg border border-slate-200 group flex flex-col items-center text-center transition-all active:scale-95">
+                            <div class="w-14 h-14 bg-brand-teal/10 text-brand-teal rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fas fa-id-card"></i></div>
+                            <h3 class="font-bold text-brand-dark text-base mb-1">Registro</h3>
+                            <p class="text-slate-500 text-[11px] leading-snug">Perfil y credencial</p>
+                        </a>
+
+                        <a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener"
+                           class="bg-brand-dark p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.2)] hover:-translate-y-1.5 border border-slate-800 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95 ">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                             <div class="w-16 h-16 bg-white/10 text-brand-teal rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform border border-white/10">
@@ -446,6 +522,12 @@
                 </div>
             </section>
         </main>
+
+        <footer class="mt-10 mb-3 text-center text-xs text-slate-400">
+            <div class="venezuela-line max-w-24 mx-auto rounded-full mb-4" aria-hidden="true"></div>
+            <p class="font-semibold text-slate-500">Academia La Movida de SST</p>
+            <p class="mt-1">De la Reacción a la Prevención · <a href="https://www.movidasst.com" class="text-brand-teal font-bold">www.movidasst.com</a></p>
+        </footer>
     </div>
 
     <div id="review-modal" role="dialog" aria-modal="true" aria-labelledby="modal-course-title" class="fixed inset-0 bg-slate-900/60 overflow-y-auto h-full w-full hidden z-[9999] flex items-center justify-center backdrop-blur-[16px] transition-opacity duration-300 pb-16 md:pb-0" onclick="closeModal()">
@@ -467,7 +549,7 @@
                     <div class="grid grid-cols-1 gap-5">
                         <div>
                             <label class="block text-brand-dark text-sm font-bold mb-1.5" for="user-name">Tu Nombre</label>
-                            <input class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-brand-teal focus:border-transparent block p-3 transition-all outline-none shadow-sm" id="user-name" type="text" placeholder="Ej: Ana García" required>
+                            <input class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-brand-teal focus:border-transparent block p-3 transition-all outline-none shadow-sm" id="user-name" type="text" autocomplete="name" maxlength="80" placeholder="Ej: Ana García" required>
                         </div>
                         <div>
                             <label class="block text-brand-dark text-sm font-bold mb-1.5">Tu Calificación</label>
@@ -488,9 +570,13 @@
                         </div>
                         <div>
                             <label class="block text-brand-dark text-sm font-bold mb-1.5" for="user-comment">Comentario</label>
-                            <textarea class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-brand-teal focus:border-transparent block p-3 transition-all outline-none resize-none shadow-sm" id="user-comment" rows="2" placeholder="¿Qué fue lo mejor del curso?" required></textarea>
+                            <textarea class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-brand-teal focus:border-transparent block p-3 transition-all outline-none resize-none shadow-sm" id="user-comment" rows="3" maxlength="700" placeholder="¿Qué fue lo mejor del curso? Evita incluir datos personales de terceros." required></textarea>
                         </div>
                     </div>
+                    <label class="flex items-start gap-3 mt-4 p-3.5 rounded-2xl bg-white border border-slate-200 text-xs text-slate-500 leading-relaxed cursor-pointer">
+                        <input id="review-consent" type="checkbox" required class="mt-0.5 w-4 h-4 accent-[#007b85] shrink-0">
+                        <span>Entiendo que mi nombre, puntuación y comentario serán visibles públicamente en esta página. No incluiré datos personales de terceros ni contenido ofensivo.</span>
+                    </label>
                     <div class="flex items-center justify-end gap-3 pt-5 mt-2 border-t border-slate-200/60">
                         <button type="button" onclick="closeModal()" class="px-4 py-2 text-slate-500 font-bold hover:text-brand-dark hover:bg-slate-100 rounded-xl transition-colors duration-200 active:scale-95 text-sm">Cancelar</button>
                         <button class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-brand-teal/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-teal transition-all duration-200 active:scale-95 text-sm" type="submit" id="submit-btn">Publicar Opinión</button>
@@ -528,14 +614,38 @@
             setupStarRating();
             setupForm();
             setupModalEvents();
+            setupCourseSearch();
         });
 
         // Utilidad de seguridad contra fallas de inyección HTML
-        function escapeHTML(str) {
-            if (!str) return '';
-            return str.replace(/[&<>'"]/g, 
+        function escapeHTML(value) {
+            if (value === undefined || value === null) return '';
+            return String(value).replace(/[&<>'"]/g,
                 tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])
             );
+        }
+
+        function safeExternalUrl(value) {
+            if (!value) return '';
+            try {
+                const parsed = new URL(String(value), window.location.href);
+                if (!['http:', 'https:'].includes(parsed.protocol)) return '';
+                return parsed.href;
+            } catch (_) {
+                return '';
+            }
+        }
+
+        function normalizeApiPayload(payload) {
+            if (!payload || typeof payload !== 'object') return null;
+            if (payload.status === 'success' || payload.ok === true) {
+                const root = payload.data && typeof payload.data === 'object' ? payload.data : payload;
+                return {
+                    cursos: root.cursos || root.courses || payload.cursos || [],
+                    comentarios: root.comentarios || root.comments || payload.comentarios || []
+                };
+            }
+            return null;
         }
 
         // Animación de carga optimizada (Skeletons)
@@ -572,13 +682,13 @@
                 const mobBtn = document.getElementById(`btn-mobile-${btn}`);
 
                 if (btn === tabName) {
-                    if (deskBtn) deskBtn.className = "flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-lg shadow-brand-teal/30 transform scale-105 active:scale-95";
+                    if (deskBtn) deskBtn.className = "flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-md active:scale-95";
                     if (mobBtn) {
                         mobBtn.classList.remove('text-slate-400');
                         mobBtn.classList.add('active-nav');
                     }
                 } else {
-                    if (deskBtn) deskBtn.className = "flex-1 min-w-[120px] px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95";
+                    if (deskBtn) deskBtn.className = "flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95";
                     if (mobBtn) {
                         mobBtn.classList.add('text-slate-400');
                         mobBtn.classList.remove('active-nav');
@@ -587,31 +697,44 @@
             });
         }
 
-        function copyPaymentData(type, btnElement) {
+        async function copyText(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+                return;
+            }
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.focus(); ta.select();
+            document.execCommand('copy');
+            ta.remove();
+        }
+
+        async function copyPaymentData(type, btnElement) {
             const textToCopy = paymentInfo[type];
-            if (textToCopy) {
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    showToast('Datos copiados con éxito');
-                    
-                    const originalHtml = btnElement.innerHTML;
-                    const originalClasses = btnElement.className;
-                    const card = btnElement.closest('.payment-card');
-                    
-                    if(card) {
-                        card.classList.add('ring-4', 'ring-brand-green/30', 'bg-brand-green/5');
-                        setTimeout(() => card.classList.remove('ring-4', 'ring-brand-green/30', 'bg-brand-green/5'), 800);
-                    }
-
-                    btnElement.innerHTML = `<span>¡Copiado!</span> <i class="fas fa-check"></i>`;
-                    btnElement.classList.remove('bg-brand-dark', 'hover:bg-brand-teal');
-                    btnElement.classList.add('bg-brand-green', 'hover:bg-[#60963b]');
-                    
-                    setTimeout(() => {
-                        btnElement.innerHTML = originalHtml;
-                        btnElement.className = originalClasses;
-                    }, 2500);
-
-                }).catch(err => console.error('Error al copiar: ', err));
+            if (!textToCopy) return;
+            try {
+                await copyText(textToCopy);
+                showToast('Datos copiados con éxito');
+                const originalHtml = btnElement.innerHTML;
+                const originalClasses = btnElement.className;
+                const card = btnElement.closest('.payment-card');
+                if(card) {
+                    card.classList.add('ring-4', 'ring-brand-green/30', 'bg-brand-green/5');
+                    setTimeout(() => card.classList.remove('ring-4', 'ring-brand-green/30', 'bg-brand-green/5'), 800);
+                }
+                btnElement.innerHTML = `<span>¡Copiado!</span> <i class="fas fa-check"></i>`;
+                btnElement.classList.remove('bg-brand-dark', 'hover:bg-brand-teal');
+                btnElement.classList.add('bg-brand-green', 'hover:bg-[#60963b]');
+                setTimeout(() => {
+                    btnElement.innerHTML = originalHtml;
+                    btnElement.className = originalClasses;
+                }, 2200);
+            } catch (err) {
+                console.error('Error al copiar:', err);
+                showToast('No se pudo copiar. Mantén pulsado para seleccionar los datos.');
             }
         }
 
@@ -627,55 +750,70 @@
             const errorElement = document.getElementById('error-message');
             const loadingElement = document.getElementById('loading');
             const gridElement = document.getElementById('courses-grid');
+            const statusElement = document.getElementById('catalog-status');
 
             if (errorElement) errorElement.classList.add('hidden');
             if (loadingElement) loadingElement.classList.remove('hidden');
             if (gridElement) gridElement.classList.add('hidden');
+            if (statusElement) statusElement.textContent = 'Actualizando catálogo…';
 
             if (MODO_DEMO) {
-                setTimeout(() => {
-                    allCourses = mockData.cursos || [];
-                    allComments = mockData.comentarios || [];
-                    renderSocialProofBanner();
-                    renderCourses(allCourses);
-                    if(loadingElement) loadingElement.classList.add('hidden');
-                    if(gridElement) gridElement.classList.remove('hidden');
-                }, 1000);
-            } else {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 10000); 
+                allCourses = mockData.cursos || [];
+                allComments = mockData.comentarios || [];
+                renderSocialProofBanner();
+                renderCourses(allCourses);
+                if (loadingElement) loadingElement.classList.add('hidden');
+                if (gridElement) gridElement.classList.remove('hidden');
+                if (statusElement) statusElement.textContent = `${allCourses.length} cursos · modo demostración`;
+                return;
+            }
 
-                try {
-                    const response = await fetch(URL_GOOGLE_SCRIPT, { signal: controller.signal });
-                    clearTimeout(timeoutId); 
-                    const data = await response.json();
-                    
-                    if(data.status === "success") {
-                        allCourses = data.cursos || [];
-                        allComments = data.comentarios || [];
-                        
-                        if (allCourses.length === 0 && errorElement) {
-                             document.getElementById('error-text').textContent = "Conexión exitosa, pero la hoja 'Cursos' está vacía.";
-                             errorElement.classList.remove('hidden');
-                        }
-                        
-                        renderSocialProofBanner();
-                        renderCourses(allCourses);
-                        
-                        if(loadingElement) loadingElement.classList.add('hidden');
-                        if(gridElement) gridElement.classList.remove('hidden');
-                    } else {
-                        throw new Error(data.message || "Error Desconocido");
-                    }
-                } catch (error) {
-                    clearTimeout(timeoutId);
-                    if(loadingElement) loadingElement.classList.add('hidden');
-                    if(errorElement) {
-                        errorElement.classList.remove('hidden');
-                        document.getElementById('error-text').textContent = error.name === 'AbortError' 
-                            ? "Tiempo de espera agotado." 
-                            : "No se pudo conectar con el servidor.";
-                    }
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 12000);
+
+            try {
+                const separator = URL_GOOGLE_SCRIPT.includes('?') ? '&' : '?';
+                const response = await fetch(`${URL_GOOGLE_SCRIPT}${separator}_=${Date.now()}`, {
+                    signal: controller.signal,
+                    cache: 'no-store'
+                });
+                clearTimeout(timeoutId);
+
+                const raw = await response.text();
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                let data;
+                try { data = JSON.parse(raw); }
+                catch (_) { throw new Error('El servidor no devolvió JSON válido'); }
+
+                const normalized = normalizeApiPayload(data);
+                if (!normalized) throw new Error(data.message || data.error || 'Formato de respuesta no reconocido');
+
+                allCourses = Array.isArray(normalized.cursos) ? normalized.cursos : [];
+                allComments = Array.isArray(normalized.comentarios) ? normalized.comentarios : [];
+
+                renderSocialProofBanner();
+                renderCourses(allCourses);
+
+                if (loadingElement) loadingElement.classList.add('hidden');
+                if (gridElement) gridElement.classList.remove('hidden');
+                if (statusElement) statusElement.textContent = `${allCourses.length} curso${allCourses.length === 1 ? '' : 's'} · ${allComments.length} valoración${allComments.length === 1 ? '' : 'es'} · actualizado ${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+
+                if (allCourses.length === 0 && errorElement) {
+                    document.getElementById('error-text').textContent = "La conexión funciona, pero no llegaron cursos desde la hoja 'Cursos'.";
+                    errorElement.classList.remove('hidden');
+                }
+            } catch (error) {
+                clearTimeout(timeoutId);
+                console.error('Error cargando catálogo:', error);
+                if (loadingElement) loadingElement.classList.add('hidden');
+                if (gridElement) gridElement.classList.remove('hidden');
+                if (statusElement) statusElement.textContent = 'Catálogo no disponible temporalmente';
+                if (errorElement) {
+                    errorElement.classList.remove('hidden');
+                    document.getElementById('error-text').textContent = error.name === 'AbortError'
+                        ? 'El servidor tardó más de 12 segundos en responder.'
+                        : `Diagnóstico: ${error.message || 'no se pudo conectar con el servidor'}.`;
                 }
             }
         }
@@ -716,21 +854,24 @@
             if (!grid) return;
             grid.innerHTML = '';
             
-            if (!cursos || cursos.length === 0) return;
+            if (!cursos || cursos.length === 0) {
+                grid.innerHTML = `<div class="md:col-span-2 lg:col-span-3 surface-card rounded-2xl p-8 text-center"><i class="fas fa-book-open text-3xl text-slate-300 mb-3"></i><p class="font-extrabold text-brand-dark">No hay cursos para mostrar</p><p class="text-sm text-slate-500 mt-1">Prueba actualizar el catálogo o cambiar la búsqueda.</p></div>`;
+                return;
+            }
 
             cursos.forEach((curso, index) => {
                 // FIX: Detectar cualquier variante de "ID" desde Google Sheets o crear uno temporal seguro
-                const safeId = curso.id || curso.Id || curso.ID || `temp_${index}`;
+                const safeId = String(curso.id || curso.Id || curso.ID || `temp_${index}`);
                 curso._safeId = safeId; // Lo guardamos en memoria para que el botón lo encuentre
                 
-                const safeNombre = curso.nombre || curso.Nombre || curso.NOMBRE || 'Curso sin nombre';
+                const safeNombre = String(curso.nombre || curso.Nombre || curso.NOMBRE || 'Curso sin nombre');
                 
-                const courseComments = allComments.filter(c => c.cursoId === safeId);
+                const courseComments = allComments.filter(c => String(c.cursoId) === safeId);
                 const avg = courseComments.length > 0 
                     ? (courseComments.reduce((sum, c) => sum + parseInt(c.estrellas || 0), 0) / courseComments.length).toFixed(1)
                     : "0.0";
                 
-                const linkCurso = curso.enlace || curso.Enlace || curso.ENLACE || '';
+                const linkCurso = safeExternalUrl(curso.enlace || curso.Enlace || curso.ENLACE || '');
                 const nameLower = safeNombre.toLowerCase();
                 
                 let wmIcon = 'fa-graduation-cap';
@@ -764,7 +905,7 @@
                     valorBadge = `<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold tech-data shadow-sm whitespace-nowrap">GRATIS</span>`;
                 }
 
-                const descFormateada = (curso.descripcion || '').replace(/\n/g, '<br/>');
+                const descFormateada = escapeHTML(curso.descripcion || curso.Descripcion || curso.DESCRIPCION || '').replace(/\n/g, '<br/>');
 
                 // Lógica de Bento Grid
                 const isFeatured = index === 0;
@@ -790,12 +931,12 @@
                             <span class="bg-brand-yellow/20 text-brand-yellow px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-brand-yellow/30 flex items-center gap-1.5"><i class="fas fa-fire"></i> Destacado</span>
                             ${valorBadge}
                         </div>
-                        <h3 class="text-3xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors cursor-pointer" onclick="openModal('${safeId}')">${escapeHTML(safeNombre)}</h3>
+                        <h3 class="text-3xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors cursor-pointer" onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))">${escapeHTML(safeNombre)}</h3>
                         <p class="text-slate-500 mb-6 flex-1 text-sm leading-relaxed max-w-lg">${descFormateada}</p>
                         
                         <div class="flex flex-wrap gap-3 mt-auto">
-                            ${linkCurso ? `<a href="${linkCurso}" target="_blank" class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-sm flex items-center gap-2 active:scale-95"><i class="fas fa-bolt"></i> Inscribirse Ahora</a>` : ''}
-                            <button onclick="openModal('${safeId}')" class="bg-white border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 text-sm flex items-center gap-2 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar y Valorar</button>
+                            ${linkCurso ? `<a href="${linkCurso}" target="_blank" rel="noopener" class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-sm flex items-center gap-2 active:scale-95"><i class="fas fa-bolt"></i> Inscribirse Ahora</a>` : ''}
+                            <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="bg-white border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 text-sm flex items-center gap-2 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar y Valorar</button>
                         </div>
                     </div>
                     
@@ -807,40 +948,62 @@
                         ${duracion ? `
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
                             <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl text-slate-600"><i class="far fa-clock"></i></div>
-                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Duración</span><span class="font-bold text-slate-700">${duracion}</span></div>
+                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Duración</span><span class="font-bold text-slate-700">${escapeHTML(duracion)}</span></div>
                         </div>` : ''}
                         ${modalidad ? `
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
                             <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl ${modalColor.split(' ')[0]}"><i class="fas ${modalIcon}"></i></div>
-                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Modalidad</span><span class="font-bold text-slate-700">${modalidad}</span></div>
+                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Modalidad</span><span class="font-bold text-slate-700">${escapeHTML(modalidad)}</span></div>
                         </div>` : ''}
                     </div>
                     `;
                 } else {
                     internalHtml += `
                     <div class="flex justify-between items-start mb-5 relative z-10">
-                        <button class="bg-brand-yellow/10 text-brand-yellow px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5 border border-brand-yellow/20 hover:bg-brand-yellow/20 transition-colors active:scale-95" onclick="openModal('${safeId}')">
+                        <button class="bg-brand-yellow/10 text-brand-yellow px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5 border border-brand-yellow/20 hover:bg-brand-yellow/20 transition-colors active:scale-95" onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))">
                             <i class="fas fa-star"></i> <span class="tech-data">${avg}</span>
                         </button>
                         ${valorBadge}
                     </div>
-                    <h3 class="text-xl sm:text-2xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors cursor-pointer relative z-10" onclick="openModal('${safeId}')">${escapeHTML(safeNombre)}</h3>
+                    <h3 class="text-xl sm:text-2xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors cursor-pointer relative z-10" onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))">${escapeHTML(safeNombre)}</h3>
                     <p class="text-slate-500 mb-6 flex-1 text-[13px] sm:text-sm leading-relaxed relative z-10">${descFormateada}</p>
                     
                     <div class="flex flex-wrap items-center gap-2 mb-5 relative z-10">
-                        ${duracion ? `<span class="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 flex items-center gap-1.5"><i class="far fa-clock"></i> ${duracion}</span>` : ''}
-                        ${modalidad ? `<span class="${modalColor} border-transparent px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5"><i class="fas ${modalIcon}"></i> ${modalidad}</span>` : ''}
+                        ${duracion ? `<span class="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 flex items-center gap-1.5"><i class="far fa-clock"></i> ${escapeHTML(duracion)}</span>` : ''}
+                        ${modalidad ? `<span class="${modalColor} border-transparent px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5"><i class="fas ${modalIcon}"></i> ${escapeHTML(modalidad)}</span>` : ''}
                     </div>
 
                     <div class="pt-5 mt-auto border-t border-slate-200/60 flex flex-col sm:flex-row gap-3 relative z-10">
-                        ${linkCurso ? `<a href="${linkCurso}" target="_blank" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-md shadow-brand-teal/20 text-sm flex items-center justify-center gap-2 active:scale-95"><span>Inscribirse</span><i class="fas fa-external-link-alt text-[11px]"></i></a>` : ''}
-                        <button onclick="openModal('${safeId}')" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3 px-3 rounded-xl transition-all duration-300 text-sm flex items-center justify-center gap-1.5 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar</button>
+                        ${linkCurso ? `<a href="${linkCurso}" target="_blank" rel="noopener" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-md shadow-brand-teal/20 text-sm flex items-center justify-center gap-2 active:scale-95"><span>Inscribirse</span><i class="fas fa-external-link-alt text-[11px]"></i></a>` : ''}
+                        <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3 px-3 rounded-xl transition-all duration-300 text-sm flex items-center justify-center gap-1.5 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar</button>
                     </div>
                     `;
                 }
 
                 card.innerHTML = internalHtml;
                 grid.appendChild(card);
+            });
+        }
+
+
+        function setupCourseSearch() {
+            const input = document.getElementById('course-search');
+            if (!input) return;
+            input.addEventListener('input', () => {
+                const query = input.value.trim().toLocaleLowerCase('es');
+                if (!query) {
+                    renderCourses(allCourses);
+                    return;
+                }
+                const filtered = allCourses.filter(curso => {
+                    const haystack = [
+                        curso.nombre, curso.Nombre, curso.NOMBRE,
+                        curso.descripcion, curso.Descripcion, curso.DESCRIPCION,
+                        curso.modalidad, curso.Modalidad, curso.MODALIDAD
+                    ].filter(Boolean).join(' ').toLocaleLowerCase('es');
+                    return haystack.includes(query);
+                });
+                renderCourses(filtered);
             });
         }
 
@@ -875,7 +1038,7 @@
             // FIX: Buscar el curso usando el ID ultra-seguro que generamos al renderizar
             const curso = allCourses.find((c, index) => {
                 const cId = c._safeId || c.id || c.Id || c.ID || `temp_${index}`;
-                return cId === courseId;
+                return String(cId) === String(courseId);
             });
             
             if (!curso) {
@@ -888,7 +1051,7 @@
             const formEl = document.getElementById('review-form');
             const modal = document.getElementById('review-modal');
             
-            if (titleEl) titleEl.textContent = curso.nombre || 'Curso';
+            if (titleEl) titleEl.textContent = curso.nombre || curso.Nombre || curso.NOMBRE || 'Curso';
             if (idEl) idEl.value = courseId;
             if (formEl) formEl.reset();
             
@@ -915,7 +1078,7 @@
             const container = document.getElementById('comments-list');
             if (!container) return;
             
-            const comments = allComments.filter(c => c.cursoId === courseId);
+            const comments = allComments.filter(c => String(c.cursoId) === String(courseId));
             if (comments.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
@@ -1050,6 +1213,7 @@
                 const courseInput = document.getElementById('course-id');
                 const nameInput = document.getElementById('user-name');
                 const commentInput = document.getElementById('user-comment');
+                const consentInput = document.getElementById('review-consent');
 
                 if (!btn || !ratingInput || !courseInput || !nameInput || !commentInput) return;
 
@@ -1057,12 +1221,15 @@
                 const rating = ratingInput.value;
                 
                 if(rating == 0) { showToast("Por favor selecciona una calificación."); return; }
+                if (nameInput.value.trim().length < 2) { showToast("Escribe un nombre válido."); return; }
+                if (commentInput.value.trim().length < 5) { showToast("Cuéntanos un poco más sobre tu experiencia."); return; }
+                if (consentInput && !consentInput.checked) { showToast("Debes aceptar la publicación de la reseña."); return; }
                 
                 const newReview = {
                     cursoId: courseInput.value,
-                    nombre: nameInput.value,
+                    nombre: nameInput.value.trim().slice(0, 80),
                     estrellas: rating,
-                    comentario: commentInput.value
+                    comentario: commentInput.value.trim().slice(0, 700)
                 };
                 
                 btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Publicando...';
@@ -1093,9 +1260,11 @@
                         formData.append('data', JSON.stringify(newReview));
                         const response = await fetch(URL_GOOGLE_SCRIPT, { method: 'POST', body: formData, signal: controller.signal });
                         clearTimeout(timeoutId);
-                        
-                        const result = await response.json();
-                        if(result.status === "success") {
+                        const raw = await response.text();
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        let result;
+                        try { result = JSON.parse(raw); } catch (_) { throw new Error('Respuesta inválida del servidor'); }
+                        if(result.status === "success" || result.ok === true) {
                             newReview.fecha = new Date().toISOString();
                             allComments.push(newReview);
                             renderComments(newReview.cursoId);
@@ -1105,11 +1274,12 @@
                             resetStars();
                             showToast("¡Opinión publicada con éxito!");
                         } else {
-                            throw new Error(result.message);
+                            throw new Error(result.message || result.error || 'El servidor rechazó la reseña');
                         }
                     } catch (error) {
                         clearTimeout(timeoutId);
-                        showToast(error.name === 'AbortError' ? "Tiempo de espera agotado." : "Error al guardar el comentario.");
+                        console.error('Error publicando reseña:', error);
+                        showToast(error.name === 'AbortError' ? 'Tiempo de espera agotado.' : `No se pudo publicar: ${error.message || 'error del servidor'}`);
                     } finally {
                         btn.innerHTML = originalBtnText;
                         btn.disabled = false;
