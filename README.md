@@ -1,39 +1,90 @@
 # Inscripciones · Academia La Movida de SST
 
-Sitio público: https://inscripciones.movidasst.com/
+Sitio público: https://inscripciones.movidasst.com/  
+Administración de reseñas y estados de matrícula: https://inscripciones.movidasst.com/moderacion.html
 
-## Propósito
+## Qué hace
 
-Catálogo público de cursos publicados en **Moodle (Academia Movida SST)**, con acceso a sus fichas oficiales, búsqueda, clasificación, reseñas comunitarias y orientación sobre inscripción y pagos. Este sitio **no matricula por sí solo**, no valida pagos y no emite certificados: estas acciones deben gestionarse a través de la Academia y sus procesos autorizados.
+Página pública de los cursos de la Academia publicados en Moodle, con búsqueda, categorías,
+ordenamiento, duración, precios informados por Moodle, programas/resúmenes e imágenes cuando
+están disponibles. Proporciona enlaces a la ficha oficial y orientación de pago; **no matricula,
+cobra, aprueba pagos ni emite certificados por sí misma**.
 
-## Arquitectura actual
+## Fuente de cursos y sincronización
 
-- GitHub Pages sirve `index.html`; el dominio se configura mediante `CNAME`.
-- Catálogo académico: Supabase Edge Function `academia-catalogo-publico` (GET, lectura pública). Consulta Moodle mediante `core_course_get_courses_by_field` desde el servidor. **Ningún token de Moodle debe incorporarse al HTML**.
-- Fuente autoritativa de existencia, visibilidad, identificador y enlaces de cursos: Moodle, actualmente `https://movidasst.org`.
-- Categorías públicas de Moodle: 26 (Actualización Profesional Continua), 14 (Gratuitos), 24 (De Pago), 27 (Cursos Corporativos). Las categorías nuevas se incorporan deliberadamente tras comprobar sus permisos y visibilidad.
-- Precio y duración: campos personalizados de Moodle y, si falta alguno, metadatos complementarios del servicio heredado. Verificar las discrepancias antes de publicar promociones.
-- Valoraciones: Google Apps Script (servicio anterior), consultado aparte. Una caída de reseñas no debe ocultar el catálogo. **Las reseñas actuales son opiniones de la comunidad, no necesariamente verificadas como matrículas.**
-- Cursos corporativos: acceso a la ficha Moodle y botón para solicitar capacitación en `https://presupuesto.movidasst.com/`.
+- El catálogo lee Moodle mediante `core_course_get_courses_by_field` desde la Supabase Edge
+  Function `academia-catalogo-publico`. La conexión a Moodle usa exclusivamente secretos del servidor.
+- Moodle conserva autoridad sobre identificador, visibilidad, categoría y precio. El precio actual de
+  *Gestión SST de Contratistas en Venezuela* (ID Moodle 151) es **15 USD**; 10 USD fue una
+  promoción anterior. No codificar precios promocionales directamente en la web.
+- Categorías: Actualización Profesional Continua (26), Gratuitos (14), De Pago (24),
+  Cursos Corporativos (27). Cursos corporativos pueden dirigirse a `presupuesto.movidasst.com`.
+- Precios/horas: desde resumen y/o campos personalizados de Moodle. Los datos complementarios de
+  Google Sheets **nunca sobrescriben precios** de Moodle.
+- La caché pública dura hasta 5 minutos; ante fallo transitorio puede ofrecer la última copia conocida.
+- **Las fechas de apertura del curso en Moodle no son automáticamente fechas de sesiones formativas.**
+  Solo se presenta calendario de clases cuando existe un campo específico.
+- Las imágenes proceden de los archivos descriptivos del curso en Moodle, siempre que sean servibles
+  públicamente sin tokens. Si la imagen no es accesible se muestra el diseño estándar.
+- Ningún token Moodle o clave privilegiada está presente en HTML público.
 
-## Cómo publicar un curso
+## Matrícula: estado confirmado y permisos
 
-1. Crear o actualizar el curso en Moodle, dentro de una categoría pública admitida.
-2. Confirmar que la visibilidad sea pública, con título y ficha académica correctos.
-3. Completar los campos personalizados de **duración** y **precio**; revisar que concuerden con las ofertas promocionales.
-4. Verificar `https://inscripciones.movidasst.com/` y su filtro de categoría. El catálogo utiliza una caché de hasta cinco minutos.
-5. Probar el botón **Ver curso en Academia** con una sesión de usuario no autenticado y una autenticada. La visualización de la ficha **no garantiza matrícula**.
+La función Moodle `core_enrol_get_course_enrolment_methods` no está autorizada para el token
+actual: no se inventa disponibilidad. Por defecto la ficha indica que se deben consultar las
+condiciones de matrícula en Moodle. Una función de Gestión permite a un administrador
+registrar manualmente `abierta` o `cerrada`, **solo después de verificarlo en Moodle**.
+Este estado:
+1. Requiere motivo y fecha de expiración (máximo 90 días).
+2. Se almacena en tabla RLS protegida y se publica mediante el catálogo solo mientras esté vigente.
+3. Vencido el plazo regresa a *Por verificar*; la ficha oficial sigue siendo la fuente final.
+4. No realiza operaciones sobre alumnos ni métodos de matrícula.
 
-## Seguridad y mantenimiento
+Para lograr verificación automática real, incorporar `core_enrol_get_course_enrolment_methods`
+al servicio/token de lectura de Moodle y validar que los métodos, fechas, restricciones y cupos
+sean interpretables para usuarios no matriculados.
 
-- No publicar tokens Moodle, credenciales Supabase privilegiadas ni secretos de Apps Script.
-- La Edge Function solo devuelve información de cursos, no datos personales de alumnos, matrículas ni certificados.
-- El formulario de reseñas requiere mantenimiento y moderación del servicio externo.
-- La página usa Tailwind por CDN y un archivo HTML monolítico. Como mejora posterior, migrar a CSS compilado, componentes separados y pruebas automatizadas.
-- Antes de cambiar métodos de pago, precios o permisos en Moodle, validar el flujo comercial con la administración de la Academia.
+## Reseñas y moderación
 
-## Prueba rápida
+- Las **reseñas nuevas** se envían a la Edge Function `academia-resenas`, que valida el curso
+  publicado, contenido y calificación; limita intentos y guarda el envío con estado `pendiente`.
+- El catálogo consulta solo las reseñas `aprobada` en `academia-resenas`. Si falla el servicio,
+  **no falsea calificaciones** ni oculta los cursos.
+- `moderacion.html` exige autenticación Supabase y rol administrador de Gestión.
+- Al aprobar/rechazar una opinión queda registrada la decisión. Marcar
+  `matricula_verificada` requiere comprobar la matrícula en Moodle e indicar evidencia en la
+  observación; las opiniones sin comprobación no reciben sello de matrícula.
+- Los datos históricos de Google Apps Script se mantienen en su fuente original. El
+  administrador puede importarlos **como pendientes**, emparejando por título del curso Moodle,
+  sin publicar reseñas anteriores sin revisión.
+- Las valoraciones se publican junto con el nombre informado y la calificación, según
+  consentimiento del formulario. Evitar publicar información de otras personas.
 
-- Comprobar que el servicio devuelva `ok: true`, `source: "moodle"` y una lista de cursos.
-- Validar búsqueda, filtro de categoría, orden y enlaces desde móvil y escritorio.
-- Si Moodle no responde, la página informa del fallo y permite acceder directamente a la Academia.
+## Pagos y flujo del estudiante
+
+- Los cursos de pago muestran la opción `Cómo pagar` y el importe de la ficha Moodle.
+- La página muestra únicamente orientación de pago. El estudiante debe seguir los requisitos
+  y la tarea/flujo de aprobación de Moodle para confirmar su matrícula.
+- No se debe dar por válida una inscripción porque se copiaron datos bancarios.
+- Para PayPal, no recomendar la modalidad personal `Amigos y familiares` como pago de cursos.
+
+## Compilación y validación
+
+- HTML estático servido desde GitHub Pages; el dominio lo define `CNAME`.
+- Estilos de Tailwind compilados en `assets/tailwind.css`, no mediante el script CDN en producción.
+- `package.json` fija Tailwind `3.4.17`; `package-lock.json` conserva dependencias resueltas.
+- `.github/workflows/compilar-estilos.yml` recompila al cambiar el HTML o archivos de estilo.
+- `.github/workflows/verificar-sitio.yml` ejecuta `node scripts/verificar-sitio.mjs` para validar
+  sintaxis JS, HTML, enlaces, CSS y referencias a integraciones.
+
+## Lista de pruebas
+
+1. Confirmar que `academia-catalogo-publico` responda `HTTP 200` con `source=moodle`,
+   categorías, cursos y estado de matrícula.
+2. Verificar que el precio de Contratistas ID 151 sea 15 USD.
+3. Comprobar los filtros de categoría, ordenamiento, búsqueda y vista móvil.
+4. Crear una reseña de prueba, verificar estado `pendiente`, luego eliminar el dato de prueba.
+5. Comprobar que un usuario sin permiso de Gestión no pueda moderar.
+6. Importar reseñas históricas solo mediante cuenta administrativa, comprobando coincidencias.
+7. Confirmar a mano los métodos de inscripción de Moodle antes de declarar un curso abierto.
+8. Verificar que `assets/tailwind.css` esté disponible desde GitHub Pages tras desplegar.
