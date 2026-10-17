@@ -769,71 +769,109 @@
             const loadingElement = document.getElementById('loading');
             const gridElement = document.getElementById('courses-grid');
             const statusElement = document.getElementById('catalog-status');
-
             if (errorElement) errorElement.classList.add('hidden');
             if (loadingElement) loadingElement.classList.remove('hidden');
             if (gridElement) gridElement.classList.add('hidden');
-            if (statusElement) statusElement.textContent = 'Actualizando catálogo…';
+            if (statusElement) statusElement.textContent = 'Consultando los cursos publicados en Moodle…';
 
             if (MODO_DEMO) {
                 allCourses = mockData.cursos || [];
                 allComments = mockData.comentarios || [];
                 renderSocialProofBanner();
-                renderCourses(allCourses);
+                renderFilteredCourses();
                 if (loadingElement) loadingElement.classList.add('hidden');
                 if (gridElement) gridElement.classList.remove('hidden');
-                if (statusElement) statusElement.textContent = `${allCourses.length} cursos · modo demostración`;
+                if (statusElement) statusElement.textContent = 'Demostración, datos no reales';
                 return;
             }
 
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 12000);
-
+            const timeoutId = setTimeout(() => controller.abort(), 25000);
             try {
-                const separator = URL_GOOGLE_SCRIPT.includes('?') ? '&' : '?';
-                const response = await fetch(`${URL_GOOGLE_SCRIPT}${separator}_=${Date.now()}`, {
-                    signal: controller.signal,
-                    cache: 'no-store'
-                });
-                clearTimeout(timeoutId);
-
-                const raw = await response.text();
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-                let data;
-                try { data = JSON.parse(raw); }
-                catch (_) { throw new Error('El servidor no devolvió JSON válido'); }
-
-                const normalized = normalizeApiPayload(data);
-                if (!normalized) throw new Error(data.message || data.error || 'Formato de respuesta no reconocido');
-
-                allCourses = Array.isArray(normalized.cursos) ? normalized.cursos : [];
-                allComments = Array.isArray(normalized.comentarios) ? normalized.comentarios : [];
-
-                renderSocialProofBanner();
-                renderCourses(allCourses);
-
-                if (loadingElement) loadingElement.classList.add('hidden');
-                if (gridElement) gridElement.classList.remove('hidden');
-                if (statusElement) statusElement.textContent = `${allCourses.length} curso${allCourses.length === 1 ? '' : 's'} · ${allComments.length} valoración${allComments.length === 1 ? '' : 'es'} · actualizado ${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
-
-                if (allCourses.length === 0 && errorElement) {
-                    document.getElementById('error-text').textContent = "La conexión funciona, pero no llegaron cursos desde la hoja 'Cursos'.";
-                    errorElement.classList.remove('hidden');
+                const response = await fetch(MOODLE_CATALOG_URL, { signal: controller.signal, cache: 'no-store' });
+                const data = await response.json();
+                if (!response.ok || !data.ok || !Array.isArray(data.courses)) {
+                    throw new Error('Moodle no respondió con un catálogo válido');
                 }
-            } catch (error) {
-                clearTimeout(timeoutId);
-                console.error('Error cargando catálogo:', error);
+                allCourses = data.courses.map(c => ({ ...c, _reviewId: String(c.id) }));
+                renderFilteredCourses();
                 if (loadingElement) loadingElement.classList.add('hidden');
                 if (gridElement) gridElement.classList.remove('hidden');
-                if (statusElement) statusElement.textContent = 'Catálogo no disponible temporalmente';
+                if (statusElement) statusElement.textContent = String(allCourses.length) + ' cursos publicados en Moodle'
+                    + (data.stale ? ' · última versión disponible' : '')
+                    + ' · consulta del ' + new Date(data.updated_at || Date.now()).toLocaleDateString('es');
+                void loadReviewsAndMetadata();
+            } catch (error) {
+                console.error('No fue posible consultar Moodle', error);
+                if (loadingElement) loadingElement.classList.add('hidden');
+                if (gridElement) gridElement.classList.remove('hidden');
+                if (statusElement) statusElement.textContent = 'No se pudo verificar la oferta actual en Moodle';
                 if (errorElement) {
                     errorElement.classList.remove('hidden');
-                    document.getElementById('error-text').textContent = error.name === 'AbortError'
-                        ? 'El servidor tardó más de 12 segundos en responder.'
-                        : `Diagnóstico: ${error.message || 'no se pudo conectar con el servidor'}.`;
+                    document.getElementById('error-text').textContent = 'No se pudo actualizar desde Moodle. Reintenta o entra directamente a la Academia.';
                 }
+                if (!allCourses.length && gridElement) {
+                    gridElement.innerHTML = '<div class="md:col-span-2 lg:col-span-3 text-center p-6"><a class="inline-flex rounded-xl bg-brand-teal text-white px-5 py-3 font-extrabold" href="https://movidasst.org/" target="_blank" rel="noopener noreferrer">Ver cursos en Moodle</a></div>';
+                } else renderFilteredCourses();
+            } finally {
+                clearTimeout(timeoutId);
             }
+        }
+
+        function normalizedCourseName(value) {
+            return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+        }
+
+        async function loadReviewsAndMetadata() {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 12000);
+            try {
+                const separator = URL_GOOGLE_SCRIPT.includes('?') ? '&' : '?';
+                const response = await fetch(URL_GOOGLE_SCRIPT + separator + '_=' + Date.now(), {
+                    signal: controller.signal, cache: 'no-store'
+                });
+                if (!response.ok) throw new Error('Reseñas no disponibles');
+                const normalized = normalizeApiPayload(await response.json());
+                if (!normalized) throw new Error('Formato de reseñas no reconocido');
+                allComments = Array.isArray(normalized.comentarios) ? normalized.comentarios : [];
+                const oldCourses = Array.isArray(normalized.cursos) ? normalized.cursos : [];
+                const byName = new Map(oldCourses.map(c => [
+                    normalizedCourseName(c.nombre || c.Nombre || c.NOMBRE), c
+                ]).filter(([key]) => !!key));
+                for (const course of allCourses) {
+                    const old = byName.get(normalizedCourseName(course.nombre));
+                    if (!old) continue;
+                    course._reviewId = String(old.id || old.Id || old.ID || course.id);
+                    const get = (...keys) => keys.map(k => old[k]).find(v => v !== undefined && v !== null && String(v).trim() !== '');
+                    if (!course.descripcion) course.descripcion = String(get('descripcion','Descripcion','DESCRIPCION') || '').slice(0,450);
+                    if (!course.duracion) course.duracion = String(get('duracion','Duracion','DURACION') || '');
+                    if (!course.precio_texto) course.precio_texto = String(get('valor','Valor','VALOR','precio','Precio','PRECIO') || '');
+                    if (!course.modalidad) course.modalidad = String(get('modalidad','Modalidad','MODALIDAD') || '');
+                }
+                renderSocialProofBanner();
+                renderFilteredCourses();
+            } catch (error) {
+                // El error de las reseñas no oculta los cursos oficiales procedentes de Moodle.
+                console.info('Opiniones o datos complementarios no disponibles');
+            } finally {
+                clearTimeout(timeoutId);
+            }
+        }
+
+        function renderFilteredCourses() {
+            const query = (document.getElementById('course-search')?.value || '').trim().toLocaleLowerCase('es');
+            const category = document.getElementById('course-category-filter')?.value || '';
+            const sort = document.getElementById('course-sort')?.value || 'recientes';
+            let rows = allCourses.filter(course => {
+                if (category && String(course.categoria_id || '') !== category) return false;
+                if (!query) return true;
+                const haystack = [course.nombre,course.descripcion,course.categoria,course.modalidad,course.nombre_corto].filter(Boolean).join(' ').toLocaleLowerCase('es');
+                return haystack.includes(query);
+            });
+            rows = rows.slice().sort((a,b) => sort === 'nombre'
+                ? String(a.nombre || '').localeCompare(String(b.nombre || ''),'es')
+                : Number(b.moodle_id || b.id || 0) - Number(a.moodle_id || a.id || 0));
+            renderCourses(rows);
         }
 
         function renderSocialProofBanner() {
