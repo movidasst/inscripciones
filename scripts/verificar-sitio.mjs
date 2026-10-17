@@ -24,6 +24,10 @@ assert.match(html,/function openPaymentGuide/);
 assert.match(html,/GRATIS PARA INTEGRANTES/);
 assert.match(admin,/academia_admin_resenas_decidir/);
 assert.match(admin,/academia_admin_resenas_importar/);
+assert.match(html,/<a\\b[^>]*id="academy-admin-link"[^>]*href="\\.\\/moderacion\\.html"/, "Falta el acceso visible al panel administrativo");
+assert.match(admin,/<h1>Administración de la Academia<\\/h1>/);
+assert.match(admin,/db\\.auth\\.signInWithPassword/);
+assert.match(admin,/academia_admin_resenas_listar/);
 for (const [page,name] of [[html,"catalogo"],[admin,"moderacion"]]) {
  const ids=[...page.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
  assert.equal(ids.length,new Set(ids).size,name+": IDs HTML duplicados");
