@@ -1,0 +1,42 @@
+name: Compilar estilos del catálogo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "tailwind.config.js"
+      - "styles/input.css"
+      - "package.json"
+      - ".github/workflows/compilar-estilos.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Instalar dependencias
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Compilar CSS optimizado
+        run: |
+          mkdir -p assets
+          npm run build:css
+          test -s assets/tailwind.css
+      - name: Publicar hoja compilada y lockfile
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/tailwind.css package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "build: compilar CSS de Inscripciones"
+            git push
+          fi
