@@ -35,46 +35,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- CSS Tailwind compilado automáticamente mediante GitHub Actions -->
+    <link rel="stylesheet" href="./assets/tailwind.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class', /* Forzamos modo claro ignorando el sistema del usuario */
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            teal: '#007b85',    /* Brand Color */
-                            dark: '#00205b',    /* Brand Dark */
-                            green: '#70ad47',   /* Brand Green */
-                            yellow: '#ffb600',  /* Brand Yellow */
-                        },
-                        slate: {
-                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a',
-                        }
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-glow': 'pulseGlow 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-8px)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: 0.05 },
-                            '50%': { opacity: 0.1 },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
 
     <style>
         body {
@@ -596,7 +559,7 @@
                     </div>
                     <label class="flex items-start gap-3 mt-4 p-3.5 rounded-2xl bg-white border border-slate-200 text-xs text-slate-500 leading-relaxed cursor-pointer">
                         <input id="review-consent" type="checkbox" required class="mt-0.5 w-4 h-4 accent-[#007b85] shrink-0">
-                        <span>Entiendo que mi nombre, puntuación y comentario serán visibles públicamente en esta página. No incluiré datos personales de terceros ni contenido ofensivo.</span>
+                        <span>Acepto que mi nombre, puntuación y comentario se publiquen solamente después de su revisión. No incluiré datos personales de terceros ni contenido ofensivo. Una valoración no acredita por sí sola mi matrícula.</span>
                     </label>
                     <div class="flex items-center justify-end gap-3 pt-5 mt-2 border-t border-slate-200/60">
                         <button type="button" onclick="closeModal()" class="px-4 py-2 text-slate-500 font-bold hover:text-brand-dark hover:bg-slate-100 rounded-xl transition-colors duration-200 active:scale-95 text-sm">Cancelar</button>
