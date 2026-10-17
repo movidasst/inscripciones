@@ -421,7 +421,7 @@
                             </div>
                             <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
                                 <p class="font-bold text-slate-700">movidasst@gmail.com</p>
-                                <p class="text-[11px] text-brand-yellow font-bold uppercase tracking-wider bg-brand-yellow/10 inline-block px-2 py-1 rounded">Pago: "Amigo/Familiar"</p>
+                                <p class="text-[11px] text-brand-yellow font-bold uppercase tracking-wider bg-brand-yellow/10 inline-block px-2 py-1 rounded">Consulta las condiciones de PayPal</p>
                             </div>
                             <a href="https://paypal.me/movidasst" target="_blank" rel="noopener noreferrer" aria-label="Ir a pagar con PayPal" class="mt-auto w-full bg-[#0070ba] hover:bg-[#003087] text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-[#0070ba]/30 active:scale-95">
                                 <span>Ir a Pagar</span> <i class="fas fa-external-link-alt" aria-hidden="true"></i>
@@ -563,7 +563,7 @@
                     </label>
                     <div class="flex items-center justify-end gap-3 pt-5 mt-2 border-t border-slate-200/60">
                         <button type="button" onclick="closeModal()" class="px-4 py-2 text-slate-500 font-bold hover:text-brand-dark hover:bg-slate-100 rounded-xl transition-colors duration-200 active:scale-95 text-sm">Cancelar</button>
-                        <button class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-brand-teal/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-teal transition-all duration-200 active:scale-95 text-sm" type="submit" id="submit-btn">Publicar Opinión</button>
+                        <button class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-brand-teal/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-teal transition-all duration-200 active:scale-95 text-sm" type="submit" id="submit-btn">Enviar valoración para revisión</button>
                     </div>
                 </form>
                 
@@ -585,7 +585,7 @@
             transfer: `DATOS PARA TRANSFERENCIA BANCARIA (VENEZUELA)\nBanco: Banco de Venezuela\nTipo de cuenta: Corriente\nNº de cuenta: 0102-0236-1500-0033-6732\nTitular: Ezequiel Linares\nC.I.: 30.407.087`,
             pagoMovil: `DATOS PARA PAGO MÓVIL\nBanco: Banco de Venezuela\nNombre: Ezequiel Linares\nC.I.: V-30.407.087\nTeléfono: 0412-6372223`,
             binance: `DATOS PARA BINANCE (USDT)\nRed: BEP20 (BSC)\nID: 176067584\nCorreo: david.linaresb@gmail.com`,
-            paypal: `DATOS PARA PAYPAL\nCorreo: movidasst@gmail.com\nNota: Pagar como "Amigo/Familiar"`
+            paypal: `DATOS PARA PAYPAL\nCorreo: movidasst@gmail.com\nNota: Confirma el tipo de pago permitido para tu curso`
         };
 
         let allComments = [];
@@ -1161,7 +1161,7 @@
                         <div class="flex items-center gap-3">
                             <div class="w-9 h-9 rounded-xl bg-brand-teal/10 text-brand-teal flex items-center justify-center font-extrabold text-sm shadow-sm">${charInicial}</div>
                             <div>
-                                <span class="font-bold text-brand-dark text-sm block">${nombreSafe}</span>
+                                <span class="font-bold text-brand-dark text-sm block">${nombreSafe}</span>${c.verificada===true ? '<span class="inline-flex text-[10px] font-bold text-brand-green">Matrícula comprobada por la Academia</span>' : '<span class="inline-flex text-[10px] text-slate-500">Valoración aprobada · matrícula no verificada</span>'}
                                 <div class="flex items-center gap-1.5 mt-0.5">
                                     <div class="flex text-brand-yellow text-[10px]">${generateStars(estrellasNum)}</div>
                                 </div>
