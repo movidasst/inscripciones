@@ -878,7 +878,7 @@
             const banner = document.getElementById('social-proof-banner');
             if (!banner || !allComments) return;
 
-            const topReviews = allComments.filter(c => parseInt(c.estrellas) === 5);
+            const topReviews = allComments.filter(c => Number(c.estrellas) >= 1 && Number(c.estrellas) <= 5);
             if (topReviews.length > 0) {
                 const recent = topReviews.slice(-2);
                 let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-5">';
@@ -893,7 +893,7 @@
                             <div class="relative z-10">
                                 <p class="text-[13px] text-slate-600 italic font-medium leading-relaxed mb-2">"${com}"</p>
                                 <div class="flex items-center gap-2">
-                                    <div class="flex text-brand-yellow text-[10px]">${generateStars(5)}</div>
+                                    <div class="flex text-brand-yellow text-[10px]">${generateStars(parseInt(r.estrellas) || 0)}</div>
                                     <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wide">${nombreSafe}</span>
                                 </div>
                             </div>
@@ -922,12 +922,13 @@
                 
                 const safeNombre = String(curso.nombre || curso.Nombre || curso.NOMBRE || 'Curso sin nombre');
                 
-                const courseComments = allComments.filter(c => String(c.cursoId) === safeId);
+                const reviewId = String(curso._reviewId || safeId);
+                const courseComments = allComments.filter(c => String(c.cursoId) === reviewId);
                 const avg = courseComments.length > 0 
                     ? (courseComments.reduce((sum, c) => sum + parseInt(c.estrellas || 0), 0) / courseComments.length).toFixed(1)
-                    : "0.0";
+                    : "Sin reseñas";
                 
-                const linkCurso = safeExternalUrl(curso.enlace || curso.Enlace || curso.ENLACE || '');
+                const linkCurso = escapeHTML(safeExternalUrl(curso.enlace || curso.Enlace || curso.ENLACE || ''));
                 const nameLower = safeNombre.toLowerCase();
                 
                 let wmIcon = 'fa-graduation-cap';
@@ -961,10 +962,12 @@
                     valorBadge = `<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold tech-data shadow-sm whitespace-nowrap">GRATIS</span>`;
                 }
 
-                const descFormateada = escapeHTML(curso.descripcion || curso.Descripcion || curso.DESCRIPCION || '').replace(/\n/g, '<br/>');
+                const descFormateada = escapeHTML(curso.descripcion || curso.Descripcion || curso.DESCRIPCION || 'Revisa el programa, requisitos y condiciones en la ficha oficial del curso en Moodle.').replace(/\n/g, '<br/>');
+                const categoryLabel = escapeHTML(curso.categoria || '');
+                const categoryBadge = categoryLabel ? `<span class="bg-slate-100 text-brand-dark px-3 py-1.5 rounded-xl text-xs font-bold">${categoryLabel}</span>` : '';
 
                 // Lógica de Bento Grid
-                const isFeatured = index === 0;
+                const isFeatured = index === 0 && Number(curso.id) === Math.max(0, ...allCourses.map(c => Number(c.id) || 0));
                 
                 let cardClasses = "bg-white rounded-3xl p-6 sm:p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] border border-slate-200/60 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group flex flex-col";
                 
@@ -984,8 +987,9 @@
                     internalHtml += `
                     <div class="flex-1 flex flex-col relative z-10">
                         <div class="flex items-center gap-3 mb-4">
-                            <span class="bg-brand-yellow/20 text-brand-yellow px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-brand-yellow/30 flex items-center gap-1.5"><i class="fas fa-fire"></i> Destacado</span>
+                            <span class="bg-brand-yellow/20 text-brand-yellow px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-brand-yellow/30 flex items-center gap-1.5"><i class="fas fa-book-open"></i> Nueva incorporación</span>
                             ${valorBadge}
+                            ${categoryBadge}
                         </div>
                         <h3 class="text-3xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors cursor-pointer" onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))">${escapeHTML(safeNombre)}</h3>
                         <p class="text-slate-500 mb-6 flex-1 text-sm leading-relaxed max-w-lg">${descFormateada}</p>
@@ -1019,7 +1023,7 @@
                         <button class="bg-brand-yellow/10 text-brand-yellow px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5 border border-brand-yellow/20 hover:bg-brand-yellow/20 transition-colors active:scale-95" onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))">
                             <i class="fas fa-star"></i> <span class="tech-data">${avg}</span>
                         </button>
-                        ${valorBadge}
+                        ${valorBadge || categoryBadge}
                     </div>
                     <h3 class="text-xl sm:text-2xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors cursor-pointer relative z-10" onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))">${escapeHTML(safeNombre)}</h3>
                     <p class="text-slate-500 mb-6 flex-1 text-[13px] sm:text-sm leading-relaxed relative z-10">${descFormateada}</p>
@@ -1043,23 +1047,8 @@
 
 
         function setupCourseSearch() {
-            const input = document.getElementById('course-search');
-            if (!input) return;
-            input.addEventListener('input', () => {
-                const query = input.value.trim().toLocaleLowerCase('es');
-                if (!query) {
-                    renderCourses(allCourses);
-                    return;
-                }
-                const filtered = allCourses.filter(curso => {
-                    const haystack = [
-                        curso.nombre, curso.Nombre, curso.NOMBRE,
-                        curso.descripcion, curso.Descripcion, curso.DESCRIPCION,
-                        curso.modalidad, curso.Modalidad, curso.MODALIDAD
-                    ].filter(Boolean).join(' ').toLocaleLowerCase('es');
-                    return haystack.includes(query);
-                });
-                renderCourses(filtered);
+            ['course-search','course-category-filter','course-sort'].forEach(id => {
+                document.getElementById(id)?.addEventListener(id === 'course-search' ? 'input' : 'change', renderFilteredCourses);
             });
         }
 
@@ -1108,11 +1097,11 @@
             const modal = document.getElementById('review-modal');
             
             if (titleEl) titleEl.textContent = curso.nombre || curso.Nombre || curso.NOMBRE || 'Curso';
-            if (idEl) idEl.value = courseId;
+            if (idEl) idEl.value = String(curso._reviewId || courseId);
             if (formEl) formEl.reset();
             
             resetStars();
-            renderComments(courseId);
+            renderComments(String(curso._reviewId || courseId));
             
             if (modal) {
                 modal.classList.remove('hidden');
