@@ -624,6 +624,7 @@
 
         let allComments = [];
         let allCourses = [];
+        let reviewsAvailable = false;
         const ratingLabels = ["Malo", "Regular", "Bueno", "Muy Bueno", "Excelente"];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -777,6 +778,7 @@
             if (MODO_DEMO) {
                 allCourses = mockData.cursos || [];
                 allComments = mockData.comentarios || [];
+                reviewsAvailable = true;
                 renderSocialProofBanner();
                 renderFilteredCourses();
                 if (loadingElement) loadingElement.classList.add('hidden');
@@ -834,6 +836,7 @@
                 const normalized = normalizeApiPayload(await response.json());
                 if (!normalized) throw new Error('Formato de reseñas no reconocido');
                 allComments = Array.isArray(normalized.comentarios) ? normalized.comentarios : [];
+                reviewsAvailable = true;
                 const oldCourses = Array.isArray(normalized.cursos) ? normalized.cursos : [];
                 const byName = new Map(oldCourses.map(c => [
                     normalizedCourseName(c.nombre || c.Nombre || c.NOMBRE), c
@@ -855,7 +858,9 @@
                 renderFilteredCourses();
             } catch (error) {
                 // El error de las reseñas no oculta los cursos oficiales procedentes de Moodle.
+                reviewsAvailable = false;
                 console.info('Opiniones o datos complementarios no disponibles');
+                renderFilteredCourses();
             } finally {
                 clearTimeout(timeoutId);
             }
@@ -932,6 +937,8 @@
                 const avg = courseComments.length > 0 
                     ? (courseComments.reduce((sum, c) => sum + parseInt(c.estrellas || 0), 0) / courseComments.length).toFixed(1)
                     : "Sin reseñas";
+                const ratingDisplay = reviewsAvailable ? avg : "No disponible";
+                const reviewsCountDisplay = reviewsAvailable ? " (" + courseComments.length + ")" : "";
                 
                 const linkCurso = escapeHTML(safeExternalUrl(curso.enlace || curso.Enlace || curso.ENLACE || ''));
                 const corporate = Number(curso.categoria_id) === 27;
@@ -1018,7 +1025,7 @@
                     <div class="w-full md:w-64 shrink-0 flex flex-col gap-3 relative z-10 justify-center">
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
                             <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl text-brand-yellow"><i class="fas fa-star"></i></div>
-                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Calificación</span><span class="font-extrabold text-xl text-brand-dark">${avg} <span class="text-sm font-normal text-slate-500">(${courseComments.length})</span></span></div>
+                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Calificación</span><span class="font-extrabold text-xl text-brand-dark">${ratingDisplay} <span class="text-sm font-normal text-slate-500">${reviewsCountDisplay}</span></span></div>
                         </div>
                         ${duracion ? `
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
@@ -1036,7 +1043,7 @@
                     internalHtml += `
                     <div class="flex justify-between items-start mb-5 relative z-10">
                         <button class="bg-brand-yellow/10 text-brand-yellow px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5 border border-brand-yellow/20 hover:bg-brand-yellow/20 transition-colors active:scale-95" onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))">
-                            <i class="fas fa-star"></i> <span class="tech-data">${avg}</span>
+                            <i class="fas fa-star"></i> <span class="tech-data">${ratingDisplay}</span>
                         </button>
                         ${valorBadge || categoryBadge}
                     </div>
@@ -1095,6 +1102,10 @@
         }
 
         function openModal(courseId) {
+            if (!reviewsAvailable) {
+                showToast('Las valoraciones no están disponibles temporalmente; el catálogo de Moodle sigue funcionando.');
+                return;
+            }
             // FIX: Buscar el curso usando el ID ultra-seguro que generamos al renderizar
             const curso = allCourses.find((c, index) => {
                 const cId = c._safeId || c.id || c.Id || c.ID || `temp_${index}`;
