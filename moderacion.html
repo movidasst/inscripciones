@@ -51,6 +51,19 @@ textarea{min-height:85px;resize:vertical}.toolbar{display:flex;align-items:cente
 <div class="panel"><h2>Reseñas históricas de Google</h2><p>Las reseñas anteriores siguen en su fuente original. Puedes traerlas al sistema nuevo como <strong>pendientes de moderación</strong>. Se emparejan con cursos actuales por nombre; las no identificadas se omiten.</p>
 <button type="button" id="import" class="secondary">Importar reseñas históricas para revisión</button>
 </div>
+<div class="panel">
+<h2>Estados de inscripción de Moodle</h2>
+<p>El token actual de Moodle no permite consultar automáticamente las aperturas de matrícula. Solo marca abierta o cerrada tras comprobarlo personalmente en Moodle; esa confirmación tendrá vencimiento (máximo 90 días).</p>
+<form id="enrolForm">
+<div class="field"><label for="enrolCourse">Curso</label><select id="enrolCourse" required><option value="">Cargando cursos…</option></select></div>
+<div class="grid">
+ <div class="field"><label for="enrolStatus">Estado confirmado</label><select id="enrolStatus"><option value="consultar">Por verificar (valor predeterminado)</option><option value="abierta">Inscripción abierta</option><option value="cerrada">Inscripción cerrada</option></select></div>
+ <div class="field"><label for="enrolUntil">Vigente hasta</label><input type="date" id="enrolUntil"></div>
+</div>
+<div class="field"><label for="enrolNote">Observación de verificación (sin datos personales)</label><textarea id="enrolNote" maxlength="300" placeholder="Cómo se comprobó la disponibilidad en Moodle"></textarea></div>
+<button id="saveEnrollment" type="submit">Guardar estado de inscripción</button>
+</form>
+</div>
 <div id="reviewList" class="grid" aria-live="polite"></div>
 </section>
 </main>
@@ -72,6 +85,7 @@ async function requireAdmin(){
  if(error){notice("La sesión no tiene permisos de administrador de Gestión.",true);await db.auth.signOut();$("loginPanel").classList.remove("hidden");$("adminPanel").classList.add("hidden");return false;}
  $("loginPanel").classList.add("hidden");$("adminPanel").classList.remove("hidden");notice("Acceso administrativo verificado.");
  await refresh();
+ await loadEnrollmentControls();
  return true;
 }
 async function refresh(){
@@ -104,6 +118,52 @@ async function decide(id,action,card){
  if(error){notice(error.message,true);btns.forEach(b=>b.disabled=false);return;}
  notice("Moderación registrada correctamente.");await refresh();
 }
+let enrollmentRows=[];
+async function loadEnrollmentControls(){
+ try{
+  const [catResponse,listResponse]=await Promise.all([
+   fetch(PROJECT+"/functions/v1/academia-catalogo-publico",{signal:AbortSignal.timeout(15000)}),
+   db.rpc("academia_admin_matriculas_listar")
+  ]);
+  if(listResponse.error)throw Error(listResponse.error.message);
+  if(!catResponse.ok)throw Error("Catálogo académico no disponible");
+  const catalog=await catResponse.json();
+  if(!Array.isArray(catalog.courses))throw Error("Catálogo inválido");
+  enrollmentRows=Array.isArray(listResponse.data)?listResponse.data:[];
+  const select=$("enrolCourse");
+  select.replaceChildren();
+  const empty=new Option("Selecciona un curso","");select.add(empty);
+  for(const c of catalog.courses.slice().sort((a,b)=>String(a.nombre).localeCompare(String(b.nombre),"es"))){
+   select.add(new Option(String(c.nombre||"Curso"),String(c.id)));
+  }
+  select.onchange=syncEnrollmentForm;
+  syncEnrollmentForm();
+ } catch(e){notice("Estados de matrícula: "+String(e.message||e),true)}
+}
+function syncEnrollmentForm(){
+ const id=Number($("enrolCourse").value);
+ const row=enrollmentRows.find(r=>Number(r.curso_id)===id);
+ $("enrolStatus").value=row?.estado||"consultar";
+ $("enrolUntil").value=row?.vigente_hasta ? String(row.vigente_hasta).slice(0,10) : "";
+ $("enrolNote").value=row?.comentario||"";
+}
+$("enrolForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const courseId=Number($("enrolCourse").value);
+ const status=$("enrolStatus").value;
+ const day=$("enrolUntil").value;
+ const comment=$("enrolNote").value.trim();
+ if(!Number.isSafeInteger(courseId)||courseId<2){notice("Selecciona un curso.",true);return}
+ if(status!=="consultar"&&(!day||comment.length<8)){notice("Incluye vigencia y una observación que indique cómo comprobaste la matrícula en Moodle.",true);return}
+ const date=status==="consultar"?null:new Date(day+"T23:59:00").toISOString();
+ const {data,error}=await db.rpc("academia_admin_matriculas_guardar",{
+  p_curso_id:courseId,p_estado:status,p_vigente_hasta:date,p_comentario:comment||null
+ });
+ if(error){notice(error.message,true);return}
+ notice("Estado registrado; Moodle sigue siendo la fuente de la ficha y la matrícula efectiva.");
+ await loadEnrollmentControls();
+ $("enrolCourse").value=String(courseId);syncEnrollmentForm();
+});
 async function importLegacy(){
  if(!confirm("¿Importar opiniones históricas como pendientes para revisión? No se publicarán automáticamente."))return;
  const btn=$("import");btn.disabled=true;notice("Leyendo cursos y reseñas históricas…");
