@@ -877,6 +877,8 @@
         function renderSocialProofBanner() {
             const banner = document.getElementById('social-proof-banner');
             if (!banner || !allComments) return;
+            banner.classList.add('hidden');
+            banner.innerHTML = '';
 
             const topReviews = allComments.filter(c => Number(c.estrellas) >= 1 && Number(c.estrellas) <= 5);
             if (topReviews.length > 0) {
@@ -929,6 +931,9 @@
                     : "Sin reseñas";
                 
                 const linkCurso = escapeHTML(safeExternalUrl(curso.enlace || curso.Enlace || curso.ENLACE || ''));
+                const corporate = Number(curso.categoria_id) === 27;
+                const actionUrl = corporate ? 'https://presupuesto.movidasst.com/' : linkCurso;
+                const actionLabel = corporate ? 'Solicitar capacitación' : 'Ver curso en Academia';
                 const nameLower = safeNombre.toLowerCase();
                 
                 let wmIcon = 'fa-graduation-cap';
@@ -1000,7 +1005,7 @@
                         <p class="text-slate-500 mb-6 flex-1 text-sm leading-relaxed max-w-lg">${descFormateada}</p>
                         
                         <div class="flex flex-wrap gap-3 mt-auto">
-                            ${linkCurso ? `<a href="${linkCurso}" target="_blank" rel="noopener" class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-sm flex items-center gap-2 active:scale-95"><i class="fas fa-bolt"></i> Ver curso en Academia</a>` : ''}
+                            ${linkCurso ? `<a href="${actionUrl}" target="_blank" rel="noopener noreferrer" class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-sm flex items-center gap-2 active:scale-95"><i class="fas fa-arrow-up-right-from-square"></i> ${actionLabel}</a>` : ''}
                             <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="bg-white border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 text-sm flex items-center gap-2 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar y Valorar</button>
                         </div>
                     </div>
@@ -1039,7 +1044,7 @@
                     </div>
 
                     <div class="pt-5 mt-auto border-t border-slate-200/60 flex flex-col sm:flex-row gap-3 relative z-10">
-                        ${linkCurso ? `<a href="${linkCurso}" target="_blank" rel="noopener" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-md shadow-brand-teal/20 text-sm flex items-center justify-center gap-2 active:scale-95"><span>Ver curso</span><i class="fas fa-external-link-alt text-[11px]"></i></a>` : ''}
+                        ${linkCurso ? `<a href="${actionUrl}" target="_blank" rel="noopener noreferrer" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-md shadow-brand-teal/20 text-sm flex items-center justify-center gap-2 active:scale-95"><span>${actionLabel}</span><i class="fas fa-external-link-alt text-[11px]"></i></a>` : ''}
                         <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3 px-3 rounded-xl transition-all duration-300 text-sm flex items-center justify-center gap-1.5 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar</button>
                     </div>
                     `;
