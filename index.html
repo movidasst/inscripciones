@@ -375,6 +375,7 @@
                     <div class="text-center mb-8">
                         <span class="bg-brand-teal/10 text-brand-teal px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border border-brand-teal/20">Zona de Pagos</span>
                         <h2 id="pagos-heading" class="text-2xl font-extrabold text-brand-dark mt-2">Medios Oficiales</h2>
+                        <div id="course-payment-context" role="status" aria-live="polite" class="hidden text-left bg-brand-teal/5 border border-brand-teal/20 text-brand-dark text-sm rounded-2xl p-4 mt-4"></div>
                         <p class="text-slate-500 text-sm mt-2">Usa únicamente el medio de pago indicado en tu curso. El pago no confirma la matrícula: sigue las instrucciones de Moodle.</p>
                     </div>
 
@@ -981,6 +982,16 @@
                 const descFormateada = escapeHTML(curso.descripcion || curso.Descripcion || curso.DESCRIPCION || 'Revisa el programa, requisitos y condiciones en la ficha oficial del curso en Moodle.').replace(/\n/g, '<br/>');
                 const categoryLabel = escapeHTML(curso.categoria || '');
                 const categoryBadge = categoryLabel ? `<span class="bg-slate-100 text-brand-dark px-3 py-1.5 rounded-xl text-xs font-bold">${categoryLabel}</span>` : '';
+                const imageUrl = safeExternalUrl(curso.imagen || '');
+                const officialImage = imageUrl && new URL(imageUrl).hostname === 'movidasst.org' ? escapeHTML(imageUrl) : '';
+                const classDates = curso.fechas_edicion ? escapeHTML(curso.fechas_edicion) : '';
+                const enrolInfo = escapeHTML(curso.matricula?.descripcion || 'Consultar condiciones de inscripción en Moodle');
+                const courseMeta = `<div class="rounded-xl p-3 bg-brand-teal/5 border border-brand-teal/15 text-brand-dark text-xs leading-relaxed mb-4">
+                  <i class="fas fa-info-circle text-brand-teal"></i>
+                  <strong>Inscripción:</strong> ${enrolInfo}.
+                  ${classDates ? `<div class="mt-1"><i class="far fa-calendar"></i> <strong>Fechas de clases:</strong> ${classDates}</div>` : '<div class="mt-1 text-slate-600">Fechas y condiciones de cada edición: consulta la ficha del curso.</div>'}
+                  </div>`;
+                const imageBlock = officialImage ? `<img src="${officialImage}" alt="Imagen del curso ${escapeHTML(safeNombre)}" loading="lazy" decoding="async" class="w-full h-36 object-cover rounded-xl border border-slate-200 mb-4" onerror="this.hidden=true">` : '';
 
                 // Lógica de Bento Grid
                 const isFeatured = index === 0 && Number(curso.id) === Math.max(0, ...allCourses.map(c => Number(c.id) || 0));
@@ -1008,11 +1019,14 @@
                             ${categoryBadge}
                         </div>
                         <h3 class="text-3xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors"><a href="${linkCurso}" target="_blank" rel="noopener noreferrer" title="Ver ficha oficial en Moodle">${escapeHTML(safeNombre)}</a></h3>
-                        <p class="text-slate-500 mb-6 flex-1 text-sm leading-relaxed max-w-lg">${descFormateada}</p>
+                        <div class="relative z-10">${imageBlock}</div>
+                        <p class="text-slate-500 mb-4 flex-1 text-sm leading-relaxed max-w-lg">${descFormateada}</p>
+                        ${courseMeta}
                         
                         <div class="flex flex-wrap gap-3 mt-auto">
                             ${linkCurso ? `<a href="${actionUrl}" target="_blank" rel="noopener noreferrer" class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-sm flex items-center gap-2 active:scale-95"><i class="fas fa-arrow-up-right-from-square"></i> ${actionLabel}</a>` : ''}
-                            <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="bg-white border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 text-sm flex items-center gap-2 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar y Valorar</button>
+                            <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="bg-white border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 text-sm flex items-center gap-2 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Valorar curso</button>
+                            ${Number(curso.categoria_id)===24 ? `<button type="button" onclick="openPaymentGuide(${Number(curso.id)})" class="bg-white border-2 border-brand-teal/30 text-brand-dark font-bold py-3.5 px-5 rounded-2xl text-sm"><i class="fas fa-wallet"></i> Cómo pagar</button>` : ''}
                         </div>
                     </div>
                     
@@ -1042,7 +1056,9 @@
                         ${valorBadge || categoryBadge}
                     </div>
                     <h3 class="text-xl sm:text-2xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors relative z-10"><a href="${linkCurso}" target="_blank" rel="noopener noreferrer" title="Ver ficha oficial en Moodle">${escapeHTML(safeNombre)}</a></h3>
-                    <p class="text-slate-500 mb-6 flex-1 text-[13px] sm:text-sm leading-relaxed relative z-10">${descFormateada}</p>
+                    <div class="relative z-10">${imageBlock}</div>
+                    <p class="text-slate-500 mb-4 flex-1 text-[13px] sm:text-sm leading-relaxed relative z-10">${descFormateada}</p>
+                    <div class="relative z-10">${courseMeta}</div>
                     
                     <div class="flex flex-wrap items-center gap-2 mb-5 relative z-10">
                         ${duracion ? `<span class="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 flex items-center gap-1.5"><i class="far fa-clock"></i> ${escapeHTML(duracion)}</span>` : ''}
@@ -1051,7 +1067,8 @@
 
                     <div class="pt-5 mt-auto border-t border-slate-200/60 flex flex-col sm:flex-row gap-3 relative z-10">
                         ${linkCurso ? `<a href="${actionUrl}" target="_blank" rel="noopener noreferrer" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-md shadow-brand-teal/20 text-sm flex items-center justify-center gap-2 active:scale-95"><span>${actionLabel}</span><i class="fas fa-external-link-alt text-[11px]"></i></a>` : ''}
-                        <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3 px-3 rounded-xl transition-all duration-300 text-sm flex items-center justify-center gap-1.5 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Opinar</button>
+                        <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3 px-3 rounded-xl transition-all duration-300 text-sm flex items-center justify-center gap-1.5 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Valorar</button>
+                        ${Number(curso.categoria_id)===24 ? `<button type="button" onclick="openPaymentGuide(${Number(curso.id)})" class="flex-1 border border-brand-teal/30 bg-white text-brand-dark font-bold py-3 px-3 rounded-xl text-sm">Cómo pagar</button>` : ''}
                     </div>
                     `;
                 }
@@ -1061,6 +1078,21 @@
             });
         }
 
+
+        function openPaymentGuide(id) {
+            const course = allCourses.find(c => Number(c.id) === Number(id));
+            if(!course || Number(course.categoria_id)!==24) return;
+            const ctx=document.getElementById('course-payment-context');
+            if(ctx){
+                const price=String(course.precio_texto||'').trim();
+                ctx.innerHTML='<strong>Curso seleccionado:</strong> '+escapeHTML(course.nombre)+
+                  '<div class="mt-1"><strong>Precio registrado en Moodle:</strong> '+escapeHTML(price||'Consultar con la Academia')+'</div>'+
+                  '<div class="mt-1">Elige el medio autorizado para tu curso. Después sigue las instrucciones de la plataforma para comunicar y verificar el pago. No se registra matrícula automáticamente desde esta página.</div>'+
+                  '<div class="mt-2"><a class="font-extrabold underline text-brand-teal" href="'+escapeHTML(safeExternalUrl(course.enlace||''))+'" target="_blank" rel="noopener noreferrer">Ver requisitos y confirmar inscripción en Moodle</a></div>';
+                ctx.classList.remove('hidden');
+            }
+            switchTab('pagos');
+        }
 
         function setupCourseSearch() {
             ['course-search','course-category-filter','course-sort'].forEach(id => {
