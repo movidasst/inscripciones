@@ -23,7 +23,9 @@ cobra, aprueba pagos ni emite certificados por sí misma**.
   Google Sheets **nunca sobrescriben precios** de Moodle.
 - La caché pública dura hasta 5 minutos; ante fallo transitorio puede ofrecer la última copia conocida.
 - **Las fechas de apertura del curso en Moodle no son automáticamente fechas de sesiones formativas.**
-  Solo se presenta calendario de clases cuando existe un campo específico.
+  El calendario de una edición procede de un campo específico de Moodle o de la tabla
+  `academia_curso_calendario`, administrable desde `moderacion.html` con verificación y publicación
+  expresas. Para Contratistas (ID 151) se registró 19–22 de octubre de 2026, 20:00–22:00 Venezuela.
 - Las imágenes proceden de los archivos descriptivos del curso en Moodle, siempre que sean servibles
   públicamente sin tokens. Si la imagen no es accesible se muestra el diseño estándar.
 - Ningún token Moodle o clave privilegiada está presente en HTML público.
@@ -88,3 +90,11 @@ sean interpretables para usuarios no matriculados.
 6. Importar reseñas históricas solo mediante cuenta administrativa, comprobando coincidencias.
 7. Confirmar a mano los métodos de inscripción de Moodle antes de declarar un curso abierto.
 8. Verificar que `assets/tailwind.css` esté disponible desde GitHub Pages tras desplegar.
+
+## Estado comprobado tras el despliegue de octubre de 2026
+
+- La Edge Function del catálogo respondió HTTP 200 y devolvió 24 cursos.
+- El curso 151 devolvió 15 USD, calendario 19–22 de octubre e imagen de Moodle.
+- La función de reseñas aceptó una reseña sintética con estado pendiente; el dato temporal fue borrado.
+- La disponibilidad de matrícula permanece **por verificar** hasta confirmar restricciones reales en Moodle o registrar una comprobación administrativa con caducidad.
+- La inspección automática revisa la estructura de HTML, enlaces externos, JavaScript y CSS compilado; no reemplaza una prueba visual completa en navegador.
