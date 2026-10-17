@@ -214,6 +214,7 @@
 
     <script>
         const MOODLE_CATALOG_URL = "https://lfdmbkzghnwvsapxypvt.supabase.co/functions/v1/academia-catalogo-publico";
+        const MODERATED_REVIEWS_URL = "https://lfdmbkzghnwvsapxypvt.supabase.co/functions/v1/academia-resenas";
         const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx2nf5FqE-q8PUxvy305rDBYpeyZmi-p1fUIC2pUvHss9Q6VjswXkHcN2-8iFa8dl9Kfg/exec"; 
         const MODO_DEMO = false; 
 
@@ -563,6 +564,7 @@
 
             <div class="p-5 sm:p-8 max-h-[70vh] overflow-y-auto custom-scrollbar">
                 <form id="review-form" class="mb-6 bg-slate-50 p-5 rounded-3xl border border-slate-200/60">
+                    <input id="review-website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0">
                     <input type="hidden" id="course-id">
                     <div class="grid grid-cols-1 gap-5">
                         <div>
@@ -825,45 +827,37 @@
         }
 
         async function loadReviewsAndMetadata() {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 12000);
             try {
-                const separator = URL_GOOGLE_SCRIPT.includes('?') ? '&' : '?';
-                const response = await fetch(URL_GOOGLE_SCRIPT + separator + '_=' + Date.now(), {
-                    signal: controller.signal, cache: 'no-store'
-                });
-                if (!response.ok) throw new Error('Reseñas no disponibles');
-                const normalized = normalizeApiPayload(await response.json());
-                if (!normalized) throw new Error('Formato de reseñas no reconocido');
-                allComments = Array.isArray(normalized.comentarios) ? normalized.comentarios : [];
-                reviewsAvailable = true;
-                const oldCourses = Array.isArray(normalized.cursos) ? normalized.cursos : [];
-                const byName = new Map(oldCourses.map(c => [
-                    normalizedCourseName(c.nombre || c.Nombre || c.NOMBRE), c
-                ]).filter(([key]) => !!key));
-                for (const course of allCourses) {
-                    const old = byName.get(normalizedCourseName(course.nombre));
-                    if (!old) continue;
-                    course._reviewId = String(old.id || old.Id || old.ID || course.id);
-                    const get = (...keys) => keys.map(k => old[k]).find(v => v !== undefined && v !== null && String(v).trim() !== '');
-                    if (!course.descripcion) course.descripcion = String(get('descripcion','Descripcion','DESCRIPCION') || '').slice(0,450);
-                    if (!course.duracion) course.duracion = String(get('duracion','Duracion','DURACION') || '');
-                    if (!course.precio_texto) course.precio_texto = String(get('valor','Valor','VALOR','precio','Precio','PRECIO') || '');
-                    if (!course.modalidad) course.modalidad = String(get('modalidad','Modalidad','MODALIDAD') || '');
-                }
-                const availableReviewIds = new Set(allCourses.map(c => String(c._reviewId || c.id)));
-                allComments = allComments.filter(c => availableReviewIds.has(String(c.cursoId))
-                    && Number(c.estrellas) >= 1 && Number(c.estrellas) <= 5);
-                renderSocialProofBanner();
-                renderFilteredCourses();
-            } catch (error) {
-                // El error de las reseñas no oculta los cursos oficiales procedentes de Moodle.
-                reviewsAvailable = false;
-                console.info('Opiniones o datos complementarios no disponibles');
-                renderFilteredCourses();
-            } finally {
-                clearTimeout(timeoutId);
+                const response=await fetch(MODERATED_REVIEWS_URL,{signal:AbortSignal.timeout(12000),cache:'no-store'});
+                const body=await response.json();
+                if(!response.ok||!body.ok||!Array.isArray(body.comentarios))throw Error('Reseñas no disponibles');
+                allComments=body.comentarios.filter(c=>Number(c.estrellas)>=1&&Number(c.estrellas)<=5
+                  &&allCourses.some(course=>String(course.id)===String(c.cursoId)));
+                reviewsAvailable=true;
+            } catch(error) {
+                reviewsAvailable=false;allComments=[];
+                console.info('Reseñas moderadas temporalmente no disponibles');
             }
+            renderSocialProofBanner();renderFilteredCourses();
+            // Google Sheets queda como origen complementario, no como fuente de reseñas públicas ni precios.
+            try {
+                const separator=URL_GOOGLE_SCRIPT.includes('?')?'&':'?';
+                const response=await fetch(URL_GOOGLE_SCRIPT+separator+'_='+Date.now(),{signal:AbortSignal.timeout(12000),cache:'no-store'});
+                if(!response.ok)return;
+                const normalized=normalizeApiPayload(await response.json());
+                if(!normalized)return;
+                const oldCourses=Array.isArray(normalized.cursos)?normalized.cursos:[];
+                const byName=new Map(oldCourses.map(c=>[normalizedCourseName(c.nombre||c.Nombre||c.NOMBRE),c]).filter(([key])=>Boolean(key)));
+                for(const course of allCourses){
+                    const old=byName.get(normalizedCourseName(course.nombre));
+                    if(!old)continue;
+                    const get=(...keys)=>keys.map(k=>old[k]).find(v=>v!==undefined&&v!==null&&String(v).trim()!=='');
+                    if(!course.descripcion)course.descripcion=String(get('descripcion','Descripcion','DESCRIPCION')||'').slice(0,450);
+                    if(!course.duracion)course.duracion=String(get('duracion','Duracion','DURACION')||'');
+                    if(!course.modalidad)course.modalidad=String(get('modalidad','Modalidad','MODALIDAD')||'');
+                }
+                renderFilteredCourses();
+            }catch(error){console.info('Datos complementarios no disponibles');}
         }
 
         function renderFilteredCourses() {
@@ -1296,67 +1290,30 @@
                 if (commentInput.value.trim().length < 5) { showToast("Cuéntanos un poco más sobre tu experiencia."); return; }
                 if (consentInput && !consentInput.checked) { showToast("Debes aceptar la publicación de la reseña."); return; }
                 
-                const newReview = {
-                    cursoId: courseInput.value,
-                    nombre: nameInput.value.trim().slice(0, 80),
-                    estrellas: rating,
-                    comentario: commentInput.value.trim().slice(0, 700)
+                const newReview={
+                    cursoId:String(courseInput.value),nombre:nameInput.value.trim().slice(0,80),
+                    estrellas:Number(rating),comentario:commentInput.value.trim().slice(0,700),
+                    website:document.getElementById('review-website')?.value||''
                 };
-                
-                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Publicando...';
-                btn.disabled = true;
-                btn.classList.add('opacity-75', 'cursor-not-allowed');
-
-                if (MODO_DEMO) {
-                    setTimeout(() => {
-                        newReview.fecha = new Date().toISOString();
-                        allComments.push(newReview);
-                        renderComments(newReview.cursoId);
-                        renderCourses(allCourses);
-                        renderSocialProofBanner();
-                        form.reset();
-                        resetStars();
-                        btn.innerHTML = originalBtnText;
-                        btn.disabled = false;
-                        btn.classList.remove('opacity-75', 'cursor-not-allowed');
-                        showToast("Opinión publicada.");
-                    }, 1000);
-                } else {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-                    try {
-                        const formData = new FormData();
-                        formData.append('action', 'addComment');
-                        formData.append('data', JSON.stringify(newReview));
-                        const response = await fetch(URL_GOOGLE_SCRIPT, { method: 'POST', body: formData, signal: controller.signal });
-                        clearTimeout(timeoutId);
-                        const raw = await response.text();
-                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                        let result;
-                        try { result = JSON.parse(raw); } catch (_) { throw new Error('Respuesta inválida del servidor'); }
-                        if(result.status === "success" || result.ok === true) {
-                            newReview.fecha = new Date().toISOString();
-                            allComments.push(newReview);
-                            renderComments(newReview.cursoId);
-                            renderCourses(allCourses);
-                            renderSocialProofBanner();
-                            form.reset();
-                            resetStars();
-                            showToast("¡Opinión publicada con éxito!");
-                        } else {
-                            throw new Error(result.message || result.error || 'El servidor rechazó la reseña');
-                        }
-                    } catch (error) {
-                        clearTimeout(timeoutId);
-                        console.error('Error publicando reseña:', error);
-                        showToast(error.name === 'AbortError' ? 'Tiempo de espera agotado.' : `No se pudo publicar: ${error.message || 'error del servidor'}`);
-                    } finally {
-                        btn.innerHTML = originalBtnText;
-                        btn.disabled = false;
-                        btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btn.disabled=true;
+                btn.innerHTML='<i class="fas fa-circle-notch fa-spin mr-2"></i> Enviando para revisión…';
+                try {
+                    if(MODO_DEMO){showToast('Demostración: reseña pendiente de aprobación.');}
+                    else {
+                        const response=await fetch(MODERATED_REVIEWS_URL,{
+                            method:'POST',headers:{'content-type':'application/json'},
+                            body:JSON.stringify(newReview),signal:AbortSignal.timeout(16000)
+                        });
+                        const result=await response.json();
+                        if(!response.ok||!result.ok)throw Error(result.error||'No se pudo enviar la reseña');
+                        showToast('Valoración recibida. Se publicará después de la moderación.');
                     }
-                }
+                    form.reset();resetStars();closeModal();
+                }catch(error){
+                    showToast(error.name==='AbortError'
+                        ? 'Tiempo de espera agotado; verifica antes de reenviar.'
+                        : String(error.message||'No se pudo enviar.'));
+                }finally{btn.innerHTML=originalBtnText;btn.disabled=false;}
             });
         }
     </script>
