@@ -848,6 +848,9 @@
                     if (!course.precio_texto) course.precio_texto = String(get('valor','Valor','VALOR','precio','Precio','PRECIO') || '');
                     if (!course.modalidad) course.modalidad = String(get('modalidad','Modalidad','MODALIDAD') || '');
                 }
+                const availableReviewIds = new Set(allCourses.map(c => String(c._reviewId || c.id)));
+                allComments = allComments.filter(c => availableReviewIds.has(String(c.cursoId))
+                    && Number(c.estrellas) >= 1 && Number(c.estrellas) <= 5);
                 renderSocialProofBanner();
                 renderFilteredCourses();
             } catch (error) {
@@ -962,7 +965,9 @@
                 let valor = curso.valor || curso.Valor || curso.VALOR || curso.precio || curso.Precio || curso.PRECIO;
                 let valorBadge = '';
                 const priceLabel = String(curso.precio_texto || valor || '').trim();
-                if (/^(gratis|gratuito)/i.test(priceLabel) || (!priceLabel && /gratuito/i.test(String(curso.categoria || '')))) {
+                if (/gratuit[oa]\s+para\s+integrantes/i.test(priceLabel)) {
+                    valorBadge = '<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold">GRATIS PARA INTEGRANTES</span>';
+                } else if (/^(gratis|gratuito)/i.test(priceLabel) || (!priceLabel && /gratuito/i.test(String(curso.categoria || '')))) {
                     valorBadge = '<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold">GRATUITO</span>';
                 } else if (/plan corporativo/i.test(priceLabel) || /corporativo/i.test(String(curso.categoria || ''))) {
                     valorBadge = '<span class="bg-brand-dark text-white px-3 py-1.5 rounded-xl text-xs font-bold">PLAN CORPORATIVO</span>';
