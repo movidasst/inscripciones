@@ -61,7 +61,9 @@ textarea{min-height:85px;resize:vertical}.toolbar{display:flex;align-items:cente
  <div class="field"><label for="enrolUntil">Vigente hasta</label><input type="date" id="enrolUntil"></div>
 </div>
 <div class="field"><label for="enrolNote">Observación de verificación (sin datos personales)</label><textarea id="enrolNote" maxlength="300" placeholder="Cómo se comprobó la disponibilidad en Moodle"></textarea></div>
-<button id="saveEnrollment" type="submit">Guardar estado de inscripción</button>
+<div class="field"><label for="editionDates">Fechas y horario de las clases (no confundir con la fecha de creación del curso)</label><textarea id="editionDates" maxlength="300" placeholder="Ej.: 19 al 22 de octubre · 20:00–22:00, Venezuela"></textarea></div>
+<label class="check"><input type="checkbox" id="publishDates"> Publicar este calendario informado por la Academia en la ficha del curso</label>
+<button id="saveEnrollment" type="submit">Guardar estado y calendario</button>
 </form>
 </div>
 <div id="reviewList" class="grid" aria-live="polite"></div>
@@ -119,12 +121,16 @@ async function decide(id,action,card){
  notice("Moderación registrada correctamente.");await refresh();
 }
 let enrollmentRows=[];
+let calendarRows=[];
 async function loadEnrollmentControls(){
  try{
-  const [catResponse,listResponse]=await Promise.all([
+  const [catResponse,listResponse,calendarResponse]=await Promise.all([
    fetch(PROJECT+"/functions/v1/academia-catalogo-publico",{signal:AbortSignal.timeout(15000)}),
-   db.rpc("academia_admin_matriculas_listar")
+   db.rpc("academia_admin_matriculas_listar"),
+   db.rpc("academia_admin_calendario_listar")
   ]);
+  if(calendarResponse.error)throw Error(calendarResponse.error.message);
+  calendarRows=Array.isArray(calendarResponse.data)?calendarResponse.data:[];
   if(listResponse.error)throw Error(listResponse.error.message);
   if(!catResponse.ok)throw Error("Catálogo académico no disponible");
   const catalog=await catResponse.json();
@@ -146,6 +152,9 @@ function syncEnrollmentForm(){
  $("enrolStatus").value=row?.estado||"consultar";
  $("enrolUntil").value=row?.vigente_hasta ? String(row.vigente_hasta).slice(0,10) : "";
  $("enrolNote").value=row?.comentario||"";
+ const dates=calendarRows.find(r=>Number(r.curso_id)===id);
+ $("editionDates").value=dates?.fechas_edicion||"";
+ $("publishDates").checked=Boolean(dates?.publicado);
 }
 $("enrolForm").addEventListener("submit",async e=>{
  e.preventDefault();
@@ -160,7 +169,13 @@ $("enrolForm").addEventListener("submit",async e=>{
   p_curso_id:courseId,p_estado:status,p_vigente_hasta:date,p_comentario:comment||null
  });
  if(error){notice(error.message,true);return}
- notice("Estado registrado; Moodle sigue siendo la fuente de la ficha y la matrícula efectiva.");
+ const dates=$("editionDates").value.trim();
+ const publishDates=$("publishDates").checked;
+ const calendar=await db.rpc("academia_admin_calendario_guardar",{
+  p_curso_id:courseId,p_fechas_edicion:dates,p_publicado:publishDates
+ });
+ if(calendar.error){notice("Estado guardado, pero hubo un error con el calendario: "+calendar.error.message,true);return}
+ notice("Estado y calendario registrados; Moodle sigue siendo la fuente de matrícula efectiva.");
  await loadEnrollmentControls();
  $("enrolCourse").value=String(courseId);syncEnrollmentForm();
 });
