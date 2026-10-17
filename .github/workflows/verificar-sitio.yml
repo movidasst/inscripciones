@@ -1,0 +1,26 @@
+name: Verificar sitio de inscripciones
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "moderacion.html"
+      - "scripts/**"
+      - "assets/tailwind.css"
+      - ".github/workflows/verificar-sitio.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validar páginas y CSS
+        run: node scripts/verificar-sitio.mjs
