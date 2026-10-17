@@ -7,7 +7,9 @@
     
     <!-- SEO y Meta Etiquetas -->
     <title>Academia La Movida de SST | Cursos, valoraciones y comunidad</title>
-    <meta name="description" content="Explora los cursos de la Academia La Movida de SST, consulta valoraciones de la comunidad, accede a la plataforma y conoce los medios oficiales.">
+    <meta name="description" content="Cursos publicados en Moodle por la Academia La Movida de SST: gratuitos, de pago, actualización profesional y formación corporativa.">
+    <link rel="canonical" href="https://inscripciones.movidasst.com/">
+    <meta property="og:url" content="https://inscripciones.movidasst.com/">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Academia La Movida de SST | Cursos y valoraciones">
@@ -211,6 +213,7 @@
     <div class="fixed inset-0 z-[-1] pointer-events-none bg-[radial-gradient(circle_at_top_left,rgba(0,123,133,0.08),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(0,32,91,0.06),transparent_38%)]"></div>
 
     <script>
+        const MOODLE_CATALOG_URL = "https://lfdmbkzghnwvsapxypvt.supabase.co/functions/v1/academia-catalogo-publico";
         const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx2nf5FqE-q8PUxvy305rDBYpeyZmi-p1fUIC2pUvHss9Q6VjswXkHcN2-8iFa8dl9Kfg/exec"; 
         const MODO_DEMO = false; 
 
@@ -308,7 +311,7 @@
                 <div class="text-left sm:text-center mb-5 md:mb-7">
                     <span class="inline-flex items-center gap-2 rounded-full bg-brand-teal/10 text-brand-teal border border-brand-teal/15 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider mb-2">Formación y actualización</span>
                     <h2 id="cursos-heading" class="text-2xl sm:text-3xl font-extrabold text-brand-dark">Catálogo de cursos</h2>
-                    <p class="text-slate-500 max-w-2xl sm:mx-auto text-sm mt-1.5">Consulta la oferta disponible, revisa la experiencia de otros participantes y comparte tu valoración.</p>
+                    <p class="text-slate-500 max-w-2xl sm:mx-auto text-sm mt-1.5">Cursos oficiales publicados en Moodle. Consulta la oferta y comparte tu experiencia.</p>
                 </div>
 
                 <div class="surface-card rounded-2xl p-4 sm:p-5 max-w-3xl mx-auto mb-4">
@@ -333,7 +336,22 @@
                     </label>
                     <button onclick="fetchData()" class="h-12 px-4 rounded-xl border border-slate-200 bg-white text-brand-dark font-extrabold text-sm inline-flex items-center justify-center gap-2 active:scale-[.98]"><i class="fas fa-rotate"></i><span>Actualizar</span></button>
                 </div>
-                <div id="catalog-status" class="max-w-3xl mx-auto -mt-3 mb-6 text-center text-xs text-slate-400" aria-live="polite">Conectando con el catálogo…</div>
+                <div class="max-w-3xl mx-auto mb-3 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<label class="block"><span class="sr-only">Filtrar por categoría</span>
+<select id="course-category-filter" class="w-full h-11 rounded-xl bg-white border border-slate-200 px-3 text-sm text-brand-dark font-bold">
+<option value="">Todas las categorías</option>
+<option value="26">Actualización Profesional Continua</option>
+<option value="14">Gratuitos</option>
+<option value="24">De Pago</option>
+<option value="27">Cursos Corporativos</option>
+</select></label>
+<label class="block"><span class="sr-only">Ordenar cursos</span>
+<select id="course-sort" class="w-full h-11 rounded-xl bg-white border border-slate-200 px-3 text-sm text-brand-dark font-bold">
+<option value="recientes">Incorporaciones recientes</option>
+<option value="nombre">Nombre (A–Z)</option>
+</select></label>
+</div>
+<div id="catalog-status" class="max-w-3xl mx-auto mb-6 text-center text-xs text-slate-500" aria-live="polite">Conectando con el catálogo…</div>
 
                 <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full max-w-7xl mx-auto" aria-busy="true" aria-label="Cargando cursos"></div>
 
@@ -356,7 +374,7 @@
                     <div class="text-center mb-8">
                         <span class="bg-brand-teal/10 text-brand-teal px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border border-brand-teal/20">Zona de Pagos</span>
                         <h2 id="pagos-heading" class="text-2xl font-extrabold text-brand-dark mt-2">Medios Oficiales</h2>
-                        <p class="text-slate-500 text-sm mt-2">Haz clic en el botón para copiar los datos</p>
+                        <p class="text-slate-500 text-sm mt-2">Usa únicamente el medio de pago indicado en tu curso. El pago no confirma la matrícula: sigue las instrucciones de Moodle.</p>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 md:gap-6">
