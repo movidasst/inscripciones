@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#007b85">
+<title>Moderación de reseñas · Academia Movida SST</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{font-family:Outfit,system-ui,sans-serif;color:#00205b;background:#f8fafc}
+*{box-sizing:border-box}body{margin:0;padding:0 16px 48px;background:#f8fafc}
+header,main{max-width:1080px;margin:auto}header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:26px 0 18px}
+h1{font-size:clamp(1.4rem,4vw,2.3rem);margin:3px 0 5px}h2{font-size:1.2rem}
+p{color:#475569}a{color:#007b85}button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0;border-radius:12px;background:#007b85;color:white;padding:12px 18px;font-weight:700}
+button:disabled{opacity:.5;cursor:not-allowed}.secondary{background:#fff;border:1px solid #cbd5e1;color:#00205b}.danger{background:#b91c1c}.success{background:#487e29}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #ffb600;outline-offset:3px}
+.panel{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:20px;margin:15px 0;box-shadow:0 8px 25px #00205b08}
+.field{display:grid;gap:7px;margin:12px 0}.field label{font-weight:700;color:#00205b}
+input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:12px;background:#fff;color:#00205b}
+textarea{min-height:85px;resize:vertical}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.review{padding:16px;border-radius:14px;border:1px solid #dbe5ec;background:#fff;display:grid;gap:8px}
+.review p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}.review small{color:#64748b}.review .field{margin:0}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.check{display:flex;gap:9px;align-items:flex-start;color:#475569;font-size:.86rem}.check input{width:18px;height:18px;flex-shrink:0}
+#notice{border-radius:10px;padding:12px;margin:12px 0;background:#f1f5f9;color:#00205b}#notice.error{color:#991b1b;background:#fee2e2}
+.hidden{display:none!important}.eyebrow{font-size:.75rem;letter-spacing:.1em;color:#007b85;font-weight:800;text-transform:uppercase}
+@media(max-width:650px){header{align-items:start;flex-direction:column}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">La Movida de SST+ · Academia</div><h1>Moderación de valoraciones</h1><p>Acceso administrativo. Publicar reseñas no implica confirmar matrículas.</p></div>
+<a href="https://inscripciones.movidasst.com/" rel="noopener">← Volver al catálogo</a></header>
+<main>
+<div id="notice" role="status" aria-live="polite">Inicia sesión con tu cuenta administrativa de Gestión.</div>
+<section id="loginPanel" class="panel"><h2>Acceso autorizado</h2>
+<form id="loginForm">
+<div class="field"><label for="email">Correo electrónico</label><input type="email" id="email" autocomplete="username" required></div>
+<div class="field"><label for="password">Contraseña</label><input type="password" id="password" autocomplete="current-password" required></div>
+<button type="submit">Acceder a moderación</button>
+</form></section>
+<section id="adminPanel" class="hidden">
+<div class="panel toolbar">
+<div class="row"><label for="status">Mostrar:</label><select id="status" style="width:auto"><option value="pendiente">Pendientes</option><option value="aprobada">Aprobadas</option><option value="rechazada">Rechazadas</option><option value="todas">Todas</option></select></div>
+<div class="row"><button id="reload" type="button" class="secondary">Actualizar listado</button><button id="logout" type="button" class="secondary">Cerrar sesión</button></div>
+</div>
+<div class="panel"><h2>Reseñas históricas de Google</h2><p>Las reseñas anteriores siguen en su fuente original. Puedes traerlas al sistema nuevo como <strong>pendientes de moderación</strong>. Se emparejan con cursos actuales por nombre; las no identificadas se omiten.</p>
+<button type="button" id="import" class="secondary">Importar reseñas históricas para revisión</button>
+</div>
+<div id="reviewList" class="grid" aria-live="polite"></div>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0/dist/umd/supabase.min.js"></script>
+<script>
+"use strict";
+const PROJECT = "https://lfdmbkzghnwvsapxypvt.supabase.co";
+const PUBLISHABLE = "sb_publishable_bRnkA6PA8-v073nrw9zxiQ_8rVGiOn1";
+const LEGACY_URL = "https://script.google.com/macros/s/AKfycbx2nf5FqE-q8PUxvy305rDBYpeyZmi-p1fUIC2pUvHss9Q6VjswXkHcN2-8iFa8dl9Kfg/exec";
+const db = window.supabase.createClient(PROJECT,PUBLISHABLE);
+const $ = id => document.getElementById(id);
+const escapeHTML = val => String(val??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+function notice(msg,bad=false){$("notice").textContent=msg;$("notice").classList.toggle("error",bad);}
+function normalize(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();}
+async function requireAdmin(){
+ const {data:{session}}=await db.auth.getSession();
+ if(!session){$("loginPanel").classList.remove("hidden");$("adminPanel").classList.add("hidden");return false;}
+ const {error}=await db.rpc("academia_admin_resenas_listar",{p_estado:"pendiente"});
+ if(error){notice("La sesión no tiene permisos de administrador de Gestión.",true);await db.auth.signOut();$("loginPanel").classList.remove("hidden");$("adminPanel").classList.add("hidden");return false;}
+ $("loginPanel").classList.add("hidden");$("adminPanel").classList.remove("hidden");notice("Acceso administrativo verificado.");
+ await refresh();
+ return true;
+}
+async function refresh(){
+ const status=$("status").value;const box=$("reviewList");box.replaceChildren();
+ const {data,error}=await db.rpc("academia_admin_resenas_listar",{p_estado:status});
+ if(error){notice(error.message,true);return;}
+ if(!data?.length){box.innerHTML='<article class="panel">No hay reseñas en este estado.</article>';return;}
+ for(const r of data){
+  const card=document.createElement("article");card.className="review";
+  card.innerHTML='<div class="toolbar"><strong>'+escapeHTML(r.nombre)+'</strong><small>'+escapeHTML(new Date(r.creado_at).toLocaleString("es"))+'</small></div>'
+   +'<small>Curso Moodle #'+Number(r.curso_id)+' · '+Number(r.estrellas)+'/5 estrellas · '+escapeHTML(r.origen)+'</small>'
+   +'<p>'+escapeHTML(r.comentario)+'</p><small>Estado: '+escapeHTML(r.estado)+(r.matricula_verificada?' · matrícula comprobada':' · sin verificación de matrícula')+'</small>'
+   +'<div class="field"><label>Motivo o evidencia de revisión<textarea maxlength="600" class="motivo" placeholder="Observación de moderación"></textarea></label></div>'
+   +'<label class="check"><input type="checkbox" class="verify"> Confirmo que comprobé personalmente la matrícula de esta persona en Moodle y registré el criterio de verificación</label>'
+   +'<div class="row"><button type="button" class="success approve">Aprobar</button><button type="button" class="danger reject">Rechazar</button></div>';
+  card.querySelector(".approve").addEventListener("click",()=>decide(r.id,"aprobada",card));
+  card.querySelector(".reject").addEventListener("click",()=>decide(r.id,"rechazada",card));
+  box.appendChild(card);
+ }
+}
+async function decide(id,action,card){
+ const motivo=card.querySelector(".motivo").value.trim();
+ const verified=action==="aprobada"&&card.querySelector(".verify").checked;
+ if(verified&&motivo.length<12){notice("Registra al menos 12 caracteres de evidencia de matrícula para marcarla verificada.",true);return;}
+ if(!confirm((action==="aprobada"?"¿Aprobar":"¿Rechazar")+" esta reseña?"))return;
+ const btns=card.querySelectorAll("button");btns.forEach(b=>b.disabled=true);
+ const {error}=await db.rpc("academia_admin_resenas_decidir",{
+  p_id:id,p_estado:action,p_matricula_verificada:verified,p_motivo:motivo||null
+ });
+ if(error){notice(error.message,true);btns.forEach(b=>b.disabled=false);return;}
+ notice("Moderación registrada correctamente.");await refresh();
+}
+async function importLegacy(){
+ if(!confirm("¿Importar opiniones históricas como pendientes para revisión? No se publicarán automáticamente."))return;
+ const btn=$("import");btn.disabled=true;notice("Leyendo cursos y reseñas históricas…");
+ try{
+  const [oldResponse,catResponse]=await Promise.all([
+   fetch(LEGACY_URL+"?_="+Date.now(),{signal:AbortSignal.timeout(15000)}),
+   fetch(PROJECT+"/functions/v1/academia-catalogo-publico",{signal:AbortSignal.timeout(15000)})
+  ]);
+  if(!oldResponse.ok||!catResponse.ok)throw Error("La fuente histórica o Moodle no respondió");
+  const old=await oldResponse.json(),cat=await catResponse.json();
+  const root=old.data&&typeof old.data==="object"?old.data:old;
+  const previous=Array.isArray(root.cursos)?root.cursos:[];
+  const comments=Array.isArray(root.comentarios)?root.comentarios:[];
+  if(!Array.isArray(cat.courses))throw Error("Catálogo Moodle no disponible");
+  const byName=new Map(cat.courses.map(c=>[normalize(c.nombre),Number(c.id)]));
+  const oldIdToNew=new Map(previous.map(c=>[String(c.id||c.Id||c.ID),byName.get(normalize(c.nombre||c.Nombre||c.NOMBRE))]));
+  const items=comments.map(r=>({
+   cursoId:oldIdToNew.get(String(r.cursoId)),
+   nombre:String(r.nombre||"").slice(0,80),
+   comentario:String(r.comentario||"").slice(0,700),
+   estrellas:Number(r.estrellas)
+  })).filter(r=>r.cursoId&&r.nombre.trim().length>=2&&r.comentario.trim().length>=8&&r.estrellas>=1&&r.estrellas<=5);
+  let added=0;
+  for(let i=0;i<items.length;i+=100){
+   const {data,error}=await db.rpc("academia_admin_resenas_importar",{p_resenas:items.slice(i,i+100)});
+   if(error)throw Error(error.message);
+   added+=Number(data?.pendientes_nuevas||0);
+  }
+  notice("Importación terminada: "+added+" reseñas históricas nuevas quedaron pendientes. "+(comments.length-items.length)+" no coincidieron con cursos actuales.");
+  await refresh();
+ }catch(e){notice(e.message||"Error al importar",true)}
+ finally{btn.disabled=false}
+}
+$("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();notice("Comprobando credenciales…");
+ const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
+ $("password").value="";
+ if(error){notice(error.message,true);return;}
+ await requireAdmin();
+});
+$("logout").addEventListener("click",async()=>{await db.auth.signOut();$("adminPanel").classList.add("hidden");$("loginPanel").classList.remove("hidden");notice("Sesión cerrada.");});
+$("reload").addEventListener("click",refresh);
+$("status").addEventListener("change",refresh);
+$("import").addEventListener("click",importLegacy);
+requireAdmin().catch(e=>notice(e.message,true));
+</script>
+</body>
+</html>
