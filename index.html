@@ -1,1324 +1,449 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="referrer" content="no-referrer">
-    
-    <!-- SEO y Meta Etiquetas -->
-    <title>Academia La Movida de SST | Cursos, valoraciones y comunidad</title>
-    <meta name="description" content="Cursos publicados en Moodle por la Academia La Movida de SST: gratuitos, de pago, actualización profesional y formación corporativa.">
-    <link rel="canonical" href="https://inscripciones.movidasst.com/">
-    <meta property="og:url" content="https://inscripciones.movidasst.com/">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="Academia La Movida de SST | Cursos y valoraciones">
-    <meta property="og:description" content="Cursos, valoraciones y accesos oficiales de la Academia La Movida de SST.">
-    <meta property="og:image" content="https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&sz=w1000">
-    <meta property="og:type" content="website">
-    
-    <!-- Datos Estructurados (Schema.org) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "La Movida de SST",
-      "description": "Formación y capacitación en Seguridad y Salud en el Trabajo",
-      "logo": "https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&sz=w1000",
-      "url": "https://www.movidasst.com",
-      "sameAs": ["https://movidasst.org", "https://registro.movidasst.com"]
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#00205b">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Academia Movida SST | Catálogo de cursos</title>
+  <meta name="description" content="Consulta los cursos públicos de la Academia Movida SST en Moodle, los medios de pago y los canales de la comunidad.">
+  <link rel="canonical" href="https://inscripciones.movidasst.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Academia Movida SST | Cursos disponibles">
+  <meta property="og:description" content="Cursos publicados en Moodle, medios de pago y comunidad de la Academia Movida SST.">
+  <meta property="og:image" content="https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&amp;sz=w1000">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#00205b;--teal:#007b85;--green:#70ad47;--yellow:#ffb600;--ink:#193450;--muted:#64748b;--line:#dfe7ee;--bg:#f8fafc;--white:#fff}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Outfit",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    button,input,select{font:inherit}
+    a{color:inherit}
+    button{cursor:pointer}
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+    [hidden]{display:none!important}
+    .stripe{height:5px;background:linear-gradient(90deg,var(--navy) 0 34%,var(--teal) 34% 69%,var(--green) 69% 100%)}
+    .shell{width:min(1140px,calc(100% - 40px));margin:auto}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0}
+    .brand{display:flex;align-items:center;gap:13px;min-width:0;text-decoration:none}
+    .brand img{height:68px;width:68px;object-fit:contain;border-radius:50%;background:#fff}
+    .brand strong{display:block;font-size:20px;line-height:1.12;font-weight:800;color:var(--navy)}
+    .brand small{display:block;margin-top:5px;font-size:12px;letter-spacing:.05em;color:var(--teal);font-weight:700}
+    .top-links{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+    .small-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-size:13px;font-weight:700;border-radius:11px;padding:11px 16px;border:1px solid var(--line);background:#fff;color:var(--navy);transition:background .15s}
+    .small-link:hover{background:#edf7f7}
+    .small-link.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .small-link.primary:hover{background:var(--teal);border-color:var(--teal)}
+    .hero{border-radius:26px;background:var(--navy);color:#fff;padding:clamp(28px,5vw,50px);display:flex;align-items:center;justify-content:space-between;gap:30px;overflow:hidden;position:relative}
+    .hero:after{content:"";position:absolute;right:-85px;bottom:-165px;width:350px;height:350px;border-radius:50%;border:60px solid rgba(255,255,255,.055);pointer-events:none}
+    .hero-copy{position:relative;z-index:1;max-width:660px}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#a7edef;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--yellow)}
+    h1{font-size:clamp(31px,4.4vw,52px);line-height:1.09;letter-spacing:-.035em;margin:14px 0 14px;font-weight:800}
+    .hero p{font-size:clamp(15px,1.7vw,18px);color:#dbe8f3;max-width:560px;margin:0}
+    .hero-side{z-index:1;flex:0 0 215px;border:1px solid rgba(255,255,255,.23);border-radius:20px;background:rgba(255,255,255,.09);padding:23px}
+    .hero-side .dot{font-size:30px;color:var(--yellow);line-height:1}
+    .hero-side strong{display:block;font-size:19px;line-height:1.25;margin:12px 0 8px}
+    .hero-side span{color:#c9e2e9;font-size:13px}
+    .tabs{display:flex;gap:8px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 9px 25px rgba(0,32,91,.045);margin:22px 0 29px}
+    .tab{flex:1;min-height:50px;padding:11px 12px;background:transparent;border:0;border-radius:13px;color:#607286;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .15s,color .15s}
+    .tab[aria-selected="true"]{color:#fff;background:var(--teal);box-shadow:0 3px 9px rgba(0,123,133,.17)}
+    .tab:not([aria-selected="true"]):hover{background:#edf7f7;color:var(--navy)}
+    .tab-icon{font-size:19px;line-height:1}
+    main{min-height:360px}
+    .section-top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:20px}
+    .section-top h2{font-size:clamp(24px,3vw,31px);line-height:1.15;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin:0 0 7px}
+    .section-top p{margin:0;color:var(--muted);font-size:14px}
+    .count{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;background:#e9f5f4;color:var(--teal);font-size:12px;font-weight:800;border-radius:999px;padding:9px 14px}
+    .count:before{content:"";width:8px;height:8px;background:var(--green);border-radius:50%}
+    .filters{display:grid;grid-template-columns:minmax(0,1fr) 235px auto;gap:11px;margin-bottom:15px}
+    .filter-field{width:100%;height:48px;border:1px solid var(--line);border-radius:13px;background:white;color:var(--ink);padding:0 15px;font-size:14px;min-width:0}
+    .filter-field:focus{border-color:var(--teal);outline:3px solid #d7eeee;outline-offset:0}
+    .refresh{padding:0 16px;min-height:48px;border:1px solid var(--line);background:#fff;border-radius:13px;font-weight:800;color:var(--teal)}
+    .refresh:hover{background:#edf7f7}
+    .source-line{min-height:25px;color:var(--muted);font-size:12px;margin:0 0 18px}
+    .courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .course{background:#fff;border:1px solid var(--line);border-radius:19px;padding:0;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:transform .16s,box-shadow .16s}
+    .course:hover{transform:translateY(-2px);box-shadow:0 13px 28px rgba(0,32,91,.075)}
+    .course-accent{height:5px;background:var(--teal)}
+    .course[data-category="24"] .course-accent{background:var(--yellow)}
+    .course[data-category="14"] .course-accent{background:var(--green)}
+    .course[data-category="27"] .course-accent{background:var(--navy)}
+    .course-content{padding:22px 22px 21px;display:flex;flex-direction:column;flex:1}
+    .course-category{display:inline-flex;align-self:flex-start;font-size:11px;line-height:1.3;font-weight:800;text-transform:uppercase;letter-spacing:.065em;color:var(--teal);background:#e9f5f4;border-radius:8px;padding:7px 10px}
+    .course[data-category="24"] .course-category{background:#fff6d8;color:#846000}
+    .course[data-category="14"] .course-category{background:#edf7e8;color:#3b7430}
+    .course[data-category="27"] .course-category{background:#ebf0fa;color:var(--navy)}
+    .course-title{font-size:21px;font-weight:800;line-height:1.22;color:var(--navy);letter-spacing:-.025em;margin:15px 0 16px;overflow-wrap:anywhere}
+    .course-image{width:100%;height:145px;object-fit:cover;border-radius:12px;margin:0 0 15px;background:#f0f4f8}
+    .course-info{display:flex;flex-wrap:wrap;gap:8px;margin:auto 0 18px}
+    .meta{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:12px;padding:7px 11px;background:#f3f6fa;color:#4c6075;border-radius:9px}
+    .price{background:#e8f5f1;color:#1a7468}
+    .price.paid{background:#f1f4f8;color:var(--navy)}
+    .course-actions{display:flex;flex-wrap:wrap;gap:8px}
+    .action{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--teal);padding:11px 15px;border-radius:11px;font-weight:800;font-size:13px;min-height:43px;line-height:1.25;text-decoration:none;color:#fff;background:var(--teal);flex:1}
+    .action:hover{background:#00666d}
+    .action.outline{background:#fff;color:var(--navy);border-color:#cfdee3}
+    .action.outline:hover{background:#f1f7f8}
+    .state{border:1px solid var(--line);background:#fff;border-radius:16px;text-align:center;padding:40px 22px;color:var(--muted)}
+    .state strong{display:block;color:var(--navy);font-size:19px;margin-bottom:6px}
+    .state .action{margin-top:16px;flex:none}
+    .state a{color:var(--teal);font-weight:800}
+    .payment-context{background:#e9f5f4;border:1px solid #c5e5e2;color:var(--navy);border-radius:14px;padding:16px 19px;margin:0 0 18px;font-size:14px}
+    .payment-context strong{font-weight:800}
+    .payment-context span{display:block;margin-top:4px}
+    .payments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .payment{border:1px solid var(--line);background:#fff;border-radius:19px;padding:22px;display:flex;flex-direction:column;gap:15px}
+    .payment-head{display:flex;align-items:center;gap:13px}
+    .payment-icon{height:48px;width:48px;flex:none;border-radius:13px;background:#edf7f7;display:grid;place-items:center;font-size:24px}
+    .payment h3{margin:0;font-size:19px;font-weight:800;color:var(--navy)}
+    .payment small{font-size:12px;color:var(--muted)}
+    .payment-details{color:#52687f;font-size:14px;line-height:1.8;flex:1}
+    .payment-details strong{color:var(--ink)}
+    .payment button,.payment a{font-weight:800;text-align:center;text-decoration:none;color:var(--navy);border:1px solid #cbdde1;background:#fff;border-radius:11px;padding:12px}
+    .payment button:hover,.payment a:hover{background:#e9f5f4}
+    .payment-note{margin-top:18px;font-size:13px;line-height:1.6;color:var(--muted)}
+    .community-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .community-link{display:flex;align-items:center;gap:15px;border:1px solid var(--line);padding:23px;text-decoration:none;background:#fff;border-radius:19px;transition:border-color .15s,transform .15s}
+    .community-link:hover{border-color:#9ccdd1;transform:translateY(-2px)}
+    .community-icon{display:grid;place-items:center;font-size:26px;flex:0 0 50px;height:50px;background:#e8f5f4;border-radius:13px}
+    .community-link strong{display:block;font-size:17px;font-weight:800;color:var(--navy)}
+    .community-link span{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+    .contact{display:flex;gap:16px;flex-wrap:wrap;margin:20px 0}
+    .contact a{text-decoration:none;font-size:13px;font-weight:700;color:var(--teal)}
+    footer{border-top:1px solid var(--line);margin-top:54px;padding:23px 0 36px;display:flex;justify-content:space-between;align-items:center;gap:20px;color:var(--muted);font-size:13px}
+    footer strong{display:block;font-size:14px;color:var(--navy)}
+    footer a{color:var(--teal);font-weight:800;text-decoration:none}
+    @media(max-width:760px){
+      .shell{width:min(100% - 28px,1140px)}
+      .brand img{height:54px;width:54px}
+      .brand strong{font-size:17px}
+      .topbar{align-items:flex-start;gap:10px}
+      .top-links{gap:7px}
+      .small-link{padding:9px 11px;font-size:12px}
+      .hero{border-radius:20px;padding:29px 24px}
+      .hero-side{display:none}
+      .section-top{align-items:flex-start}
+      .filters{grid-template-columns:minmax(0,1fr) auto}
+      .filters select{grid-column:1/-1;grid-row:2}
+      .filters .refresh{grid-column:2;grid-row:1}
+      .courses,.payments,.community-grid{grid-template-columns:1fr}
+      .course-content{padding:20px}
+      .course-title{font-size:19px}
+      .tab{min-height:49px;padding:11px 5px;font-size:13px;gap:5px}
+      .tab-icon{font-size:17px}
+      footer{display:block;text-align:center}
+      footer>div+div{margin-top:11px}
     }
-    </script>
-    
-    <!-- FUENTES: Únicamente Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS Tailwind compilado automáticamente mediante GitHub Actions -->
-    <link rel="stylesheet" href="./assets/tailwind.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #f8fafc; /* Fondo Light Bg Oficial */
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Tech Grid Background */
-        .bg-grid-pattern {
-            background-size: 50px 50px;
-            background-image: 
-                linear-gradient(to right, rgba(0, 32, 91, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 32, 91, 0.02) 1px, transparent 1px);
-        }
-
-        .star-rating i {
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .star-rating i.active {
-            color: #ffb600; /* Brand Yellow */
-            filter: drop-shadow(0 0 2px rgba(255, 182, 0, 0.4));
-        }
-
-        .tech-data {
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #007b85; }
-        
-        #toast {
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            transform: translateY(20px);
-        }
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .tab-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-            transform: translateY(10px);
-        }
-        .tab-content.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Estilos de Bottom Nav activo */
-        .mobile-nav-btn.active-nav {
-            color: #007b85;
-            position: relative;
-        }
-        .mobile-nav-btn.active-nav::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: 20%;
-            width: 60%;
-            height: 3px;
-            background: #007b85;
-            border-radius: 4px;
-        }
-
-
-        :root {
-            --movida-dark: #082b5c;
-            --movida-blue: #0f4c81;
-            --movida-teal: #007f87;
-            --movida-green: #68a842;
-            --ven-yellow: #f4c430;
-            --ven-blue: #003893;
-            --ven-red: #cf142b;
-        }
-
-        html { scroll-behavior: smooth; }
-        body { overflow-x: hidden; }
-        button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
-        button, a { touch-action: manipulation; }
-
-        .venezuela-line {
-            height: 4px;
-            background: linear-gradient(90deg, var(--ven-yellow) 0 33.333%, var(--ven-blue) 33.333% 66.666%, var(--ven-red) 66.666% 100%);
-        }
-
-        .surface-card {
-            background: rgba(255,255,255,.94);
-            border: 1px solid rgba(203,213,225,.72);
-            box-shadow: 0 10px 30px rgba(15,23,42,.055);
-        }
-
-        .touch-target { min-height: 44px; }
-
-        .mobile-nav-safe {
-            padding-bottom: max(.35rem, env(safe-area-inset-bottom));
-        }
-
-        .course-search:focus {
-            box-shadow: 0 0 0 4px rgba(0,123,133,.10);
-        }
-
-        @media (max-width: 767px) {
-            .chart-card, .surface-card { border-radius: 1.15rem; }
-            .mobile-compact { padding-left: 1rem; padding-right: 1rem; }
-            #review-modal { align-items: flex-end; }
-            #review-modal > div { border-radius: 1.5rem 1.5rem 0 0; margin: 0; max-height: 92dvh; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                scroll-behavior: auto !important;
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .01ms !important;
-            }
-        }
-
-    </style>
+    @media(max-width:390px){.top-links{display:none}.count{font-size:11px;padding:7px 9px}.tab{font-size:12px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
 </head>
-<body class="antialiased min-h-screen pt-1 pb-24 md:pb-12 text-slate-600 transition-colors duration-300 relative">
+<body>
+  <div class="stripe" aria-hidden="true"></div>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="https://www.movidasst.com/" aria-label="Volver a La Movida de SST">
+        <img src="https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&amp;sz=w1000" width="68" height="68" alt="La Movida de SST" loading="eager">
+        <span><strong>Academia Movida SST</strong><small>APRENDIZAJE JUSTO A TIEMPO</small></span>
+      </a>
+      <div class="top-links">
+        <a class="small-link" href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Registro ↗</a>
+        <a class="small-link primary" href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer">Ingresar a Moodle ↗</a>
+      </div>
+    </header>
 
-    <div class="fixed inset-x-0 top-0 z-[60] venezuela-line" aria-hidden="true"></div>
-    <div class="fixed inset-0 z-[-2] bg-slate-50 bg-grid-pattern"></div>
-    <div class="fixed inset-0 z-[-1] pointer-events-none bg-[radial-gradient(circle_at_top_left,rgba(0,123,133,0.08),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(0,32,91,0.06),transparent_38%)]"></div>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <div class="eyebrow">Academia · La Movida de SST+</div>
+        <h1 id="page-title">Aprende, actualízate<br>y sigue avanzando.</h1>
+        <p>Explora los cursos publicados en nuestra plataforma Moodle. Toda la información de cada curso está en su ficha oficial.</p>
+      </div>
+      <div class="hero-side" aria-hidden="true">
+        <div class="dot">✦</div>
+        <strong>Formación conectada con la práctica</strong>
+        <span>Seguridad y Salud en el Trabajo</span>
+      </div>
+    </section>
 
-    <script>
-        const MOODLE_CATALOG_URL = "https://lfdmbkzghnwvsapxypvt.supabase.co/functions/v1/academia-catalogo-publico";
-        const MODERATED_REVIEWS_URL = "https://lfdmbkzghnwvsapxypvt.supabase.co/functions/v1/academia-resenas";
-        const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx2nf5FqE-q8PUxvy305rDBYpeyZmi-p1fUIC2pUvHss9Q6VjswXkHcN2-8iFa8dl9Kfg/exec"; 
-        const MODO_DEMO = false; 
-
-        const mockData = {
-            cursos: [
-                { id: "c1", nombre: "Diplomado en Gestión de Riesgos", descripcion: "Aprende a identificar, evaluar y controlar riesgos laborales de manera efectiva.", duracion: "120", modalidad: "Asincrónico", valor: "50", enlace: "https://movidasst.org" },
-                { id: "c2", nombre: "Auditor Interno ISO 45001", descripcion: "Fórmate como auditor interno en sistemas de gestión de seguridad y salud en el trabajo.", duracion: "40", modalidad: "Sincrónico", valor: "0", enlace: "https://movidasst.org" },
-                { id: "c3", nombre: "Primeros Auxilios Avanzados", descripcion: "Técnicas avanzadas de primeros auxilios para entornos industriales.", duracion: "20", modalidad: "Híbrido", valor: "25", enlace: "https://movidasst.org" }
-            ],
-            comentarios: [
-                { cursoId: "c1", nombre: "Carlos Rodríguez", estrellas: "5", comentario: "Excelente curso, muy completo y con material actualizado. Lo recomiendo al 100%.", fecha: new Date().toISOString() },
-                { cursoId: "c2", nombre: "Ana Martínez", estrellas: "5", comentario: "El profesor explica con gran claridad. Aprendí muchísimo sobre la norma.", fecha: new Date(Date.now() - 86400000).toISOString() }
-            ]
-        };
-    </script>
-
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" role="alert" aria-live="assertive" class="fixed bottom-24 md:bottom-12 left-1/2 transform -translate-x-1/2 bg-brand-dark text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z-[100] border border-brand-teal/30">
-        <i class="fas fa-check-circle text-brand-green"></i>
-        <span id="toast-message" class="font-medium text-sm">Copiado al portapapeles</span>
-    </div>
-
-    <!-- Botón Flotante Volver (Escritorio) -->
-    <a href="https://www.movidasst.com" 
-       title="Volver al Hub Principal"
-       aria-label="Volver al inicio"
-       class="hidden md:flex group bg-white/90 backdrop-blur-[16px] items-center gap-[10px] fixed bottom-6 right-6 text-brand-teal px-5 py-2.5 rounded-2xl font-bold text-[13px] tracking-[0.5px] border border-slate-200/60 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.05)] z-40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:border-brand-teal active:scale-95"
-       style="text-decoration: none;"
-    >
-        <svg class="group-hover:rotate-180 transition-transform duration-500" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-        </svg>
-        <span>VOLVER</span>
-    </a>
-
-    <!-- Barra de Navegación Inferior Móvil -->
-    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-200 z-50 flex justify-around items-center px-2 pt-1 shadow-[0_-8px_28px_rgba(15,23,42,0.08)] mobile-nav-safe">
-        <button onclick="switchTab('cursos')" id="btn-mobile-cursos" class="mobile-nav-btn active-nav flex-1 flex flex-col items-center p-2 pt-2.5 min-h-[58px] text-slate-400 transition-colors active:scale-95">
-            <i class="fas fa-graduation-cap text-[22px] mb-1"></i>
-            <span class="text-[10px] font-bold tracking-wide">Cursos</span>
-        </button>
-        <button onclick="switchTab('pagos')" id="btn-mobile-pagos" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 pt-2.5 min-h-[58px] text-slate-400 transition-colors active:scale-95">
-            <i class="fas fa-wallet text-[22px] mb-1"></i>
-            <span class="text-[10px] font-bold tracking-wide">Pagos</span>
-        </button>
-        <button onclick="switchTab('comunidad')" id="btn-mobile-comunidad" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 pt-2.5 min-h-[58px] text-slate-400 transition-colors active:scale-95">
-            <i class="fas fa-users text-[22px] mb-1"></i>
-            <span class="text-[10px] font-bold tracking-wide">Comunidad</span>
-        </button>
+    <nav class="tabs" role="tablist" aria-label="Secciones de la Academia">
+      <button class="tab" id="tab-cursos" type="button" role="tab" aria-controls="view-cursos" aria-selected="true" data-tab="cursos"><span class="tab-icon" aria-hidden="true">▦</span> Cursos</button>
+      <button class="tab" id="tab-pagos" type="button" role="tab" aria-controls="view-pagos" aria-selected="false" data-tab="pagos"><span class="tab-icon" aria-hidden="true">◈</span> Medios de pago</button>
+      <button class="tab" id="tab-comunidad" type="button" role="tab" aria-controls="view-comunidad" aria-selected="false" data-tab="comunidad"><span class="tab-icon" aria-hidden="true">◎</span> Comunidad</button>
     </nav>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 relative z-10">
-
-        <header class="mb-6 md:mb-8 relative">
-            <div class="surface-card rounded-[1.35rem] md:rounded-[1.75rem] overflow-hidden">
-                <div class="venezuela-line" aria-hidden="true"></div>
-                <div class="p-4 sm:p-6 md:p-7">
-                    <div class="flex items-center gap-3 sm:gap-4">
-                        <a href="https://www.movidasst.com" aria-label="Ir al inicio de La Movida de SST" class="shrink-0">
-                            <img src="https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&sz=w1000" alt="Logo La Movida de SST" class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain drop-shadow-sm" loading="eager">
-                        </a>
-                        <div class="min-w-0 flex-1">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-extrabold uppercase tracking-[.12em] text-brand-teal mb-1">
-                                <i class="fas fa-graduation-cap" aria-hidden="true"></i> Academia
-                            </span>
-                            <h1 class="text-[1.65rem] leading-[1.05] sm:text-3xl md:text-4xl font-extrabold text-brand-dark tracking-tight">La Movida de SST</h1>
-                            <p class="text-xs sm:text-sm text-slate-500 mt-1 leading-snug">Actualización profesional, cursos y experiencias educativas en SST.</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-2.5 mt-4">
-                        <a href="https://registro.movidasst.com/" target="_blank" rel="noopener" class="touch-target inline-flex items-center justify-center gap-2 rounded-xl bg-brand-teal text-white font-extrabold text-sm px-3.5 py-3 shadow-md shadow-brand-teal/20 active:scale-[.98] transition">
-                            <i class="fas fa-id-card" aria-hidden="true"></i><span>Registro</span>
-                        </a>
-                        <a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener" class="touch-target inline-flex items-center justify-center gap-2 rounded-xl bg-brand-dark text-white font-extrabold text-sm px-3.5 py-3 shadow-md active:scale-[.98] transition">
-                            <i class="fas fa-right-to-bracket" aria-hidden="true"></i><span>Ingresar</span>
-                        </a>
-                    </div>
-                    <!-- Entrada al panel administrativo. La autorización se valida en Supabase, no por visibilidad del enlace. -->
-                    <div class="mt-3 flex justify-center sm:justify-end">
-                        <a id="academy-admin-link" href="./moderacion.html" class="touch-target inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-brand-dark hover:border-brand-teal hover:text-brand-teal transition-colors" aria-label="Administración de la Academia, acceso restringido">
-                            <i class="fas fa-user-shield" aria-hidden="true"></i>
-                            <span>Administración</span>
-                            <span class="text-[10px] font-semibold text-slate-500">Acceso restringido</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <nav aria-label="Secciones de la Academia" class="hidden md:flex mt-4 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200 max-w-xl w-full mx-auto gap-1.5">
-                <button aria-controls="view-cursos" onclick="switchTab('cursos')" id="btn-cursos" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 bg-brand-teal text-white shadow-md active:scale-95"><i class="fas fa-graduation-cap"></i>Cursos</button>
-                <button aria-controls="view-pagos" onclick="switchTab('pagos')" id="btn-pagos" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95"><i class="fas fa-wallet"></i>Pagos</button>
-                <button aria-controls="view-comunidad" onclick="switchTab('comunidad')" id="btn-comunidad" class="flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95"><i class="fas fa-users"></i>Comunidad</button>
-            </nav>
-        </header>
-
-        <main>
-            <section id="view-cursos" class="tab-content active" aria-labelledby="cursos-heading">
-                
-                <div id="social-proof-banner" class="hidden mb-10 w-full max-w-5xl mx-auto"></div>
-
-                <div class="text-left sm:text-center mb-5 md:mb-7">
-                    <span class="inline-flex items-center gap-2 rounded-full bg-brand-teal/10 text-brand-teal border border-brand-teal/15 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider mb-2">Formación y actualización</span>
-                    <h2 id="cursos-heading" class="text-2xl sm:text-3xl font-extrabold text-brand-dark">Catálogo de cursos</h2>
-                    <p class="text-slate-500 max-w-2xl sm:mx-auto text-sm mt-1.5">Cursos oficiales publicados en Moodle. Consulta la oferta y comparte tu experiencia.</p>
-                </div>
-
-                <div class="surface-card rounded-2xl p-4 sm:p-5 max-w-3xl mx-auto mb-4">
-                    <div class="flex items-start gap-3">
-                        <div class="w-11 h-11 bg-brand-teal/10 rounded-xl text-brand-teal flex items-center justify-center shrink-0"><i class="fas fa-user-check"></i></div>
-                        <div class="min-w-0 flex-1">
-                            <h3 class="font-extrabold text-brand-dark text-base">Dos accesos, dos funciones</h3>
-                            <p class="text-slate-500 text-sm leading-relaxed mt-1"><strong class="text-slate-700">Registro La Movida:</strong> actualiza tu perfil y credencial. <strong class="text-slate-700">Academia:</strong> ingresa a los cursos y certificados.</p>
-                            <div class="flex flex-wrap gap-2 mt-3">
-                                <a href="https://registro.movidasst.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-brand-teal text-white px-3.5 py-2.5 rounded-xl text-xs font-extrabold"><i class="fas fa-id-card"></i> Ir al Registro</a>
-                                <a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-slate-100 text-brand-dark px-3.5 py-2.5 rounded-xl text-xs font-extrabold border border-slate-200"><i class="fas fa-right-to-bracket"></i> Ingresar a Academia</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="max-w-3xl mx-auto mb-6 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2.5">
-                    <label class="relative block">
-                        <span class="sr-only">Buscar cursos</span>
-                        <i class="fas fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                        <input id="course-search" type="search" inputmode="search" autocomplete="off" placeholder="Buscar curso por nombre, modalidad o tema…" class="course-search w-full h-12 rounded-xl bg-white border border-slate-200 pl-11 pr-4 text-sm text-slate-800 outline-none transition">
-                    </label>
-                    <button onclick="fetchData()" class="h-12 px-4 rounded-xl border border-slate-200 bg-white text-brand-dark font-extrabold text-sm inline-flex items-center justify-center gap-2 active:scale-[.98]"><i class="fas fa-rotate"></i><span>Actualizar</span></button>
-                </div>
-                <div class="max-w-3xl mx-auto mb-3 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-<label class="block"><span class="sr-only">Filtrar por categoría</span>
-<select id="course-category-filter" class="w-full h-11 rounded-xl bg-white border border-slate-200 px-3 text-sm text-brand-dark font-bold">
-<option value="">Todas las categorías</option>
-<option value="26">Actualización Profesional Continua</option>
-<option value="14">Gratuitos</option>
-<option value="24">De Pago</option>
-<option value="27">Cursos Corporativos</option>
-</select></label>
-<label class="block"><span class="sr-only">Ordenar cursos</span>
-<select id="course-sort" class="w-full h-11 rounded-xl bg-white border border-slate-200 px-3 text-sm text-brand-dark font-bold">
-<option value="recientes">Incorporaciones recientes</option>
-<option value="nombre">Nombre (A–Z)</option>
-</select></label>
-</div>
-<div id="catalog-status" class="max-w-3xl mx-auto mb-6 text-center text-xs text-slate-500" aria-live="polite">Conectando con el catálogo…</div>
-
-                <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full max-w-7xl mx-auto" aria-busy="true" aria-label="Cargando cursos"></div>
-
-                <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-3xl relative mb-6 text-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] max-w-2xl mx-auto backdrop-blur-[16px]" role="alert">
-                    <div class="flex items-center justify-center gap-2 mb-1">
-                        <i class="fas fa-wifi" aria-hidden="true"></i>
-                        <strong class="font-bold">No pudimos cargar el catálogo</strong>
-                    </div>
-                    <span class="block sm:inline text-sm opacity-90" id="error-text">Revisa la conexión o el estado del servicio.</span>
-                    <button onclick="fetchData()" class="mt-2 text-xs font-bold underline hover:text-red-800 active:scale-95">Reintentar</button>
-                </div>
-
-                <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 relative z-10" aria-live="polite">
-                    <!-- Dinámico -->
-                </div>
-            </section>
-
-            <section id="view-pagos" class="tab-content" aria-labelledby="pagos-heading">
-                <div class="w-full max-w-5xl mx-auto">
-                    <div class="text-center mb-8">
-                        <span class="bg-brand-teal/10 text-brand-teal px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border border-brand-teal/20">Zona de Pagos</span>
-                        <h2 id="pagos-heading" class="text-2xl font-extrabold text-brand-dark mt-2">Medios Oficiales</h2>
-                        <div id="course-payment-context" role="status" aria-live="polite" class="hidden text-left bg-brand-teal/5 border border-brand-teal/20 text-brand-dark text-sm rounded-2xl p-4 mt-4"></div>
-                        <p class="text-slate-500 text-sm mt-2">Usa únicamente el medio de pago indicado en tu curso. El pago no confirma la matrícula: sigue las instrucciones de Moodle.</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 md:gap-6">
-                        
-                        <!-- VENEZUELA -->
-                        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 flex flex-col relative overflow-hidden group transition-all duration-300 payment-card">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            
-                            <div class="flex items-start gap-4 mb-4 relative z-10">
-                                <div class="w-12 h-12 shrink-0 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-red-100">
-                                    <i class="fas fa-university" aria-hidden="true"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-extrabold text-brand-dark text-lg leading-tight">Transferencia<br>Venezuela</h3>
-                                </div>
-                            </div>
-                            <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
-                                <p>Cta. Corriente <span class="font-bold text-slate-700">0102-0236...</span></p>
-                                <p>Ezequiel Linares</p>
-                            </div>
-                            <button onclick="copyPaymentData('transfer', this)" aria-label="Copiar datos de transferencia" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md active:scale-95">
-                                <span>Copiar Datos Completos</span> <i class="far fa-copy" aria-hidden="true"></i>
-                            </button>
-                        </div>
-
-                        <!-- PAGO MÓVIL -->
-                        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 flex flex-col relative overflow-hidden group transition-all duration-300 payment-card">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            
-                            <div class="flex items-start gap-4 mb-4 relative z-10">
-                                <div class="w-12 h-12 shrink-0 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-purple-100">
-                                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-extrabold text-brand-dark text-lg leading-tight">Pago Móvil<br>(Bs)</h3>
-                                </div>
-                            </div>
-                            <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
-                                <p>Banco de Venezuela</p>
-                                <p class="font-bold text-slate-700">0412-6372223</p>
-                            </div>
-                            <button onclick="copyPaymentData('pagoMovil', this)" aria-label="Copiar datos de pago móvil" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md active:scale-95">
-                                <span>Copiar Datos Completos</span> <i class="far fa-copy" aria-hidden="true"></i>
-                            </button>
-                        </div>
-
-                        <!-- BINANCE -->
-                        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 flex flex-col relative overflow-hidden group transition-all duration-300 payment-card">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            
-                            <div class="flex items-start gap-4 mb-4 relative z-10">
-                                <div class="w-12 h-12 shrink-0 bg-yellow-50 text-[#f3ba2f] rounded-2xl flex items-center justify-center text-xl shadow-sm border border-yellow-100">
-                                    <i class="fab fa-bitcoin" aria-hidden="true"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-extrabold text-brand-dark text-lg leading-tight">Binance<br>(USDT)</h3>
-                                </div>
-                            </div>
-                            <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
-                                <p>Red: BEP20 (BSC)</p>
-                                <p>ID: <span class="font-bold text-slate-700">176067584</span></p>
-                            </div>
-                            <button onclick="copyPaymentData('binance', this)" aria-label="Copiar datos de Binance" class="mt-auto w-full bg-brand-dark hover:bg-brand-teal text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md active:scale-95">
-                                <span>Copiar Datos Completos</span> <i class="far fa-copy" aria-hidden="true"></i>
-                            </button>
-                        </div>
-
-                        <!-- PAYPAL -->
-                        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 flex flex-col relative overflow-hidden group transition-all duration-300">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            
-                            <div class="flex items-start gap-4 mb-4 relative z-10">
-                                <div class="w-12 h-12 shrink-0 bg-[#0070ba]/10 text-[#0070ba] rounded-2xl flex items-center justify-center text-xl shadow-sm border border-[#0070ba]/20">
-                                    <i class="fab fa-paypal" aria-hidden="true"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-extrabold text-brand-dark text-lg leading-tight">PayPal<br>Directo</h3>
-                                </div>
-                            </div>
-                            <div class="space-y-1.5 text-sm relative z-10 mb-6 text-slate-500">
-                                <p class="font-bold text-slate-700">movidasst@gmail.com</p>
-                                <p class="text-[11px] text-brand-yellow font-bold uppercase tracking-wider bg-brand-yellow/10 inline-block px-2 py-1 rounded">Consulta las condiciones de PayPal</p>
-                            </div>
-                            <a href="https://paypal.me/movidasst" target="_blank" rel="noopener noreferrer" aria-label="Ir a pagar con PayPal" class="mt-auto w-full bg-[#0070ba] hover:bg-[#003087] text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-md shadow-[#0070ba]/30 active:scale-95">
-                                <span>Ir a Pagar</span> <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="view-comunidad" class="tab-content" aria-labelledby="comunidad-heading">
-                <div class="w-full max-w-4xl mx-auto">
-                    <div class="text-center mb-10">
-                        <h2 id="comunidad-heading" class="text-2xl font-extrabold text-brand-dark">Comunidad y Accesos</h2>
-                        <p class="text-slate-500 font-light mt-2 text-sm">
-                            Conecta con nosotros y accede a la plataforma.
-                        </p>
-                    </div>
-
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-8">
-                        
-                        <a href="https://chat.whatsapp.com/Fv0CmlSqTVyDB0diXAyPCI" target="_blank" rel="noopener noreferrer" 
-                           class="bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            
-                            <div class="w-16 h-16 bg-[#25D366]/10 text-[#25D366] rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform border border-[#25D366]/20 shadow-sm">
-                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="font-bold text-brand-dark text-lg mb-1">Grupo Academia</h3>
-                            <p class="text-slate-500 text-xs">Comunidad de estudio</p>
-                        </a>
-
-                        <a href="https://whatsapp.com/channel/0029Va0mlH5Jf05mrcCz8r3e" target="_blank" rel="noopener"
-                           class="bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1.5 border border-slate-200/60 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                            <div class="w-16 h-16 bg-brand-teal/10 text-brand-teal rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform border border-brand-teal/20 shadow-sm">
-                                <i class="fas fa-bullhorn" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="font-bold text-brand-dark text-lg mb-1">Canal Oficial</h3>
-                            <p class="text-slate-500 text-xs">Noticias y novedades</p>
-                        </a>
-
-                        <a href="https://registro.movidasst.com/" target="_blank" rel="noopener"
-                           class="bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-lg border border-slate-200 group flex flex-col items-center text-center transition-all active:scale-95">
-                            <div class="w-14 h-14 bg-brand-teal/10 text-brand-teal rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fas fa-id-card"></i></div>
-                            <h3 class="font-bold text-brand-dark text-base mb-1">Registro</h3>
-                            <p class="text-slate-500 text-[11px] leading-snug">Perfil y credencial</p>
-                        </a>
-
-                        <a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener"
-                           class="bg-brand-dark p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.2)] hover:-translate-y-1.5 border border-slate-800 group flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 active:scale-95 ">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                            <div class="w-16 h-16 bg-white/10 text-brand-teal rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform border border-white/10">
-                                <i class="fas fa-user-graduate" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="font-bold text-white text-lg mb-1">Ingresar</h3>
-                            <p class="text-slate-300 text-xs">Acceso a estudiantes</p>
-                        </a>
-                    </div>
-
-                    <!-- CONTACTO DIRECTO -->
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="https://wa.me/56968615650" target="_blank" rel="noopener noreferrer" 
-                           class="flex items-center gap-4 px-6 py-4 bg-white border border-slate-200/60 rounded-2xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:border-brand-teal hover:shadow-[0_10px_20px_-5px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 group active:scale-95">
-                            <i class="fab fa-whatsapp text-[#25D366] text-3xl group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                            <div class="flex flex-col text-left">
-                                <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">WhatsApp Directo</span>
-                                <span class="font-bold text-brand-dark group-hover:text-brand-teal text-sm transition-colors">+56 9 6861 5650</span>
-                            </div>
-                        </a>
-                        <a href="mailto:movidasst@gmail.com" 
-                           class="flex items-center gap-4 px-6 py-4 bg-white border border-slate-200/60 rounded-2xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:border-brand-teal hover:shadow-[0_10px_20px_-5px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 group active:scale-95">
-                            <i class="far fa-envelope text-brand-teal text-3xl group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                            <div class="flex flex-col text-left">
-                                <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Correo Electrónico</span>
-                                <span class="font-bold text-brand-dark group-hover:text-brand-teal text-sm transition-colors">movidasst@gmail.com</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="mt-10 mb-3 text-center text-xs text-slate-400">
-            <div class="venezuela-line max-w-24 mx-auto rounded-full mb-4" aria-hidden="true"></div>
-            <p class="font-semibold text-slate-500">Academia La Movida de SST</p>
-            <p class="mt-1">De la Reacción a la Prevención · <a href="https://www.movidasst.com" class="text-brand-teal font-bold">www.movidasst.com</a></p>
-        </footer>
-    </div>
-
-    <div id="review-modal" role="dialog" aria-modal="true" aria-labelledby="modal-course-title" class="fixed inset-0 bg-slate-900/60 overflow-y-auto h-full w-full hidden z-[9999] flex items-center justify-center backdrop-blur-[16px] transition-opacity duration-300 pb-16 md:pb-0" onclick="closeModal()">
-        
-        <div class="relative mx-auto p-0 border border-slate-200/60 w-full max-w-2xl shadow-2xl rounded-3xl bg-white m-4 cursor-default transform transition-all scale-100 overflow-hidden" onclick="event.stopPropagation()">
-            
-            <div class="bg-gradient-to-br from-brand-dark to-[#001030] p-6 relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-teal/20 rounded-full blur-[120px]"></div>
-                <button aria-label="Cerrar modal" onclick="closeModal()" class="absolute top-4 right-4 text-white/60 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all duration-200 z-10 active:scale-95">
-                    <i class="fas fa-times text-xl" aria-hidden="true"></i>
-                </button>
-                <h3 class="text-xl sm:text-2xl font-extrabold text-white mb-1 relative z-10 pr-8" id="modal-course-title">Nombre del Curso</h3>
-                <p class="text-brand-teal text-xs font-medium relative z-10">Tu opinión es valiosa para la comunidad.</p>
-            </div>
-
-            <div class="p-5 sm:p-8 max-h-[70vh] overflow-y-auto custom-scrollbar">
-                <form id="review-form" class="mb-6 bg-slate-50 p-5 rounded-3xl border border-slate-200/60">
-                    <input id="review-website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0">
-                    <input type="hidden" id="course-id">
-                    <div class="grid grid-cols-1 gap-5">
-                        <div>
-                            <label class="block text-brand-dark text-sm font-bold mb-1.5" for="user-name">Tu Nombre</label>
-                            <input class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-brand-teal focus:border-transparent block p-3 transition-all outline-none shadow-sm" id="user-name" type="text" autocomplete="name" maxlength="80" placeholder="Ej: Ana García" required>
-                        </div>
-                        <div>
-                            <label class="block text-brand-dark text-sm font-bold mb-1.5">Tu Calificación</label>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-                                <div class="star-rating text-3xl flex gap-1.5 text-slate-300" id="star-input" role="radiogroup" aria-label="Puntuación de 1 a 5 estrellas">
-                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="1" aria-label="1 estrella"></i>
-                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="2" aria-label="2 estrellas"></i>
-                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="3" aria-label="3 estrellas"></i>
-                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="4" aria-label="4 estrellas"></i>
-                                    <i class="fas fa-star hover:scale-110 p-1" role="radio" aria-checked="false" tabindex="0" data-value="5" aria-label="5 estrellas"></i>
-                                </div>
-                                <div id="rating-badge" class="hidden bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-sm">
-                                    <span id="rating-text-simple" class="tech-data text-sm text-brand-dark">0/5</span>
-                                </div>
-                            </div>
-                            <p id="rating-text" class="text-xs text-slate-400 mt-1 font-medium h-4" aria-live="polite">Haz clic para puntuar</p>
-                            <input type="hidden" id="rating-value" value="0" required>
-                        </div>
-                        <div>
-                            <label class="block text-brand-dark text-sm font-bold mb-1.5" for="user-comment">Comentario</label>
-                            <textarea class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-brand-teal focus:border-transparent block p-3 transition-all outline-none resize-none shadow-sm" id="user-comment" rows="3" maxlength="700" placeholder="¿Qué fue lo mejor del curso? Evita incluir datos personales de terceros." required></textarea>
-                        </div>
-                    </div>
-                    <label class="flex items-start gap-3 mt-4 p-3.5 rounded-2xl bg-white border border-slate-200 text-xs text-slate-500 leading-relaxed cursor-pointer">
-                        <input id="review-consent" type="checkbox" required class="mt-0.5 w-4 h-4 accent-[#007b85] shrink-0">
-                        <span>Acepto que mi nombre, puntuación y comentario se publiquen solamente después de su revisión. No incluiré datos personales de terceros ni contenido ofensivo. Una valoración no acredita por sí sola mi matrícula.</span>
-                    </label>
-                    <div class="flex items-center justify-end gap-3 pt-5 mt-2 border-t border-slate-200/60">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 text-slate-500 font-bold hover:text-brand-dark hover:bg-slate-100 rounded-xl transition-colors duration-200 active:scale-95 text-sm">Cancelar</button>
-                        <button class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-brand-teal/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-teal transition-all duration-200 active:scale-95 text-sm" type="submit" id="submit-btn">Enviar valoración para revisión</button>
-                    </div>
-                </form>
-                
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-brand-teal/10 p-2 rounded-xl text-brand-teal">
-                        <i class="far fa-comments" aria-hidden="true"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-brand-dark">Reseñas de la comunidad</h4>
-                </div>
-                <div id="comments-list" class="space-y-4 pr-1">
-                    <div class="text-center text-slate-400 py-6 tech-data text-xs">Cargando datos...</div>
-                </div>
-            </div>
+    <main>
+      <section id="view-cursos" role="tabpanel" aria-labelledby="tab-cursos">
+        <div class="section-top">
+          <div>
+            <h2>Cursos de la Academia</h2>
+            <p>Únicamente cursos visibles y publicados en Moodle.</p>
+          </div>
+          <span class="count" id="course-count" aria-live="polite">Consultando Moodle</span>
         </div>
-    </div>
+        <div class="filters">
+          <input class="filter-field" id="course-search" type="search" autocomplete="off" placeholder="Buscar por nombre del curso..." aria-label="Buscar curso">
+          <select class="filter-field" id="course-category" aria-label="Filtrar por categoría">
+            <option value="all">Todas las categorías</option>
+          </select>
+          <button class="refresh" type="button" id="refresh-courses" aria-label="Actualizar cursos desde Moodle">↻ Actualizar</button>
+        </div>
+        <p class="source-line" id="course-status" role="status" aria-live="polite">Consultando catálogo público…</p>
+        <div class="courses" id="courses-grid" aria-live="polite"></div>
+        <div class="state" id="courses-state">
+          <strong>Conectando con Moodle…</strong>
+          <span>Consultamos los cursos que se encuentran visibles para el público.</span>
+        </div>
+      </section>
 
-    <script>
-        const paymentInfo = {
-            transfer: `DATOS PARA TRANSFERENCIA BANCARIA (VENEZUELA)\nBanco: Banco de Venezuela\nTipo de cuenta: Corriente\nNº de cuenta: 0102-0236-1500-0033-6732\nTitular: Ezequiel Linares\nC.I.: 30.407.087`,
-            pagoMovil: `DATOS PARA PAGO MÓVIL\nBanco: Banco de Venezuela\nNombre: Ezequiel Linares\nC.I.: V-30.407.087\nTeléfono: 0412-6372223`,
-            binance: `DATOS PARA BINANCE (USDT)\nRed: BEP20 (BSC)\nID: 176067584\nCorreo: david.linaresb@gmail.com`,
-            paypal: `DATOS PARA PAYPAL\nCorreo: movidasst@gmail.com\nNota: Confirma el tipo de pago permitido para tu curso`
-        };
+      <section id="view-pagos" role="tabpanel" aria-labelledby="tab-pagos" hidden>
+        <div class="section-top">
+          <div><h2>Medios de pago</h2><p>Consulta las opciones oficiales de la Academia.</p></div>
+        </div>
+        <div class="payment-context" id="course-payment-context" hidden aria-live="polite"></div>
+        <div class="payments">
+          <article class="payment">
+            <div class="payment-head"><div class="payment-icon" aria-hidden="true">🏦</div><div><h3>Transferencia bancaria</h3><small>Venezuela</small></div></div>
+            <div class="payment-details">Banco de Venezuela<br>Cuenta corriente: <strong>0102-0236…</strong><br>Titular: <strong>Ezequiel Linares</strong></div>
+            <button type="button" data-copy="transfer">Copiar datos completos</button>
+          </article>
+          <article class="payment">
+            <div class="payment-head"><div class="payment-icon" aria-hidden="true">📲</div><div><h3>Pago Móvil</h3><small>Bolívares · Venezuela</small></div></div>
+            <div class="payment-details">Banco de Venezuela<br>Teléfono: <strong>0412-6372223</strong><br>Titular: <strong>Ezequiel Linares</strong></div>
+            <button type="button" data-copy="pagoMovil">Copiar datos completos</button>
+          </article>
+          <article class="payment">
+            <div class="payment-head"><div class="payment-icon" aria-hidden="true">◈</div><div><h3>Binance</h3><small>USDT · BEP20 (BSC)</small></div></div>
+            <div class="payment-details">Red: <strong>BEP20 (BSC)</strong><br>ID: <strong>176067584</strong></div>
+            <button type="button" data-copy="binance">Copiar datos completos</button>
+          </article>
+          <article class="payment">
+            <div class="payment-head"><div class="payment-icon" aria-hidden="true">💳</div><div><h3>PayPal</h3><small>Pago directo</small></div></div>
+            <div class="payment-details">Correo: <strong>movidasst@gmail.com</strong><br>Consulta las condiciones aplicables antes de pagar.</div>
+            <a href="https://paypal.me/movidasst" target="_blank" rel="noopener noreferrer">Abrir PayPal ↗</a>
+          </article>
+        </div>
+        <p class="payment-note">Utiliza el medio indicado para tu curso y sigue las instrucciones de Moodle para reportar y verificar el pago. Esta página no procesa pagos ni confirma inscripciones.</p>
+      </section>
 
-        let allComments = [];
-        let allCourses = [];
-        let reviewsAvailable = false;
-        const ratingLabels = ["Malo", "Regular", "Bueno", "Muy Bueno", "Excelente"];
+      <section id="view-comunidad" role="tabpanel" aria-labelledby="tab-comunidad" hidden>
+        <div class="section-top">
+          <div><h2>Comunidad y accesos</h2><p>Conecta con la Academia y con La Movida de SST.</p></div>
+        </div>
+        <div class="community-grid">
+          <a class="community-link" href="https://chat.whatsapp.com/Fv0CmlSqTVyDB0diXAyPCI" target="_blank" rel="noopener noreferrer">
+            <span class="community-icon" aria-hidden="true">💬</span><div><strong>Grupo de la Academia ↗</strong><span>Información de cursos y actividades</span></div>
+          </a>
+          <a class="community-link" href="https://whatsapp.com/channel/0029Va0mlH5Jf05mrcCz8r3e" target="_blank" rel="noopener noreferrer">
+            <span class="community-icon" aria-hidden="true">📣</span><div><strong>Canal oficial ↗</strong><span>Noticias y novedades de SST</span></div>
+          </a>
+          <a class="community-link" href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">
+            <span class="community-icon" aria-hidden="true">🪪</span><div><strong>Registro La Movida ↗</strong><span>Comunidad, perfil y credencial</span></div>
+          </a>
+          <a class="community-link" href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer">
+            <span class="community-icon" aria-hidden="true">🎓</span><div><strong>Ingresar a Moodle ↗</strong><span>Acceso a formación y certificados</span></div>
+          </a>
+        </div>
+        <div class="contact">
+          <a href="https://wa.me/56968615650" target="_blank" rel="noopener noreferrer">WhatsApp: +56 9 6861 5650 ↗</a>
+          <a href="mailto:movidasst@gmail.com">Correo: movidasst@gmail.com ↗</a>
+        </div>
+      </section>
+    </main>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderSkeletons();
-            fetchData();
-            setupStarRating();
-            setupForm();
-            setupModalEvents();
-            setupCourseSearch();
+    <footer>
+      <div><strong>Academia Movida SST</strong>De la Reacción a la Prevención</div>
+      <div><a href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer">www.movidasst.com ↗</a></div>
+    </footer>
+  </div>
+  <script>
+    "use strict";
+    const MOODLE_CATALOG_URL = "https://lfdmbkzghnwvsapxypvt.supabase.co/functions/v1/academia-catalogo-publico";
+    const MOODLE_ROOT = "https://movidasst.org";
+    const CATEGORY_NAMES = {"14":"Gratuitos","24":"De Pago","26":"Actualización Profesional Continua","27":"Cursos Corporativos"};
+    const paymentInfo = {
+      transfer: "DATOS PARA TRANSFERENCIA BANCARIA (VENEZUELA)\nBanco: Banco de Venezuela\nTipo de cuenta: Corriente\nNº de cuenta: 0102-0236-1500-0033-6732\nTitular: Ezequiel Linares\nC.I.: 30.407.087",
+      pagoMovil: "DATOS PARA PAGO MÓVIL\nBanco: Banco de Venezuela\nNombre: Ezequiel Linares\nC.I.: V-30.407.087\nTeléfono: 0412-6372223",
+      binance: "DATOS PARA BINANCE (USDT)\nRed: BEP20 (BSC)\nID: 176067584\nCorreo: david.linaresb@gmail.com"
+    };
+    let courses = [];
+    let catalogReady = false;
+
+    function activateTab(name) {
+      if (!["cursos","pagos","comunidad"].includes(name)) return;
+      document.querySelectorAll("[data-tab]").forEach(function(button){
+        const active = button.dataset.tab === name;
+        button.setAttribute("aria-selected", String(active));
+        button.tabIndex = active ? 0 : -1;
+      });
+      document.querySelectorAll("[role=tabpanel]").forEach(function(section){
+        section.hidden = section.id !== "view-" + name;
+      });
+    }
+    function setState(title,detail) {
+      const panel=document.getElementById("courses-state");
+      panel.replaceChildren();
+      const heading=document.createElement("strong");heading.textContent=title;
+      const note=document.createElement("span");note.textContent=detail;
+      panel.append(heading,note);panel.hidden=false;
+      document.getElementById("courses-grid").hidden=true;
+    }
+    function courseFromMoodle(raw) {
+      if (!raw || typeof raw!=="object" || raw.origen!=="moodle") return null;
+      const id=Number(raw.moodle_id || raw.id);
+      const category=Number(raw.categoria_id);
+      if (!Number.isSafeInteger(id) || id<=1 || !Object.prototype.hasOwnProperty.call(CATEGORY_NAMES,String(category))) return null;
+      const name=String(raw.nombre || "").trim();
+      if (!name) return null;
+      const duration=String(raw.duracion || "").trim().slice(0,70);
+      const price=String(raw.precio_texto || "").trim().slice(0,75);
+      const img=String(raw.imagen || "");
+      let photo="";
+      if (img) {
+        try{
+          const url=new URL(img);
+          if (url.protocol==="https:" && url.hostname==="movidasst.org" && url.pathname.includes("/pluginfile.php/")) photo=url.href;
+        }catch(_){}
+      }
+      return {id:id,category:category,name:name.slice(0,220),duration:duration,price:price,photo:photo,url:MOODLE_ROOT+"/course/view.php?id="+id};
+    }
+    function populateCategories(){
+      const filter=document.getElementById("course-category");
+      const previous=filter.value;
+      filter.replaceChildren(new Option("Todas las categorías","all"));
+      const values=new Set(courses.map(function(c){return c.category;}));
+      [26,14,24,27].forEach(function(id){
+        if (!values.has(id)) return;
+        filter.add(new Option(CATEGORY_NAMES[String(id)],String(id)));
+      });
+      filter.value=Array.from(filter.options).some(function(opt){return opt.value===previous;})?previous:"all";
+    }
+    function element(tag,cls,txt) {
+      const el=document.createElement(tag);
+      if (cls) el.className=cls;
+      if (txt!==undefined) el.textContent=txt;
+      return el;
+    }
+    function renderCourses(){
+      const grid=document.getElementById("courses-grid");
+      const count=document.getElementById("course-count");
+      const search=document.getElementById("course-search").value.trim().toLocaleLowerCase("es");
+      const category=document.getElementById("course-category").value;
+      const rows=courses.filter(function(c){
+        return (category==="all" || String(c.category)===category) && (!search || c.name.toLocaleLowerCase("es").includes(search));
+      }).sort(function(a,b){return b.id-a.id;});
+      count.textContent=courses.length+" cursos en Moodle";
+      grid.replaceChildren();
+      if (rows.length===0){
+        grid.hidden=true;
+        setState(catalogReady?"No encontramos coincidencias":"Sin cursos publicados",catalogReady?"Prueba otra búsqueda o categoría.":"Consulta el catálogo oficial de Moodle.");
+        return;
+      }
+      rows.forEach(function(course){
+        const card=element("article","course");
+        card.dataset.category=String(course.category);
+        card.append(element("div","course-accent"));
+        const content=element("div","course-content");
+        content.append(element("span","course-category",CATEGORY_NAMES[String(course.category)]));
+        content.append(element("h3","course-title",course.name));
+        if (course.photo){
+          const img=element("img","course-image");img.src=course.photo;img.alt="Imagen del curso "+course.name;img.loading="lazy";img.decoding="async";img.referrerPolicy="no-referrer";img.onerror=function(){img.remove();};content.append(img);
+        }
+        const meta=element("div","course-info");
+        if (course.duration) meta.append(element("span","meta","◷ "+course.duration));
+        if (course.price) meta.append(element("span","meta price"+(course.category===24?" paid":""),course.price));
+        if (meta.childElementCount) content.append(meta);
+        const actions=element("div","course-actions");
+        const link=element("a","action","Ver curso en Moodle ↗");
+        link.href=course.url;link.target="_blank";link.rel="noopener noreferrer";
+        actions.append(link);
+        if (course.category===24){
+          const paymentButton=element("button","action outline","Cómo pagar");
+          paymentButton.type="button";
+          paymentButton.addEventListener("click",function(){
+            const panel=document.getElementById("course-payment-context");
+            panel.replaceChildren();
+            panel.append(element("strong","",course.name));
+            panel.append(element("span","",course.price ? "Precio informado por Moodle: "+course.price : "Consulta el precio y las condiciones en Moodle."));
+            panel.hidden=false;
+            activateTab("pagos");
+            document.querySelector(".tabs").scrollIntoView({block:"start",behavior:"auto"});
+          });
+          actions.append(paymentButton);
+        }
+        content.append(actions);
+        card.append(content);
+        grid.append(card);
+      });
+      grid.hidden=false;
+      document.getElementById("courses-state").hidden=true;
+    }
+    async function loadCourses(){
+      const count=document.getElementById("course-count");
+      const status=document.getElementById("course-status");
+      const refresh=document.getElementById("refresh-courses");
+      refresh.disabled=true;
+      count.textContent="Consultando Moodle";
+      status.textContent="Actualizando desde Moodle…";
+      catalogReady=false;
+      courses=[];
+      setState("Conectando con Moodle…","Mostraremos únicamente los cursos publicados.");
+      const controller=new AbortController();
+      const timer=setTimeout(function(){controller.abort();},20000);
+      try{
+        const response=await fetch(MOODLE_CATALOG_URL,{cache:"no-store",signal:controller.signal,headers:{"accept":"application/json"}});
+        if (!response.ok) throw new Error("No fue posible conectar con Moodle");
+        const payload=await response.json();
+        if (payload.ok!==true || payload.source!=="moodle" || payload.stale===true || !Array.isArray(payload.courses)) throw new Error("No se pudo verificar la publicación de los cursos");
+        const seen=new Set();
+        courses=payload.courses.map(courseFromMoodle).filter(function(c){
+          if (!c || seen.has(c.id)) return false;
+          seen.add(c.id);return true;
         });
-
-        // Utilidad de seguridad contra fallas de inyección HTML
-        function escapeHTML(value) {
-            if (value === undefined || value === null) return '';
-            return String(value).replace(/[&<>'"]/g,
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])
-            );
+        catalogReady=true;
+        populateCategories();
+        renderCourses();
+        status.textContent="Datos obtenidos del catálogo público de Moodle · Actualización automática.";
+      }catch(err){
+        count.textContent="Catálogo no disponible";
+        status.textContent="No se pudo verificar la oferta actual en Moodle.";
+        setState("No podemos mostrar los cursos ahora","Para consultar la oferta publicada, entra directamente a la Academia.");
+        const panel=document.getElementById("courses-state");
+        const a=element("a","","Ver catálogo en Moodle ↗");
+        a.href=MOODLE_ROOT+"/course/index.php";a.target="_blank";a.rel="noopener noreferrer";panel.append(element("div",""),a);
+      }finally{clearTimeout(timer);refresh.disabled=false;}
+    }
+    async function copyPayment(kind,button){
+      const value=paymentInfo[kind];
+      if (!value) return;
+      const original=button.textContent;
+      try{
+        if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(value);
+        else{
+          const temp=element("textarea");temp.value=value;temp.style.position="fixed";temp.style.opacity="0";
+          document.body.append(temp);temp.select();
+          if (!document.execCommand("copy")) throw new Error("Copia no disponible");
+          temp.remove();
         }
-
-        function safeExternalUrl(value) {
-            if (!value) return '';
-            try {
-                const parsed = new URL(String(value), window.location.href);
-                if (!['http:', 'https:'].includes(parsed.protocol)) return '';
-                return parsed.href;
-            } catch (_) {
-                return '';
-            }
-        }
-
-        function normalizeApiPayload(payload) {
-            if (!payload || typeof payload !== 'object') return null;
-            if (payload.status === 'success' || payload.ok === true) {
-                const root = payload.data && typeof payload.data === 'object' ? payload.data : payload;
-                return {
-                    cursos: root.cursos || root.courses || payload.cursos || [],
-                    comentarios: root.comentarios || root.comments || payload.comentarios || []
-                };
-            }
-            return null;
-        }
-
-        // Animación de carga optimizada (Skeletons)
-        function renderSkeletons() {
-            const container = document.getElementById('loading');
-            let html = '';
-            for(let i=0; i<3; i++) {
-                let hideClass = i===1 ? 'hidden md:flex' : (i===2 ? 'hidden lg:flex' : '');
-                html += `
-                <div class="bg-white rounded-3xl p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200/60 flex flex-col h-72 animate-pulse ${hideClass}">
-                    <div class="flex justify-between items-start mb-6"><div class="w-16 h-8 bg-slate-200 rounded-xl"></div><div class="w-20 h-8 bg-slate-200 rounded-xl"></div></div>
-                    <div class="w-3/4 h-6 bg-slate-200 rounded-lg mb-4"></div><div class="w-full h-3 bg-slate-200 rounded mb-2"></div><div class="w-5/6 h-3 bg-slate-200 rounded mb-8"></div>
-                    <div class="mt-auto flex gap-3"><div class="flex-[1.5] h-12 bg-slate-200 rounded-2xl"></div><div class="flex-1 h-12 bg-slate-200 rounded-2xl"></div></div>
-                </div>`;
-            }
-            container.innerHTML = html;
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            setTimeout(() => {
-                const target = document.getElementById(`view-${tabName}`);
-                if (target) target.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 10);
-
-            const buttons = ['cursos', 'pagos', 'comunidad'];
-            buttons.forEach(btn => {
-                // Escritorio
-                const deskBtn = document.getElementById(`btn-${btn}`);
-                // Móvil
-                const mobBtn = document.getElementById(`btn-mobile-${btn}`);
-
-                if (btn === tabName) {
-                    if (deskBtn) deskBtn.className = "flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-brand-teal text-white shadow-md active:scale-95";
-                    if (mobBtn) {
-                        mobBtn.classList.remove('text-slate-400');
-                        mobBtn.classList.add('active-nav');
-                    }
-                } else {
-                    if (deskBtn) deskBtn.className = "flex-1 min-w-[120px] px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50 active:scale-95";
-                    if (mobBtn) {
-                        mobBtn.classList.add('text-slate-400');
-                        mobBtn.classList.remove('active-nav');
-                    }
-                }
-            });
-        }
-
-        async function copyText(text) {
-            if (navigator.clipboard && window.isSecureContext) {
-                await navigator.clipboard.writeText(text);
-                return;
-            }
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
-            ta.focus(); ta.select();
-            document.execCommand('copy');
-            ta.remove();
-        }
-
-        async function copyPaymentData(type, btnElement) {
-            const textToCopy = paymentInfo[type];
-            if (!textToCopy) return;
-            try {
-                await copyText(textToCopy);
-                showToast('Datos copiados con éxito');
-                const originalHtml = btnElement.innerHTML;
-                const originalClasses = btnElement.className;
-                const card = btnElement.closest('.payment-card');
-                if(card) {
-                    card.classList.add('ring-4', 'ring-brand-green/30', 'bg-brand-green/5');
-                    setTimeout(() => card.classList.remove('ring-4', 'ring-brand-green/30', 'bg-brand-green/5'), 800);
-                }
-                btnElement.innerHTML = `<span>¡Copiado!</span> <i class="fas fa-check"></i>`;
-                btnElement.classList.remove('bg-brand-dark', 'hover:bg-brand-teal');
-                btnElement.classList.add('bg-brand-green', 'hover:bg-[#60963b]');
-                setTimeout(() => {
-                    btnElement.innerHTML = originalHtml;
-                    btnElement.className = originalClasses;
-                }, 2200);
-            } catch (err) {
-                console.error('Error al copiar:', err);
-                showToast('No se pudo copiar. Mantén pulsado para seleccionar los datos.');
-            }
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-message');
-            toastMsg.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        async function fetchData() {
-            const errorElement = document.getElementById('error-message');
-            const loadingElement = document.getElementById('loading');
-            const gridElement = document.getElementById('courses-grid');
-            const statusElement = document.getElementById('catalog-status');
-            if (errorElement) errorElement.classList.add('hidden');
-            if (loadingElement) loadingElement.classList.remove('hidden');
-            if (gridElement) gridElement.classList.add('hidden');
-            if (statusElement) statusElement.textContent = 'Consultando los cursos publicados en Moodle…';
-
-            if (MODO_DEMO) {
-                allCourses = mockData.cursos || [];
-                allComments = mockData.comentarios || [];
-                reviewsAvailable = true;
-                renderSocialProofBanner();
-                renderFilteredCourses();
-                if (loadingElement) loadingElement.classList.add('hidden');
-                if (gridElement) gridElement.classList.remove('hidden');
-                if (statusElement) statusElement.textContent = 'Demostración, datos no reales';
-                return;
-            }
-
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 25000);
-            try {
-                const response = await fetch(MOODLE_CATALOG_URL, { signal: controller.signal, cache: 'no-store' });
-                const data = await response.json();
-                if (!response.ok || !data.ok || !Array.isArray(data.courses)) {
-                    throw new Error('Moodle no respondió con un catálogo válido');
-                }
-                allCourses = data.courses.map(c => ({ ...c, _reviewId: String(c.id) }));
-                renderFilteredCourses();
-                if (loadingElement) loadingElement.classList.add('hidden');
-                if (gridElement) gridElement.classList.remove('hidden');
-                if (statusElement) statusElement.textContent = String(allCourses.length) + ' cursos publicados en Moodle'
-                    + (data.stale ? ' · última versión disponible' : '')
-                    + ' · consulta del ' + new Date(data.updated_at || Date.now()).toLocaleDateString('es');
-                void loadReviewsAndMetadata();
-            } catch (error) {
-                console.error('No fue posible consultar Moodle', error);
-                if (loadingElement) loadingElement.classList.add('hidden');
-                if (gridElement) gridElement.classList.remove('hidden');
-                if (statusElement) statusElement.textContent = 'No se pudo verificar la oferta actual en Moodle';
-                if (errorElement) {
-                    errorElement.classList.remove('hidden');
-                    document.getElementById('error-text').textContent = 'No se pudo actualizar desde Moodle. Reintenta o entra directamente a la Academia.';
-                }
-                if (!allCourses.length && gridElement) {
-                    gridElement.innerHTML = '<div class="md:col-span-2 lg:col-span-3 text-center p-6"><a class="inline-flex rounded-xl bg-brand-teal text-white px-5 py-3 font-extrabold" href="https://movidasst.org/" target="_blank" rel="noopener noreferrer">Ver cursos en Moodle</a></div>';
-                } else renderFilteredCourses();
-            } finally {
-                clearTimeout(timeoutId);
-            }
-        }
-
-        function normalizedCourseName(value) {
-            return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-        }
-
-        async function loadReviewsAndMetadata() {
-            try {
-                const response=await fetch(MODERATED_REVIEWS_URL,{signal:AbortSignal.timeout(12000),cache:'no-store'});
-                const body=await response.json();
-                if(!response.ok||!body.ok||!Array.isArray(body.comentarios))throw Error('Reseñas no disponibles');
-                allComments=body.comentarios.filter(c=>Number(c.estrellas)>=1&&Number(c.estrellas)<=5
-                  &&allCourses.some(course=>String(course.id)===String(c.cursoId)));
-                reviewsAvailable=true;
-            } catch(error) {
-                reviewsAvailable=false;allComments=[];
-                console.info('Reseñas moderadas temporalmente no disponibles');
-            }
-            renderSocialProofBanner();renderFilteredCourses();
-            // Google Sheets queda como origen complementario, no como fuente de reseñas públicas ni precios.
-            try {
-                const separator=URL_GOOGLE_SCRIPT.includes('?')?'&':'?';
-                const response=await fetch(URL_GOOGLE_SCRIPT+separator+'_='+Date.now(),{signal:AbortSignal.timeout(12000),cache:'no-store'});
-                if(!response.ok)return;
-                const normalized=normalizeApiPayload(await response.json());
-                if(!normalized)return;
-                const oldCourses=Array.isArray(normalized.cursos)?normalized.cursos:[];
-                const byName=new Map(oldCourses.map(c=>[normalizedCourseName(c.nombre||c.Nombre||c.NOMBRE),c]).filter(([key])=>Boolean(key)));
-                for(const course of allCourses){
-                    const old=byName.get(normalizedCourseName(course.nombre));
-                    if(!old)continue;
-                    const get=(...keys)=>keys.map(k=>old[k]).find(v=>v!==undefined&&v!==null&&String(v).trim()!=='');
-                    if(!course.descripcion)course.descripcion=String(get('descripcion','Descripcion','DESCRIPCION')||'').slice(0,450);
-                    if(!course.duracion)course.duracion=String(get('duracion','Duracion','DURACION')||'');
-                    if(!course.modalidad)course.modalidad=String(get('modalidad','Modalidad','MODALIDAD')||'');
-                }
-                renderFilteredCourses();
-            }catch(error){console.info('Datos complementarios no disponibles');}
-        }
-
-        function renderFilteredCourses() {
-            const query = (document.getElementById('course-search')?.value || '').trim().toLocaleLowerCase('es');
-            const category = document.getElementById('course-category-filter')?.value || '';
-            const sort = document.getElementById('course-sort')?.value || 'recientes';
-            let rows = allCourses.filter(course => {
-                if (category && String(course.categoria_id || '') !== category) return false;
-                if (!query) return true;
-                const haystack = [course.nombre,course.descripcion,course.categoria,course.modalidad,course.nombre_corto].filter(Boolean).join(' ').toLocaleLowerCase('es');
-                return haystack.includes(query);
-            });
-            rows = rows.slice().sort((a,b) => sort === 'nombre'
-                ? String(a.nombre || '').localeCompare(String(b.nombre || ''),'es')
-                : Number(b.moodle_id || b.id || 0) - Number(a.moodle_id || a.id || 0));
-            renderCourses(rows);
-        }
-
-        function renderSocialProofBanner() {
-            const banner = document.getElementById('social-proof-banner');
-            if (!banner || !allComments) return;
-            banner.classList.add('hidden');
-            banner.innerHTML = '';
-
-            const topReviews = allComments.filter(c => Number(c.estrellas) >= 1 && Number(c.estrellas) <= 5);
-            if (topReviews.length > 0) {
-                const recent = topReviews.slice(-2);
-                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-5">';
-                recent.forEach(r => {
-                    let com = (r.comentario || '').length > 85 ? escapeHTML((r.comentario || '').substring(0, 85)) + '...' : escapeHTML(r.comentario);
-                    let nombreSafe = escapeHTML(r.nombre);
-                    html += `
-                        <div class="bg-white border border-slate-200/60 p-5 rounded-3xl flex gap-4 items-center shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
-                            
-                            <div class="flex-shrink-0 text-brand-yellow/80 text-3xl relative z-10"><i class="fas fa-quote-left"></i></div>
-                            <div class="relative z-10">
-                                <p class="text-[13px] text-slate-600 italic font-medium leading-relaxed mb-2">"${com}"</p>
-                                <div class="flex items-center gap-2">
-                                    <div class="flex text-brand-yellow text-[10px]">${generateStars(parseInt(r.estrellas) || 0)}</div>
-                                    <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wide">${nombreSafe}</span>
-                                </div>
-                            </div>
-                        </div>`;
-                });
-                html += '</div>';
-                banner.innerHTML = html;
-                banner.classList.remove('hidden');
-            }
-        }
-
-        function renderCourses(cursos) {
-            const grid = document.getElementById('courses-grid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            
-            if (!cursos || cursos.length === 0) {
-                grid.innerHTML = `<div class="md:col-span-2 lg:col-span-3 surface-card rounded-2xl p-8 text-center"><i class="fas fa-book-open text-3xl text-slate-300 mb-3"></i><p class="font-extrabold text-brand-dark">No hay cursos para mostrar</p><p class="text-sm text-slate-500 mt-1">Prueba actualizar el catálogo o cambiar la búsqueda.</p></div>`;
-                return;
-            }
-
-            cursos.forEach((curso, index) => {
-                // FIX: Detectar cualquier variante de "ID" desde Google Sheets o crear uno temporal seguro
-                const safeId = String(curso.id || curso.Id || curso.ID || `temp_${index}`);
-                curso._safeId = safeId; // Lo guardamos en memoria para que el botón lo encuentre
-                
-                const safeNombre = String(curso.nombre || curso.Nombre || curso.NOMBRE || 'Curso sin nombre');
-                
-                const reviewId = String(curso._reviewId || safeId);
-                const courseComments = allComments.filter(c => String(c.cursoId) === reviewId);
-                const avg = courseComments.length > 0 
-                    ? (courseComments.reduce((sum, c) => sum + parseInt(c.estrellas || 0), 0) / courseComments.length).toFixed(1)
-                    : "Sin reseñas";
-                const ratingDisplay = reviewsAvailable ? avg : "No disponible";
-                const reviewsCountDisplay = reviewsAvailable ? " (" + courseComments.length + ")" : "";
-                
-                const linkCurso = escapeHTML(safeExternalUrl(curso.enlace || curso.Enlace || curso.ENLACE || ''));
-                const corporate = Number(curso.categoria_id) === 27;
-                const actionUrl = corporate ? 'https://presupuesto.movidasst.com/' : linkCurso;
-                const actionLabel = corporate ? 'Solicitar capacitación' : 'Ver curso en Academia';
-                const nameLower = safeNombre.toLowerCase();
-                
-                let wmIcon = 'fa-graduation-cap';
-                if(nameLower.includes('riesgo') || nameLower.includes('seguridad')) wmIcon = 'fa-shield-alt';
-                else if(nameLower.includes('auditor') || nameLower.includes('iso')) wmIcon = 'fa-clipboard-check';
-                else if(nameLower.includes('liderazgo') || nameLower.includes('gestión')) wmIcon = 'fa-users-cog';
-                else if(nameLower.includes('salud') || nameLower.includes('medicina')) wmIcon = 'fa-heartbeat';
-
-                let duracion = curso.duracion || curso.Duracion || curso.DURACION || '';
-                if (duracion && !isNaN(duracion)) duracion += " Hs";
-
-                let modalidad = curso.modalidad || curso.Modalidad || curso.MODALIDAD || '';
-                let modalIcon = 'fa-laptop';
-                let modalColor = 'text-slate-600 bg-slate-100';
-                if (modalidad) {
-                    const lowerMod = modalidad.toLowerCase();
-                    if (lowerMod.includes('asincronico') || lowerMod.includes('asincrónica') || lowerMod.includes('asincrónico')) {
-                        modalIcon = 'fa-play-circle'; modalColor = 'text-brand-dark bg-brand-dark/10'; modalidad = 'Asincrónico';
-                    } else if (lowerMod.includes('sincronico') || lowerMod.includes('sincrónica') || lowerMod.includes('sincrónico')) {
-                        modalIcon = 'fa-video'; modalColor = 'text-brand-teal bg-brand-teal/10'; modalidad = 'Sincrónico';
-                    } else if (lowerMod.includes('ambas') || lowerMod.includes('mixto') || lowerMod.includes('híbrido')) {
-                        modalIcon = 'fa-layer-group'; modalColor = 'text-brand-green bg-brand-green/10'; modalidad = 'Híbrido';
-                    }
-                }
-
-                let valor = curso.valor || curso.Valor || curso.VALOR || curso.precio || curso.Precio || curso.PRECIO;
-                let valorBadge = '';
-                const priceLabel = String(curso.precio_texto || valor || '').trim();
-                if (/gratuit[oa]\s+para\s+integrantes/i.test(priceLabel)) {
-                    valorBadge = '<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold">GRATIS PARA INTEGRANTES</span>';
-                } else if (/^(gratis|gratuito)/i.test(priceLabel) || (!priceLabel && /gratuito/i.test(String(curso.categoria || '')))) {
-                    valorBadge = '<span class="bg-brand-green text-white px-3 py-1.5 rounded-xl text-xs font-bold">GRATUITO</span>';
-                } else if (/plan corporativo/i.test(priceLabel) || /corporativo/i.test(String(curso.categoria || ''))) {
-                    valorBadge = '<span class="bg-brand-dark text-white px-3 py-1.5 rounded-xl text-xs font-bold">PLAN CORPORATIVO</span>';
-                } else if (priceLabel) {
-                    const label = !isNaN(Number(priceLabel)) && Number(priceLabel) > 0 ? priceLabel + ' USD' : priceLabel;
-                    valorBadge = '<span class="bg-brand-dark text-white px-3 py-1.5 rounded-xl text-xs font-bold">'
-                        + escapeHTML(label.slice(0,70)) + '</span>';
-                }
-
-                const descFormateada = escapeHTML(curso.descripcion || curso.Descripcion || curso.DESCRIPCION || 'Revisa el programa, requisitos y condiciones en la ficha oficial del curso en Moodle.').replace(/\n/g, '<br/>');
-                const categoryLabel = escapeHTML(curso.categoria || '');
-                const categoryBadge = categoryLabel ? `<span class="bg-slate-100 text-brand-dark px-3 py-1.5 rounded-xl text-xs font-bold">${categoryLabel}</span>` : '';
-                const imageUrl = safeExternalUrl(curso.imagen || '');
-                const officialImage = imageUrl && new URL(imageUrl).hostname === 'movidasst.org' ? escapeHTML(imageUrl) : '';
-                const classDates = curso.fechas_edicion ? escapeHTML(curso.fechas_edicion) : '';
-                const enrolInfo = escapeHTML(curso.matricula?.descripcion || 'Consultar condiciones de inscripción en Moodle');
-                const courseMeta = `<div class="rounded-xl p-3 bg-brand-teal/5 border border-brand-teal/15 text-brand-dark text-xs leading-relaxed mb-4">
-                  <i class="fas fa-info-circle text-brand-teal"></i>
-                  <strong>Inscripción:</strong> ${enrolInfo}.
-                  ${classDates ? `<div class="mt-1"><i class="far fa-calendar"></i> <strong>Fechas de clases:</strong> ${classDates}</div>` : '<div class="mt-1 text-slate-600">Fechas y condiciones de cada edición: consulta la ficha del curso.</div>'}
-                  </div>`;
-                const imageBlock = officialImage ? `<img src="${officialImage}" alt="Imagen del curso ${escapeHTML(safeNombre)}" loading="lazy" decoding="async" class="w-full h-36 object-cover rounded-xl border border-slate-200 mb-4" onerror="this.hidden=true">` : '';
-
-                // Lógica de Bento Grid
-                const isFeatured = index === 0 && Number(curso.id) === Math.max(0, ...allCourses.map(c => Number(c.id) || 0));
-                
-                let cardClasses = "bg-white rounded-3xl p-6 sm:p-8 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(0,123,133,0.12)] border border-slate-200/60 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group flex flex-col";
-                
-                if (isFeatured) {
-                    cardClasses += " md:col-span-2 lg:col-span-2 md:flex-row gap-6 items-stretch";
-                }
-
-                const card = document.createElement('article');
-                card.className = cardClasses;
-                
-                let internalHtml = `
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-dark via-brand-teal to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
-                    <i class="fas ${wmIcon} absolute ${isFeatured ? '-bottom-10 -right-4 text-[14rem]' : '-bottom-6 -right-6 text-[10rem]'} text-slate-100 opacity-60 z-0 rotate-12 pointer-events-none group-hover:scale-110 transition-transform duration-700"></i>
-                `;
-
-                if (isFeatured) {
-                    internalHtml += `
-                    <div class="flex-1 flex flex-col relative z-10">
-                        <div class="flex items-center gap-3 mb-4">
-                            <span class="bg-brand-yellow/20 text-brand-yellow px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-brand-yellow/30 flex items-center gap-1.5"><i class="fas fa-book-open"></i> Nueva incorporación</span>
-                            ${valorBadge}
-                            ${categoryBadge}
-                        </div>
-                        <h3 class="text-3xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors"><a href="${linkCurso}" target="_blank" rel="noopener noreferrer" title="Ver ficha oficial en Moodle">${escapeHTML(safeNombre)}</a></h3>
-                        <div class="relative z-10">${imageBlock}</div>
-                        <p class="text-slate-500 mb-4 flex-1 text-sm leading-relaxed max-w-lg">${descFormateada}</p>
-                        ${courseMeta}
-                        
-                        <div class="flex flex-wrap gap-3 mt-auto">
-                            ${linkCurso ? `<a href="${actionUrl}" target="_blank" rel="noopener noreferrer" class="bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 shadow-lg shadow-brand-teal/30 text-sm flex items-center gap-2 active:scale-95"><i class="fas fa-arrow-up-right-from-square"></i> ${actionLabel}</a>` : ''}
-                            <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="bg-white border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 text-sm flex items-center gap-2 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Valorar curso</button>
-                            ${Number(curso.categoria_id)===24 ? `<button type="button" onclick="openPaymentGuide(${Number(curso.id)})" class="bg-white border-2 border-brand-teal/30 text-brand-dark font-bold py-3.5 px-5 rounded-2xl text-sm"><i class="fas fa-wallet"></i> Cómo pagar</button>` : ''}
-                        </div>
-                    </div>
-                    
-                    <div class="w-full md:w-64 shrink-0 flex flex-col gap-3 relative z-10 justify-center">
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
-                            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl text-brand-yellow"><i class="fas fa-star"></i></div>
-                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Calificación</span><span class="font-extrabold text-xl text-brand-dark">${ratingDisplay} <span class="text-sm font-normal text-slate-500">${reviewsCountDisplay}</span></span></div>
-                        </div>
-                        ${duracion ? `
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
-                            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl text-slate-600"><i class="far fa-clock"></i></div>
-                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Duración</span><span class="font-bold text-slate-700">${escapeHTML(duracion)}</span></div>
-                        </div>` : ''}
-                        ${modalidad ? `
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 flex items-center gap-4">
-                            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xl ${modalColor.split(' ')[0]}"><i class="fas ${modalIcon}"></i></div>
-                            <div><span class="block text-xs text-slate-400 font-bold uppercase">Modalidad</span><span class="font-bold text-slate-700">${escapeHTML(modalidad)}</span></div>
-                        </div>` : ''}
-                    </div>
-                    `;
-                } else {
-                    internalHtml += `
-                    <div class="flex justify-between items-start mb-5 relative z-10">
-                        <button class="bg-brand-yellow/10 text-brand-yellow px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5 border border-brand-yellow/20 hover:bg-brand-yellow/20 transition-colors active:scale-95" onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))">
-                            <i class="fas fa-star"></i> <span class="tech-data">${ratingDisplay}</span>
-                        </button>
-                        ${valorBadge || categoryBadge}
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-extrabold mb-3 text-brand-dark leading-tight group-hover:text-brand-teal transition-colors relative z-10"><a href="${linkCurso}" target="_blank" rel="noopener noreferrer" title="Ver ficha oficial en Moodle">${escapeHTML(safeNombre)}</a></h3>
-                    <div class="relative z-10">${imageBlock}</div>
-                    <p class="text-slate-500 mb-4 flex-1 text-[13px] sm:text-sm leading-relaxed relative z-10">${descFormateada}</p>
-                    <div class="relative z-10">${courseMeta}</div>
-                    
-                    <div class="flex flex-wrap items-center gap-2 mb-5 relative z-10">
-                        ${duracion ? `<span class="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 flex items-center gap-1.5"><i class="far fa-clock"></i> ${escapeHTML(duracion)}</span>` : ''}
-                        ${modalidad ? `<span class="${modalColor} border-transparent px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5"><i class="fas ${modalIcon}"></i> ${escapeHTML(modalidad)}</span>` : ''}
-                    </div>
-
-                    <div class="pt-5 mt-auto border-t border-slate-200/60 flex flex-col sm:flex-row gap-3 relative z-10">
-                        ${linkCurso ? `<a href="${actionUrl}" target="_blank" rel="noopener noreferrer" class="flex-[1.5] bg-brand-teal hover:bg-[#006a73] text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-md shadow-brand-teal/20 text-sm flex items-center justify-center gap-2 active:scale-95"><span>${actionLabel}</span><i class="fas fa-external-link-alt text-[11px]"></i></a>` : ''}
-                        <button onclick="openModal(decodeURIComponent('${encodeURIComponent(safeId)}'))" class="flex-1 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 text-brand-dark font-bold py-3 px-3 rounded-xl transition-all duration-300 text-sm flex items-center justify-center gap-1.5 active:scale-95"><i class="far fa-edit text-brand-yellow"></i> Valorar</button>
-                        ${Number(curso.categoria_id)===24 ? `<button type="button" onclick="openPaymentGuide(${Number(curso.id)})" class="flex-1 border border-brand-teal/30 bg-white text-brand-dark font-bold py-3 px-3 rounded-xl text-sm">Cómo pagar</button>` : ''}
-                    </div>
-                    `;
-                }
-
-                card.innerHTML = internalHtml;
-                grid.appendChild(card);
-            });
-        }
-
-
-        function openPaymentGuide(id) {
-            const course = allCourses.find(c => Number(c.id) === Number(id));
-            if(!course || Number(course.categoria_id)!==24) return;
-            const ctx=document.getElementById('course-payment-context');
-            if(ctx){
-                const price=String(course.precio_texto||'').trim();
-                ctx.innerHTML='<strong>Curso seleccionado:</strong> '+escapeHTML(course.nombre)+
-                  '<div class="mt-1"><strong>Precio registrado en Moodle:</strong> '+escapeHTML(price||'Consultar con la Academia')+'</div>'+
-                  '<div class="mt-1">Elige el medio autorizado para tu curso. Después sigue las instrucciones de la plataforma para comunicar y verificar el pago. No se registra matrícula automáticamente desde esta página.</div>'+
-                  '<div class="mt-2"><a class="font-extrabold underline text-brand-teal" href="'+escapeHTML(safeExternalUrl(course.enlace||''))+'" target="_blank" rel="noopener noreferrer">Ver requisitos y confirmar inscripción en Moodle</a></div>';
-                ctx.classList.remove('hidden');
-            }
-            switchTab('pagos');
-        }
-
-        function setupCourseSearch() {
-            ['course-search','course-category-filter','course-sort'].forEach(id => {
-                document.getElementById(id)?.addEventListener(id === 'course-search' ? 'input' : 'change', renderFilteredCourses);
-            });
-        }
-
-        function setupModalEvents() {
-            const modal = document.getElementById('review-modal');
-            if (!modal) return;
-            
-            document.addEventListener('keydown', (e) => { 
-                if (modal.classList.contains('hidden')) return;
-                if (e.key === 'Escape') closeModal();
-                if (e.key === 'Tab') {
-                    const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                    const firstElement = focusableElements[0];
-                    const lastElement = focusableElements[focusableElements.length - 1];
-                    if (e.shiftKey) { 
-                        if (document.activeElement === firstElement) { lastElement.focus(); e.preventDefault(); }
-                    } else { 
-                        if (document.activeElement === lastElement) { firstElement.focus(); e.preventDefault(); }
-                    }
-                }
-            });
-
-            const stars = document.querySelectorAll('#star-input i');
-            stars.forEach(star => {
-                star.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
-                });
-            });
-        }
-
-        function openModal(courseId) {
-            if (!reviewsAvailable) {
-                showToast('Las valoraciones no están disponibles temporalmente; el catálogo de Moodle sigue funcionando.');
-                return;
-            }
-            // FIX: Buscar el curso usando el ID ultra-seguro que generamos al renderizar
-            const curso = allCourses.find((c, index) => {
-                const cId = c._safeId || c.id || c.Id || c.ID || `temp_${index}`;
-                return String(cId) === String(courseId);
-            });
-            
-            if (!curso) {
-                console.error("Error: No se pudo localizar el curso.");
-                return;
-            }
-            
-            const titleEl = document.getElementById('modal-course-title');
-            const idEl = document.getElementById('course-id');
-            const formEl = document.getElementById('review-form');
-            const modal = document.getElementById('review-modal');
-            
-            if (titleEl) titleEl.textContent = curso.nombre || curso.Nombre || curso.NOMBRE || 'Curso';
-            if (idEl) idEl.value = String(curso._reviewId || courseId);
-            if (formEl) formEl.reset();
-            
-            resetStars();
-            renderComments(String(curso._reviewId || courseId));
-            
-            if (modal) {
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-            setTimeout(() => {
-                const nameInput = document.getElementById('user-name');
-                if (nameInput) nameInput.focus();
-            }, 100);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('review-modal');
-            if (modal) modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function renderComments(courseId) {
-            const container = document.getElementById('comments-list');
-            if (!container) return;
-            
-            const comments = allComments.filter(c => String(c.cursoId) === String(courseId));
-            if (comments.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-slate-300"><i class="far fa-edit text-xl" aria-hidden="true"></i></div>
-                        <p class="text-brand-dark font-bold text-sm">Sé el primero en opinar</p>
-                        <p class="text-xs text-brand-teal mt-1">Tu feedback es importante</p>
-                    </div>`;
-                return;
-            }
-            const reversedComments = [...comments].reverse();
-            container.innerHTML = reversedComments.map(c => {
-                const nombreSafe = escapeHTML(c.nombre || 'Anónimo');
-                const comentarioSafe = escapeHTML(c.comentario || '');
-                const estrellasNum = parseInt(c.estrellas) || 0;
-                const charInicial = nombreSafe.charAt(0) || 'U';
-                
-                return `
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-teal/30 transition-all duration-200">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl bg-brand-teal/10 text-brand-teal flex items-center justify-center font-extrabold text-sm shadow-sm">${charInicial}</div>
-                            <div>
-                                <span class="font-bold text-brand-dark text-sm block">${nombreSafe}</span>${c.verificada===true ? '<span class="inline-flex text-[10px] font-bold text-brand-green">Matrícula comprobada por la Academia</span>' : '<span class="inline-flex text-[10px] text-slate-500">Valoración aprobada · matrícula no verificada</span>'}
-                                <div class="flex items-center gap-1.5 mt-0.5">
-                                    <div class="flex text-brand-yellow text-[10px]">${generateStars(estrellasNum)}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="text-[9px] text-slate-400 font-bold bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">${new Date(c.fecha || Date.now()).toLocaleDateString()}</span>
-                    </div>
-                    <p class="text-slate-600 text-[13px] leading-relaxed pl-12">${comentarioSafe}</p>
-                </div>
-            `}).join('');
-        }
-
-        function generateStars(count) {
-            let html = '';
-            for(let i=0; i<5; i++) {
-                html += `<i class="${i < count ? 'fas text-brand-yellow drop-shadow-sm' : 'far text-slate-300'} fa-star" aria-hidden="true"></i>`;
-            }
-            return html;
-        }
-
-        function setupStarRating() {
-            const stars = document.querySelectorAll('#star-input i');
-            const ratingInput = document.getElementById('rating-value');
-            const ratingText = document.getElementById('rating-text');
-            const ratingBadge = document.getElementById('rating-badge');
-            const ratingTextSimple = document.getElementById('rating-text-simple');
-            const starContainer = document.getElementById('star-input');
-            
-            if(!starContainer) return;
-
-            stars.forEach(star => {
-                star.addEventListener('mouseenter', function() {
-                    const value = this.getAttribute('data-value');
-                    updateStarVisuals(value); 
-                    updateRatingText(value);
-                });
-                star.addEventListener('click', function() {
-                    const value = this.getAttribute('data-value');
-                    if (ratingInput) ratingInput.value = value;
-                    updateStarVisuals(value); 
-                    updateRatingText(value);
-                    if (ratingBadge) ratingBadge.classList.remove('hidden');
-                    if (ratingTextSimple) ratingTextSimple.textContent = `${value}/5`;
-                    
-                    stars.forEach(s => s.setAttribute('aria-checked', 'false'));
-                    this.setAttribute('aria-checked', 'true');
-
-                    this.style.transform = "scale(1.3)";
-                    setTimeout(() => this.style.transform = "scale(1)", 150);
-                });
-            });
-            
-            starContainer.addEventListener('mouseleave', function() {
-                if (!ratingInput) return;
-                const currentValue = ratingInput.value;
-                updateStarVisuals(currentValue);
-                if(currentValue == 0 && ratingText && ratingBadge) {
-                    ratingText.textContent = "Haz clic para puntuar";
-                    ratingBadge.classList.add('hidden');
-                } else {
-                    updateRatingText(currentValue);
-                }
-            });
-        }
-
-        function updateRatingText(value) {
-            const ratingText = document.getElementById('rating-text');
-            if (!ratingText) return;
-            const label = ratingLabels[value - 1];
-            if (value > 0) ratingText.innerHTML = `<span class="text-brand-teal font-bold">${label}</span>`;
-        }
-
-        function updateStarVisuals(value) {
-            const stars = document.querySelectorAll('#star-input i');
-            stars.forEach(star => {
-                const starVal = parseInt(star.getAttribute('data-value'));
-                if (starVal <= value) {
-                    star.classList.add('active', 'fas', 'text-brand-yellow', 'drop-shadow-sm');
-                    star.classList.remove('far', 'text-slate-300');
-                } else {
-                    star.classList.remove('active', 'fas', 'text-brand-yellow', 'drop-shadow-sm');
-                    star.classList.add('far', 'text-slate-300');
-                }
-            });
-        }
-
-        function resetStars() {
-            const ratingInput = document.getElementById('rating-value');
-            const ratingText = document.getElementById('rating-text');
-            const ratingBadge = document.getElementById('rating-badge');
-            
-            if (ratingInput) ratingInput.value = 0;
-            if (ratingText) ratingText.textContent = "Haz clic para puntuar";
-            if (ratingBadge) ratingBadge.classList.add('hidden');
-            
-            const stars = document.querySelectorAll('#star-input i');
-            stars.forEach(s => s.setAttribute('aria-checked', 'false'));
-            updateStarVisuals(0);
-        }
-
-        function setupForm() {
-            const form = document.getElementById('review-form');
-            if (!form) return;
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = document.getElementById('submit-btn');
-                const ratingInput = document.getElementById('rating-value');
-                const courseInput = document.getElementById('course-id');
-                const nameInput = document.getElementById('user-name');
-                const commentInput = document.getElementById('user-comment');
-                const consentInput = document.getElementById('review-consent');
-
-                if (!btn || !ratingInput || !courseInput || !nameInput || !commentInput) return;
-
-                const originalBtnText = btn.innerHTML;
-                const rating = ratingInput.value;
-                
-                if(rating == 0) { showToast("Por favor selecciona una calificación."); return; }
-                if (nameInput.value.trim().length < 2) { showToast("Escribe un nombre válido."); return; }
-                if (commentInput.value.trim().length < 5) { showToast("Cuéntanos un poco más sobre tu experiencia."); return; }
-                if (consentInput && !consentInput.checked) { showToast("Debes aceptar la publicación de la reseña."); return; }
-                
-                const newReview={
-                    cursoId:String(courseInput.value),nombre:nameInput.value.trim().slice(0,80),
-                    estrellas:Number(rating),comentario:commentInput.value.trim().slice(0,700),
-                    website:document.getElementById('review-website')?.value||''
-                };
-                btn.disabled=true;
-                btn.innerHTML='<i class="fas fa-circle-notch fa-spin mr-2"></i> Enviando para revisión…';
-                try {
-                    if(MODO_DEMO){showToast('Demostración: reseña pendiente de aprobación.');}
-                    else {
-                        const response=await fetch(MODERATED_REVIEWS_URL,{
-                            method:'POST',headers:{'content-type':'application/json'},
-                            body:JSON.stringify(newReview),signal:AbortSignal.timeout(16000)
-                        });
-                        const result=await response.json();
-                        if(!response.ok||!result.ok)throw Error(result.error||'No se pudo enviar la reseña');
-                        showToast('Valoración recibida. Se publicará después de la moderación.');
-                    }
-                    form.reset();resetStars();closeModal();
-                }catch(error){
-                    showToast(error.name==='AbortError'
-                        ? 'Tiempo de espera agotado; verifica antes de reenviar.'
-                        : String(error.message||'No se pudo enviar.'));
-                }finally{btn.innerHTML=originalBtnText;btn.disabled=false;}
-            });
-        }
-    </script>
+        button.textContent="✓ Datos copiados";
+      }catch(_){button.textContent="No se pudo copiar";}
+      setTimeout(function(){button.textContent=original;},2000);
+    }
+    document.addEventListener("DOMContentLoaded",function(){
+      document.querySelectorAll("[data-tab]").forEach(function(button){
+        button.addEventListener("click",function(){activateTab(button.dataset.tab);});
+      });
+      document.querySelectorAll("[data-copy]").forEach(function(button){
+        button.addEventListener("click",function(){copyPayment(button.dataset.copy,button);});
+      });
+      document.getElementById("course-search").addEventListener("input",function(){if (catalogReady)renderCourses();});
+      document.getElementById("course-category").addEventListener("change",function(){if (catalogReady)renderCourses();});
+      document.getElementById("refresh-courses").addEventListener("click",loadCourses);
+      loadCourses();
+    });
+  </script>
 </body>
 </html>
