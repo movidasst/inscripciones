@@ -6,11 +6,11 @@
   <meta name="theme-color" content="#00205b">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Academia Movida SST | Catálogo de cursos</title>
-  <meta name="description" content="Consulta los cursos públicos de la Academia Movida SST en Moodle, los medios de pago y los canales de la comunidad.">
+  <meta name="description" content="Consulta los cursos de pago de la Academia Movida SST en Moodle, los medios de pago y los canales de la comunidad.">
   <link rel="canonical" href="https://inscripciones.movidasst.com/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Academia Movida SST | Cursos disponibles">
-  <meta property="og:description" content="Cursos publicados en Moodle, medios de pago y comunidad de la Academia Movida SST.">
+  <meta property="og:description" content="Cursos de pago publicados en Moodle, medios de pago y comunidad de la Academia Movida SST.">
   <meta property="og:image" content="https://drive.google.com/thumbnail?id=1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s&amp;sz=w1000">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -160,7 +160,7 @@
       <div class="hero-copy">
         <div class="eyebrow">Academia · La Movida de SST+</div>
         <h1 id="page-title">Aprende, actualízate<br>y sigue avanzando.</h1>
-        <p>Explora los cursos publicados en nuestra plataforma Moodle. Toda la información de cada curso está en su ficha oficial.</p>
+        <p>Explora los cursos de pago publicados en nuestra plataforma Moodle. Toda la información de cada curso está en su ficha oficial.</p>
       </div>
       <div class="hero-side" aria-hidden="true">
         <div class="dot">✦</div>
@@ -180,14 +180,14 @@
         <div class="section-top">
           <div>
             <h2>Cursos de la Academia</h2>
-            <p>Únicamente cursos visibles y publicados en Moodle.</p>
+            <p>Únicamente cursos visibles de la categoría De Pago en Moodle.</p>
           </div>
           <span class="count" id="course-count" aria-live="polite">Consultando Moodle</span>
         </div>
         <div class="filters">
           <input class="filter-field" id="course-search" type="search" autocomplete="off" placeholder="Buscar por nombre del curso..." aria-label="Buscar curso">
-          <select class="filter-field" id="course-category" aria-label="Filtrar por categoría">
-            <option value="all">Todas las categorías</option>
+          <select class="filter-field" id="course-category" aria-label="Categoría de los cursos" disabled>
+            <option value="24">De Pago</option>
           </select>
           <button class="refresh" type="button" id="refresh-courses" aria-label="Actualizar cursos desde Moodle">↻ Actualizar</button>
         </div>
@@ -263,7 +263,8 @@
     "use strict";
     const MOODLE_CATALOG_URL = "https://lfdmbkzghnwvsapxypvt.supabase.co/functions/v1/academia-catalogo-publico";
     const MOODLE_ROOT = "https://movidasst.org";
-    const CATEGORY_NAMES = {"14":"Gratuitos","24":"De Pago","26":"Actualización Profesional Continua","27":"Cursos Corporativos"};
+    const PAID_CATEGORY_ID = 24;
+    const CATEGORY_NAMES = {"24":"De Pago"};
     const paymentInfo = {
       transfer: "DATOS PARA TRANSFERENCIA BANCARIA (VENEZUELA)\nBanco: Banco de Venezuela\nTipo de cuenta: Corriente\nNº de cuenta: 0102-0236-1500-0033-6732\nTitular: Ezequiel Linares\nC.I.: 30.407.087",
       pagoMovil: "DATOS PARA PAGO MÓVIL\nBanco: Banco de Venezuela\nNombre: Ezequiel Linares\nC.I.: V-30.407.087\nTeléfono: 0412-6372223",
@@ -295,7 +296,7 @@
       if (!raw || typeof raw!=="object" || raw.origen!=="moodle") return null;
       const id=Number(raw.moodle_id || raw.id);
       const category=Number(raw.categoria_id);
-      if (!Number.isSafeInteger(id) || id<=1 || !Object.prototype.hasOwnProperty.call(CATEGORY_NAMES,String(category))) return null;
+      if (!Number.isSafeInteger(id) || id<=1 || category!==PAID_CATEGORY_ID) return null;
       const name=String(raw.nombre || "").trim();
       if (!name) return null;
       const duration=String(raw.duracion || "").trim().slice(0,70);
@@ -309,17 +310,6 @@
         }catch(_){}
       }
       return {id:id,category:category,name:name.slice(0,220),duration:duration,price:price,photo:photo,url:MOODLE_ROOT+"/course/view.php?id="+id};
-    }
-    function populateCategories(){
-      const filter=document.getElementById("course-category");
-      const previous=filter.value;
-      filter.replaceChildren(new Option("Todas las categorías","all"));
-      const values=new Set(courses.map(function(c){return c.category;}));
-      [26,14,24,27].forEach(function(id){
-        if (!values.has(id)) return;
-        filter.add(new Option(CATEGORY_NAMES[String(id)],String(id)));
-      });
-      filter.value=Array.from(filter.options).some(function(opt){return opt.value===previous;})?previous:"all";
     }
     function element(tag,cls,txt) {
       const el=document.createElement(tag);
@@ -335,11 +325,11 @@
       const rows=courses.filter(function(c){
         return (category==="all" || String(c.category)===category) && (!search || c.name.toLocaleLowerCase("es").includes(search));
       }).sort(function(a,b){return b.id-a.id;});
-      count.textContent=courses.length+" cursos en Moodle";
+      count.textContent=courses.length+" cursos de pago";
       grid.replaceChildren();
       if (rows.length===0){
         grid.hidden=true;
-        setState(catalogReady?"No encontramos coincidencias":"Sin cursos publicados",catalogReady?"Prueba otra búsqueda o categoría.":"Consulta el catálogo oficial de Moodle.");
+        setState(courses.length?"No encontramos coincidencias":"Sin cursos de pago publicados",courses.length?"Prueba otra búsqueda.":"No hay cursos visibles en la categoría De Pago de Moodle.");
         return;
       }
       rows.forEach(function(course){
@@ -390,7 +380,7 @@
       status.textContent="Actualizando desde Moodle…";
       catalogReady=false;
       courses=[];
-      setState("Conectando con Moodle…","Mostraremos únicamente los cursos publicados.");
+      setState("Conectando con Moodle…","Mostraremos únicamente los cursos publicados en la categoría De Pago.");
       const controller=new AbortController();
       const timer=setTimeout(function(){controller.abort();},20000);
       try{
@@ -404,9 +394,8 @@
           seen.add(c.id);return true;
         });
         catalogReady=true;
-        populateCategories();
         renderCourses();
-        status.textContent="Datos obtenidos del catálogo público de Moodle · Actualización automática.";
+        status.textContent="Categoría De Pago de Moodle · Actualización automática.";
       }catch(err){
         count.textContent="Catálogo no disponible";
         status.textContent="No se pudo verificar la oferta actual en Moodle.";
