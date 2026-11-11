@@ -559,7 +559,7 @@
           if (url.protocol==="https:" && url.hostname==="movidasst.org" && url.pathname.includes("/pluginfile.php/")) photo=url.href;
         }catch(_){}
       }
-      return {id:id,category:category,name:name.slice(0,220),duration:duration,price:price,photo:photo,url:MOODLE_ROOT+"/course/view.php?id="+id};
+      return {id:id,category:category,name:name.slice(0,220),duration:duration,price:price,photo:photo,url:MOODLE_ROOT+"/course/info.php?id="+id};
     }
     function element(tag,cls,txt) {
       const el=document.createElement(tag);
@@ -600,7 +600,8 @@
         if (course.price) meta.append(element("span","meta price"+(course.category===24?" paid":""),course.price));
         if (meta.childElementCount) content.append(meta);
         const actions=element("div","course-actions");
-        const link=element("a","action","Ver curso en Moodle ↗");
+        const link=element("a","action","Inscríbete ↗");
+         link.setAttribute("aria-label","Inscríbete en "+course.name);
         link.href=course.url;link.target="_blank";link.rel="noopener noreferrer";
         actions.append(link);
         if (course.category===24){
